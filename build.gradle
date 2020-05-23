@@ -7,10 +7,7 @@
  */
 
 plugins {
-    // Apply the java plugin to add support for Java
     id 'java'
-
-    // Apply the application plugin to add support for building a CLI application.
     id 'application'
 }
 
@@ -23,10 +20,7 @@ repositories {
 tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
 
 dependencies {
-    // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.2-jre'
-
-    // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
 
     compile group: 'com.google.flogger', name: 'flogger', version: '0.4'
