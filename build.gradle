@@ -20,15 +20,25 @@ repositories {
     jcenter()
 }
 
+tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.2-jre'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
-}
 
-application {
-    // Define the main class for the application.
-    mainClassName = 'dev.utils.App'
+    compile group: 'com.google.flogger', name: 'flogger', version: '0.4'
+    runtime group: 'com.google.flogger', name: 'flogger-system-backend', version: '0.4'
+
+    compile 'commons-io:commons-io:2.4'
+    compile 'org.apache.commons:commons-lang3:3.4'
+	
+    compile group: 'org.apache.poi', name : 'poi', version: '4.1.2'
+	compile(group: 'org.apache.poi', name : 'poi-ooxml', version: '4.1.2') {
+		exclude group: 'stax', module: 'stax-api'
+	}
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
