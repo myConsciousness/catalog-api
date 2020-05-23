@@ -50,7 +50,7 @@ public final class StaxContentHandler {
     /**
      * 形式 : コンテンツファイルへのパス
      */
-    private static final String FORMAT_FILE_PATH_TO_CONTENT = "%s/xml/%s.%s";
+    private static final String FORMAT_FILE_PATH_TO_CONTENT = "%s/src/main/resources/xml/%s.%s";
 
     /**
      * 要素定数
