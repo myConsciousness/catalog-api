@@ -9,6 +9,7 @@
  * This source code or any portion thereof must not be<br>
  * reproduced or used in any manner whatsoever.
  */
+
 package org.thinkit.common.catalog;
 
 import lombok.Getter;

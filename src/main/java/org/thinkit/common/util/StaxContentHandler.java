@@ -9,6 +9,7 @@
  * This source code or any portion thereof must not be<br>
  * reproduced or used in any manner whatsoever.
  */
+
 package org.thinkit.common.util;
 
 import java.io.File;
@@ -32,7 +33,8 @@ import org.apache.commons.lang3.StringUtils;
 import lombok.Cleanup;
 
 /**
- * コンテンツファイルに対する汎用的な操作を行う機能を定義したクラスです。 当該クラスではStAX形式でのXML解析を行います。
+ * コンテンツファイルに対する汎用的な操作を行う機能を定義したクラスです。 <br>
+ * 当該クラスではStAX形式でのXML解析を行います。
  *
  * @author Kato Shinya
  * @since 1.0
