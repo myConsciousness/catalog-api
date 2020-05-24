@@ -1194,7 +1194,7 @@ public class ExcelHandler implements AutoCloseable {
 
             final List<Map<String, String>> matrixList = new ArrayList<>();
 
-            for (int i = startRowIndex + 1, size = sheet.getPhysicalNumberOfRows(); i < size; i++) {
+            for (int i = startRowIndex + 1, size = sheet.getPhysicalNumberOfRows() + 1; i < size; i++) {
                 final Map<String, String> record = new HashMap<>(rowSize);
                 final Row row = sheet.getRow(i);
 
