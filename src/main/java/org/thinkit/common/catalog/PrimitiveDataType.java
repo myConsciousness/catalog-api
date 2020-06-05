@@ -18,8 +18,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * プリミティブデータ型区分を管理するカテゴリです。<br>
- * 
+ * プリミティブデータ型区分を管理するカテゴリです。
  * 
  * @author Kato Shinya
  * @since 1.0

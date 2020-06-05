@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 区切り文字を管理するカテゴリです。<br>
- * {@link #getDelimiter()}を使用することで区切り要素の文字列を表現を取得できます。
+ * {@link #getDelimiter()}を使用することで区切り要素の文字列表現を取得できます。
  * 
  * @author Kato Shinya
  * @since 1.0
