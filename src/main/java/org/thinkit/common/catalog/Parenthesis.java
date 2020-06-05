@@ -17,7 +17,11 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 括弧を管理するカタログです。<br>
- * {@link #getParenthesis()}を使用することで括弧要素の文字列表現を取得することができます。
+ * {@link #getParenthesis()}を使用することで括弧要素の文字列表現を取得することができます。<br>
+ * <br>
+ * 以下の静的メソッドを使用することでも各要素の文字列表現を取得できます。<br>
+ * {@link #start()}<br>
+ * {@link #end()}<br>
  * 
  * @author Kato Shinya
  * @since 1.0
@@ -46,4 +50,22 @@ public enum Parenthesis implements Catalog<Parenthesis> {
      * 括弧
      */
     private final String parenthesis;
+
+    /**
+     * 開始括弧の文字列表現を返却します。
+     * 
+     * @return 開始括弧の文字列表現
+     */
+    public static String start() {
+        return START.getParenthesis();
+    }
+
+    /**
+     * 終了括弧の文字列表現を返却します。
+     * 
+     * @return 終了括弧の文字列表現
+     */
+    public static String end() {
+        return END.getParenthesis();
+    }
 }
