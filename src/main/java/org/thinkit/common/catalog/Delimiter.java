@@ -17,7 +17,13 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 区切り文字を管理するカテゴリです。<br>
- * {@link #getDelimiter()}を使用することで区切り要素の文字列表現を取得できます。
+ * {@link #getDelimiter()}を使用することで区切り要素の文字列表現を取得できます。<br>
+ * <br>
+ * 以下の静的メソッドを使用することでも各要素の文字列表現を取得できます。<br>
+ * {@link #commma()}<br>
+ * {@link #period()}<br>
+ * {@link #colon()}<br>
+ * {@link #semicolon()}<br>
  * 
  * @author Kato Shinya
  * @since 1.0
@@ -56,4 +62,40 @@ public enum Delimiter implements Catalog<Delimiter> {
      * 区切り文字
      */
     private final String delimiter;
+
+    /**
+     * カンマの文字列表現を返却します。
+     * 
+     * @return カンマの文字列表現
+     */
+    public static String commma() {
+        return COMMA.getDelimiter();
+    }
+
+    /**
+     * ピリオドの文字列表現を返却します。
+     * 
+     * @return ピリオドの文字列表現
+     */
+    public static String period() {
+        return PERIOD.getDelimiter();
+    }
+
+    /**
+     * コロンの文字列表現を返却します。
+     * 
+     * @return コロンの文字列表現
+     */
+    public static String colon() {
+        return COLON.getDelimiter();
+    }
+
+    /**
+     * セミコロンの文字列表現を返却します。
+     * 
+     * @return セミコロンの文字列表現
+     */
+    public static String semicolon() {
+        return SEMICOLON.getDelimiter();
+    }
 }

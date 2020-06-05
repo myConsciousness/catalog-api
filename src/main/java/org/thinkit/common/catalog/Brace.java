@@ -17,7 +17,11 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * ブレースを管理するカタログです。<br>
- * {@link #getBrace()}を使用することでブレース要素の文字列表現を取得することができます。
+ * {@link #getBrace()}を使用することでブレース要素の文字列表現を取得することができます。<br>
+ * <br>
+ * 以下の静的メソッドを使用することでも各要素の文字列表現を取得できます。<br>
+ * {@link #start()}<br>
+ * {@link #end()}<br>
  * 
  * @author Kato Shinya
  * @since 1.0
@@ -46,4 +50,22 @@ public enum Brace implements Catalog<Brace> {
      * ブレース
      */
     private final String brace;
+
+    /**
+     * 開始ブレースの文字列表現を返却します。
+     * 
+     * @return 開始ブレースの文字列表現
+     */
+    public static String start() {
+        return START.getBrace();
+    }
+
+    /**
+     * 終了ブレースの文字列表現を返却します。
+     * 
+     * @return 終了ブレースの文字列表現
+     */
+    public static String end() {
+        return END.getBrace();
+    }
 }
