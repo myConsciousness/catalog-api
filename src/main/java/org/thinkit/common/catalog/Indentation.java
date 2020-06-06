@@ -35,17 +35,17 @@ public enum Indentation implements Catalog<Indentation> {
     /**
      * 半角スペース
      */
-    SPACE(0, "&#xA0;"),
+    SPACE(0, " "),
 
     /**
      * 水平タブ
      */
-    TAB(1, "&#x08;"),
+    TAB(1, "\t"),
 
     /**
      * 改行
      */
-    RETURN(2, "&#x0D;&#x0A;");
+    RETURN(2, "\r\n");
 
     /**
      * コード値
