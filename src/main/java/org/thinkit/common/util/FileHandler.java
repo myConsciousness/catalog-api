@@ -14,8 +14,11 @@ package org.thinkit.common.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import org.thinkit.common.catalog.Delimiter;
 
@@ -94,7 +97,8 @@ public final class FileHandler {
 
         final File file = new File(new File(filePathBuilder.toString()).getParentFile(), fullFileName.toString());
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
+        try (PrintWriter writer = new PrintWriter(
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)))) {
             writer.write(content);
         } catch (IOException e) {
             e.printStackTrace();
