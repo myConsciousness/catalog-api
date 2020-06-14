@@ -12,6 +12,8 @@
 
 package org.thinkit.common.catalog;
 
+import org.thinkit.common.util.PlatformChecker;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +23,9 @@ import lombok.RequiredArgsConstructor;
  * {@link WINDOWS}<br>
  * {@link MAC}<br>
  * {@link LINUX}<br>
+ * <br>
+ * 以下の静的メソッドを呼び出すことでプログラム実行時のプラットフォーム要素を取得することができます。<br>
+ * {@link #getPlatform()}
  * 
  * @author Kato Shinya
  * @since 1.0
@@ -29,6 +34,7 @@ import lombok.RequiredArgsConstructor;
  * @see #WINDOWS
  * @see #MAC
  * @see #LINUX
+ * @see #getPlatform()
  */
 @RequiredArgsConstructor
 public enum Platform implements Catalog<Platform> {
@@ -53,4 +59,21 @@ public enum Platform implements Catalog<Platform> {
      */
     @Getter
     private final int code;
+
+    /**
+     * プログラムの実行プラットフォームを判定し返却します。<br>
+     * <br>
+     * プラットフォームの判定には以下のメソッドを使用しています。<br>
+     * そのため{@link #getPlatform()}はWindows、Mac、Linuxのみをサポートしています。<br>
+     * 実行時のプラットフォームがWindows、Mac、Linux以外の場合は必ず{@code null}を返却します。
+     * {@link PlatformChecker#isWindows()}<br>
+     * {@link PlatformChecker#isMac()}<br>
+     * {@link PlatformChecker#isLinux()}<br>
+     * 
+     * @return プログラム実行時のプラットフォーム要素
+     */
+    public static Platform getPlatform() {
+        return PlatformChecker.isWindows() ? WINDOWS
+                : PlatformChecker.isMac() ? MAC : PlatformChecker.isLinux() ? LINUX : null;
+    }
 }
