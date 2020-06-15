@@ -44,12 +44,26 @@ public final class FileHandler {
     /**
      * プラットフォームに対応したファイルの区切り文字列
      */
-    private static final String FILE_SEPARATOR = File.separator;
+    private static String FILE_SEPARATOR;
 
     /**
      * プラットフォームに対応した改行文字列
      */
-    private static final String NEW_LINE = System.lineSeparator();
+    private static String NEW_LINE;
+
+    static {
+        try {
+            FILE_SEPARATOR = File.separator;
+        } catch (SecurityException e) {
+            FILE_SEPARATOR = "¥¥";
+        }
+
+        try {
+            NEW_LINE = System.lineSeparator();
+        } catch (SecurityException e) {
+            NEW_LINE = "¥r¥n";
+        }
+    }
 
     /**
      * 出力先
@@ -116,7 +130,7 @@ public final class FileHandler {
      * 
      * @return プラットフォームに対応したファイルの区切り文字
      */
-    public String getFileSeparator() {
+    public static String getFileSeparator() {
         return FILE_SEPARATOR;
     }
 
@@ -125,7 +139,7 @@ public final class FileHandler {
      * 
      * @return プラットフォームに対応した改行コード
      */
-    public String getNewLine() {
+    public static String getNewLine() {
         return NEW_LINE;
     }
 }
