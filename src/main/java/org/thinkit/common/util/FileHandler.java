@@ -23,7 +23,6 @@ import java.nio.charset.StandardCharsets;
 import org.thinkit.common.catalog.Delimiter;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
@@ -43,9 +42,13 @@ import lombok.ToString;
 public final class FileHandler {
 
     /**
-     * OS環境に応じた改行文字列
+     * プラットフォームに対応したファイルの区切り文字列
      */
-    @Getter
+    private static final String FILE_SEPARATOR = File.separator;
+
+    /**
+     * プラットフォームに対応した改行文字列
+     */
     private static final String NEW_LINE = System.lineSeparator();
 
     /**
@@ -106,5 +109,23 @@ public final class FileHandler {
         }
 
         return true;
+    }
+
+    /**
+     * プラットフォームに対応したファイルの区切り文字を返却します。
+     * 
+     * @return プラットフォームに対応したファイルの区切り文字
+     */
+    public String getFileSeparator() {
+        return FILE_SEPARATOR;
+    }
+
+    /**
+     * プラットフォームに対応した改行コードを返却します。
+     * 
+     * @return プラットフォームに対応した改行コード
+     */
+    public String getNewLine() {
+        return NEW_LINE;
     }
 }
