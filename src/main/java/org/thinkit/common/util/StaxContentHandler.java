@@ -34,12 +34,16 @@ import lombok.Cleanup;
 
 /**
  * コンテンツファイルに対する汎用的な操作を行う機能を定義したクラスです。 <br>
- * 当該クラスではStAX形式でのXML解析を行います。
+ * 当該クラスではStAX形式でのXML解析を行います。<br>
+ * <br>
+ * コンテンツファイルの管理方法がXMLからjsonへ変更したため{@link StaxContentHandler}は非推奨になりました。<br>
+ * json形式のコンテンツを解析する場合は{@link ContentLoader}を使用してください。
  *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
  */
+@Deprecated
 public final class StaxContentHandler {
 
     /**
