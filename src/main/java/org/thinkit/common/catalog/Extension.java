@@ -22,10 +22,15 @@ import lombok.RequiredArgsConstructor;
  * 以下の静的メソッドを使用することでも各要素の文字列表現を取得できます。<br>
  * {@link #java()}<br>
  * {@link #xml()}<br>
+ * {@link #json()}<br>
  * 
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
+ * 
+ * @see #java()
+ * @see #xml()
+ * @see #json()
  */
 @Getter
 @RequiredArgsConstructor
@@ -39,7 +44,12 @@ public enum Extension implements Catalog<Extension> {
     /**
      * XML
      */
-    XML(1, ".xml");
+    XML(1, ".xml"),
+
+    /**
+     * json
+     */
+    JSON(2, ".json");
 
     /**
      * コード値
@@ -69,5 +79,15 @@ public enum Extension implements Catalog<Extension> {
      */
     public static String xml() {
         return JAVA.getExtension();
+    }
+
+    /**
+     * jsonの拡張子を返却します。
+     * 
+     * @return jsonの拡張子
+     * @see #JSON
+     */
+    public static String json() {
+        return JSON.getExtension();
     }
 }
