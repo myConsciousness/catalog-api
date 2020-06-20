@@ -27,6 +27,21 @@ import lombok.NonNull;
  * json文字列を特定のオブジェクトへ変換する際には{@link JsonConverter#toObject(String, Class)}を使用し、
  * ジェネリクス情報を持つオブジェクトへ変換したい場合は{@link JsonConverter#toObject(String, TypeReference)}を使用してください。
  * 
+ * <pre>
+ * オブジェクトをjson文字列へ変換する場合:
+ * <code>String jsonString = JsonConverter.toString(object);</code>
+ * </pre>
+ * 
+ * <pre>
+ * json文字列を特定のオブジェクトへ変換する場合:
+ * <code>Sample sample = JsonConverter.toObject(jsonString, Sample.class);</code>
+ * </pre>
+ * 
+ * <pre>
+ * json文字列を特定のジェネリクスを持つオブジェクトへ変換する場合:
+ * <code>Map<String, String> map = JsonConverter.toObject(jsonString, new TypeReference&lt;Map&lt;String, String&gt;&gt;() {});</code>
+ * </pre>
+ * 
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -114,6 +129,11 @@ public final class JsonConverter {
     /**
      * Thrown to indicate that an illegal operation has been detected during the
      * conversion of an object to a json string, or a json string to an object.
+     * 
+     * <pre>
+     * Example:
+     * <code>throw new JsonConvertingException();</code>
+     * </pre>
      *
      * @author Kato Shinya
      * @since 1.0
