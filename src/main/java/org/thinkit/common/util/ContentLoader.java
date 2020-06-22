@@ -15,11 +15,8 @@ package org.thinkit.common.util;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.apache.commons.lang3.StringUtils;
 import org.thinkit.common.catalog.Delimiter;
@@ -62,7 +59,7 @@ public final class ContentLoader {
             throw new IllegalArgumentException("wrong parameter was given. Attribute is required.");
         }
 
-        return load(contentName, attributes, new HashMap<>());
+        return load(contentName, attributes, new HashMap<>(0));
     }
 
     /**
@@ -89,15 +86,35 @@ public final class ContentLoader {
 
         final Map<String, Object> content = getContent(contentName);
 
+        final List<Map<String, Object>> selectionNodes = getNodeList(content, SelectionNodeKey.SELECTION_NODES);
+        final List<Map<String, Object>> conditionNodes = getNodeList(content, ConditionNodeKey.CONDITION_NODES);
+
         return null;
     }
 
     /**
-     * 引数として指定されたコンテンツ名に紐づくコンテンツファイルからコンテンツ情報を取得し返却します。<br>
-     * コンテンツ情報は{@link JsonConverter}に定義されているメソッドを使用して変換を行っています。<br>
+     * コンテンツマップから指定された{@link ContentKey}に紐づくノードリストを取得し返却します。
+     * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
+     * {@link SuppressWarnings}でuncheckedをこの{@link #getNodeList(Map, ContentKey)}メソッドへ指定しています。
+     * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
+     * 
+     * @param content    コンテンツマップ
+     * @param contentKey コンテンツキー
+     * 
+     * @exception NullPointerException 引数として{@code null}が渡された場合
+     */
+    @SuppressWarnings("unchecked")
+    private static List<Map<String, Object>> getNodeList(@NonNull Map<String, Object> content,
+            @NonNull ContentKey contentKey) {
+        return (List<Map<String, Object>>) content.get(contentKey.getKey());
+    }
+
+    /**
+     * 引数として指定されたコンテンツ名に紐づくコンテンツファイルからコンテンツ情報を取得し返却します。
+     * コンテンツ情報は{@link JsonConverter}に定義されているメソッドを使用して変換を行っています。
      * 
      * @param contentName コンテンツ名
-     * @return コンテンツ
+     * @return コンテンツマップ
      * 
      * @exception NullPointerException 引数として{@code null}が渡された場合
      */
@@ -107,10 +124,29 @@ public final class ContentLoader {
         final File file = Paths
                 .get(String.format(FORMAT_FILE_PATH_TO_CONTENT, currentDirectory, contentName, Extension.json()))
                 .toFile();
-        final String jsonString = JsonConverter.toString(file);
 
-        return JsonConverter.toObject(jsonString, new TypeReference<LinkedHashMap<String, Object>>() {
-        });
+        return JsonConverter.toLinkedHashMap(JsonConverter.toString(file));
+    }
+
+    /**
+     * コンテンツのキーに関する汎用的な処理を定義したインターフェースです。
+     * {@link ContentKey}を実装する具象クラスは必ず{@link #getKey()}を実装してください。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     * 
+     * @see SelectionNodeKey
+     * @see ConditionNodeKey
+     */
+    private interface ContentKey {
+
+        /**
+         * キーの文字列表現を返却します。
+         * 
+         * @return キーの文字列表現
+         */
+        public String getKey();
     }
 
     /**
@@ -121,7 +157,7 @@ public final class ContentLoader {
      * @version 1.0
      */
     @RequiredArgsConstructor
-    private enum SelectionNodeKey {
+    private enum SelectionNodeKey implements ContentKey {
 
         /**
          * 選択ノード群
@@ -150,12 +186,8 @@ public final class ContentLoader {
             selectionNodes, node, conditionId;
         }
 
-        /**
-         * キーの文字列表現を返却します。
-         * 
-         * @return キーの文字列表現
-         */
-        private String getKey() {
+        @Override
+        public String getKey() {
             return this.key.name();
         }
     }
@@ -168,7 +200,7 @@ public final class ContentLoader {
      * @version 1.0
      */
     @RequiredArgsConstructor
-    private enum ConditionNodeKey {
+    private enum ConditionNodeKey implements ContentKey {
 
         /**
          * 条件ノード群
@@ -227,12 +259,8 @@ public final class ContentLoader {
             conditionNodes, node, conditionId, exclude, conditions, condition, keyName, operand, value;
         }
 
-        /**
-         * キーの文字列表現を返却します。
-         * 
-         * @return キーの文字列表現
-         */
-        private String getKey() {
+        @Override
+        public String getKey() {
             return this.key.name();
         }
     }
