@@ -12,6 +12,10 @@
 
 package org.thinkit.common.util;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -78,6 +82,58 @@ public final class JsonConverter {
         } catch (JsonProcessingException e) {
             throw new JsonConvertingException(e);
         }
+    }
+
+    /**
+     * 引数として指定されたjson文字列を{@link HashMap}へ変換して返却します。
+     * {@link #toObject(String, TypeReference)}を使用することでも同様の返却値を得ることができますが、
+     * json文字列を{@link HashMap}へ変換する際にはこの{@link #HashMap(String)}を使用してください。
+     * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
+     * 
+     * <p>
+     * この{@link #toHashMap(String)}が返却するマップは{@link HashMap}で実装されます。
+     * そのため、変換の際にjson文字列で定義された順序は保持されません。
+     * 
+     * <pre>
+     * 使用例:
+     * <code>Map map = JsonConverter.toHashMap(jsonString);</code>
+     * </pre>
+     * 
+     * @param jsonString json文字列
+     * @return json文字列を変換した{@link HashMap}オブジェクト
+     * 
+     * @exception NullPointerException 引数として{@code null}が指定された場合
+     * @throws JsonConvertingException jsonコンテンツの解析または生成処理が異常終了した場合
+     */
+    public static Map<String, Object> toHashMap(@NonNull final String jsonString) {
+        return toObject(jsonString, new TypeReference<HashMap<String, Object>>() {
+        });
+    }
+
+    /**
+     * 引数として指定されたjson文字列を{@link LinkedHashMap}へ変換して返却します。
+     * {@link #toObject(String, TypeReference)}を使用することでも同様の返却値を得ることができますが、
+     * json文字列を{@link LinkedHashMap}へ変換する際にはこの{@link #toLinkedHashMap(String)}を使用してください。
+     * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
+     * 
+     * <p>
+     * この{@link #toLinkedHashMap(String)}が返却するマップは{@link LinkedHashMap}で実装されます。
+     * そのため、json文字列で定義された順序を保持した状態で変換が行われます。
+     * 
+     * <pre>
+     * 使用例:
+     * <code>Map map = JsonConverter.toLinkedHashMap(jsonString);</code>
+     * </pre>
+     * 
+     * @param jsonString json文字列
+     * @return json文字列を変換した{@link LinkedHashMap}オブジェクト
+     * 
+     * @exception NullPointerException 引数として{@code null}が指定された場合
+     * @throws JsonConvertingException jsonコンテンツの解析または生成処理が異常終了した場合
+     */
+    public static Map<String, Object> toLinkedHashMap(@NonNull final String jsonString) {
+        return toObject(jsonString, new TypeReference<LinkedHashMap<String, Object>>() {
+        });
     }
 
     /**
