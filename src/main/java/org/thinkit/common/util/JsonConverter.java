@@ -54,7 +54,7 @@ public final class JsonConverter {
      * {@link ObjectMapper}はスレッドセーフです。
      */
     private static final ObjectMapper mapper = JsonMapper.builder()
-            .enable(MapperFeature.BLOCK_UNSAFE_POLYMORPHIC_BASE_TYPES).build();;
+            .enable(MapperFeature.BLOCK_UNSAFE_POLYMORPHIC_BASE_TYPES).build();
 
     /**
      * デフォルトコンストラクタ
