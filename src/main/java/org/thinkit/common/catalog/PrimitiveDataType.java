@@ -12,8 +12,6 @@
 
 package org.thinkit.common.catalog;
 
-import org.thinkit.common.catalog.Catalog;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
