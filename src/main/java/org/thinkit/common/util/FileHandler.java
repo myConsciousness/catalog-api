@@ -20,8 +20,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import org.thinkit.common.catalog.Delimiter;
-
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Setter;
@@ -79,13 +77,20 @@ public final class FileHandler {
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ。<br>
+     * 指定された出力先のディレクトリが存在しない場合は生成します。
      * 
      * @param output 出力先
      * @exception NullPointerException 引数として{@code null}が渡された場合
      */
     public FileHandler(@NonNull String output) {
         this.output = output;
+
+        final File outputDirectory = new File(output);
+
+        if (!outputDirectory.exists()) {
+            outputDirectory.mkdirs();
+        }
     }
 
     /**
@@ -106,13 +111,13 @@ public final class FileHandler {
     public boolean write(@NonNull String fileName, @NonNull String extension, @NonNull String content) {
 
         final StringBuilder fullFileNameBuilder = new StringBuilder();
-        fullFileNameBuilder.append(fileName).append(Delimiter.commma()).append(extension);
+        fullFileNameBuilder.append(fileName).append(extension);
         final String fullFileName = fullFileNameBuilder.toString();
 
         final StringBuilder filePathBuilder = new StringBuilder();
-        filePathBuilder.append(output).append("\\").append(fullFileName.toString());
+        filePathBuilder.append(output).append("\\").append(fullFileName);
 
-        final File file = new File(new File(filePathBuilder.toString()).getParentFile(), fullFileName.toString());
+        final File file = new File(new File(filePathBuilder.toString()).getParentFile(), fullFileName);
 
         try (PrintWriter writer = new PrintWriter(
                 new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)))) {
