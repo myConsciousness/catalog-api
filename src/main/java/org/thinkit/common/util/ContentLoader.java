@@ -14,6 +14,7 @@ package org.thinkit.common.util;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,12 +85,17 @@ public final class ContentLoader {
             throw new IllegalArgumentException("wrong parameter was given. Attribute is required.");
         }
 
-        final Map<String, Object> content = getContent(contentName);
+        final Map<String, Object> rawContent = getContent(contentName);
 
-        final List<Map<String, Object>> selectionNodes = getNodeList(content, SelectionNodeKey.SELECTION_NODES);
-        final List<Map<String, Object>> conditionNodes = getNodeList(content, ConditionNodeKey.CONDITION_NODES);
+        final List<Map<String, Object>> conditionNodes = getNodeList(rawContent, ConditionNodeKey.CONDITION_NODES);
 
-        return null;
+        if (!conditionNodes.isEmpty()) {
+
+        }
+
+        final List<String> conditionIdList = new ArrayList<>(0);
+
+        return getContentList(attributes, rawContent, conditionIdList);
     }
 
     /**
@@ -110,6 +116,32 @@ public final class ContentLoader {
     }
 
     /**
+     * ノードマップから引数として指定されたコンテンツキーを基に文字列型の値を取得し返却します。
+     * 引数として{@code null}が渡された場合は実行時に必ず{@code null}が発生します。
+     * 
+     * @param nodeMap    ノードマップ
+     * @param contentKey コンテンツキー
+     * @return ノードマップに格納されたコンテンツキーに紐づく文字列型の値
+     */
+    private static String getString(@NonNull Map<String, Object> nodeMap, @NonNull ContentKey contentKey) {
+        return (String) nodeMap.get(contentKey.getKey());
+    }
+
+    /**
+     * ノードマップから引数として指定されたコンテンツキーを基に文字列型の値を取得し返却します。
+     * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
+     * 
+     * @param nodeMap    ノードマップ
+     * @param contentKey コンテンツキー
+     * @return ノードマップに格納されたコンテンツキーに紐づく文字列型の値
+     * 
+     * @exception NullPointerException 引数として{@code null}が渡された場合
+     */
+    private static String getString(@NonNull Map<String, Object> nodeMap, @NonNull String contentKey) {
+        return (String) nodeMap.get(contentKey);
+    }
+
+    /**
      * 引数として指定されたコンテンツ名に紐づくコンテンツファイルからコンテンツ情報を取得し返却します。
      * コンテンツ情報は{@link JsonConverter}に定義されているメソッドを使用して変換を行っています。
      * 
@@ -126,6 +158,44 @@ public final class ContentLoader {
                 .toFile();
 
         return JsonConverter.toLinkedHashMap(JsonConverter.toString(file));
+    }
+
+    /**
+     * 引数として渡された情報を基にコンテンツリストを生成し返却します。 <br>
+     * 引数として{@code null}が渡された場合は実行時に必ず失敗します。<br>
+     * <br>
+     * コンテンツ定義に条件IDが設定されているレコードはコンテンツに定義された条件に合致する場合にのみ取得します。<br>
+     * コンテンツ定義に条件IDが設定されていない（空文字列）の場合は無条件でレコードの取得を行います。
+     * 
+     * @param attributes      コンテンツから取得する値に紐づくキー
+     * @param rawContent      加工されていないコンテンツオブジェクト
+     * @param conditionIdList 取得する対象の条件IDが格納されたリスト
+     * @return コンテンツリスト
+     * 
+     * @exception NullPointerException 引数として{@code null}が渡された場合
+     */
+    private static List<Map<String, String>> getContentList(@NonNull List<String> attributes,
+            @NonNull Map<String, Object> rawContent, @NonNull List<String> conditionIdList) {
+
+        final List<Map<String, String>> contentList = new ArrayList<>(0);
+        final List<Map<String, Object>> selectionNodes = getNodeList(rawContent, SelectionNodeKey.SELECTION_NODES);
+
+        for (Map<String, Object> nodeMap : selectionNodes) {
+            final Map<String, String> content = new HashMap<>(0);
+            final String conditionId = getString(nodeMap, SelectionNodeKey.CONDITION_ID);
+
+            if (!StringUtils.isEmpty(conditionId) && !conditionIdList.contains(conditionId)) {
+                continue;
+            }
+
+            for (String attribute : attributes) {
+                content.put(attribute, getString(nodeMap, attribute));
+            }
+
+            contentList.add(content);
+        }
+
+        return contentList;
     }
 
     /**
@@ -172,7 +242,7 @@ public final class ContentLoader {
         /**
          * 条件ID
          */
-        CONDITION_NODE(Key.conditionId);
+        CONDITION_ID(Key.conditionId);
 
         /**
          * キー
@@ -243,6 +313,11 @@ public final class ContentLoader {
         OPERAND(Key.operand),
 
         /**
+         * データ型
+         */
+        DATA_TYPE(Key.dataType),
+
+        /**
          * 値
          */
         VALUE(Key.value);
@@ -256,7 +331,7 @@ public final class ContentLoader {
          * キー定数
          */
         private enum Key {
-            conditionNodes, node, conditionId, exclude, conditions, condition, keyName, operand, value;
+            conditionNodes, node, conditionId, exclude, conditions, condition, keyName, operand, dataType, value;
         }
 
         @Override
