@@ -59,7 +59,7 @@ public final class ContentLoader {
     /**
      * コンテンツファイルへのパス（形式）
      */
-    private static final String FORMAT_FILE_PATH_TO_CONTENT = "%s/src/main/resources/content/%s.%s";
+    private static final String FORMAT_FILE_PATH_TO_CONTENT = "%s/src/main/resources/content/%s%s";
 
     /**
      * デフォルトコンストラクタ
@@ -130,6 +130,7 @@ public final class ContentLoader {
      * 
      * @param content    コンテンツマップ
      * @param contentKey コンテンツキー
+     * @return {@link ContentKey}に紐づくノードリスト
      * 
      * @exception NullPointerException 引数として{@code null}が渡された場合
      */
@@ -137,6 +138,24 @@ public final class ContentLoader {
     private static List<Map<String, Object>> getNodeList(@NonNull Map<String, Object> content,
             @NonNull ContentKey contentKey) {
         return (List<Map<String, Object>>) content.get(contentKey.getKey());
+    }
+
+    /**
+     * コンテンツマップから指定された{@link ContentKey}に紐づくノードマップを取得し返却します。
+     * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
+     * {@link SuppressWarnings}でuncheckedをこの{@link #getNodeList(Map, ContentKey)}メソッドへ指定しています。
+     * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
+     * 
+     * @param content    コンテンツマップ
+     * @param contentKey コンテンツキー
+     * @return {@link ContentKey}に紐づくノードマップ
+     * 
+     * @exception NullPointerException 引数として{@code null}が渡された場合
+     */
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> getNodeMap(@NonNull Map<String, Object> content,
+            @NonNull ContentKey contentKey) {
+        return (Map<String, Object>) content.get(contentKey.getKey());
     }
 
     /**
@@ -181,7 +200,7 @@ public final class ContentLoader {
                 .get(String.format(FORMAT_FILE_PATH_TO_CONTENT, currentDirectory, contentName, Extension.json()))
                 .toFile();
 
-        return JsonConverter.toLinkedHashMap(JsonConverter.toString(file));
+        return JsonConverter.toLinkedHashMap(JsonConverter.toJsonString(file));
     }
 
     /**
@@ -204,7 +223,8 @@ public final class ContentLoader {
         final List<Map<String, String>> contentList = new ArrayList<>(0);
         final List<Map<String, Object>> selectionNodes = getNodeList(rawContent, SelectionNodeKey.SELECTION_NODES);
 
-        for (Map<String, Object> nodeMap : selectionNodes) {
+        for (Map<String, Object> nodeList : selectionNodes) {
+            final Map<String, Object> nodeMap = getNodeMap(nodeList, SelectionNodeKey.NODE);
             final Map<String, String> content = new HashMap<>(0);
             final String conditionId = getString(nodeMap, SelectionNodeKey.CONDITION_ID);
 
@@ -222,17 +242,28 @@ public final class ContentLoader {
         return contentList;
     }
 
+    /**
+     * コンテンツをロードする際に使用する条件IDを取得しリストとして返却します。<br>
+     * 引数として{@code null}が渡された場合は実行時に必ず失敗します。<br>
+     * 
+     * @param conditionNodes 条件ノードリスト
+     * @param conditions     条件の照合時に使用する条件マップ
+     * @return 条件IDのリスト
+     * 
+     * @exception NullPointerException 引数として{@code null}が渡された場合
+     */
     private static List<String> getConditionIdList(@NonNull List<Map<String, Object>> conditionNodes,
             @NonNull Map<String, String> conditions) {
 
         final List<String> conditionIdList = new ArrayList<>(0);
 
         for (Map<String, Object> nodeList : conditionNodes) {
-            final List<Map<String, Object>> conditionList = getNodeList(nodeList, ConditionNodeKey.CONDITIONS);
+            final Map<String, Object> nodeMap = getNodeMap(nodeList, ConditionNodeKey.NODE);
+            final List<Map<String, Object>> conditionList = getNodeList(nodeMap, ConditionNodeKey.CONDITIONS);
 
             for (Map<String, Object> condition : conditionList) {
                 if (all(condition, conditions)) {
-                    conditionIdList.add(getString(condition, ConditionNodeKey.CONDITION_ID));
+                    conditionIdList.add(getString(nodeMap, ConditionNodeKey.CONDITION_ID));
                 }
             }
         }
