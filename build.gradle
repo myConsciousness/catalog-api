@@ -18,6 +18,7 @@ repositories {
 }
 
 tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+tasks.withType(Javadoc) { options.encoding = "UTF-8" }
 
 dependencies {
     implementation 'com.google.guava:guava:28.2-jre'
