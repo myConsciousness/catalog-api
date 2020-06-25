@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 import org.thinkit.common.catalog.Delimiter;
@@ -26,6 +29,31 @@ import org.thinkit.common.catalog.Extension;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 指定されたコンテンツ定義を基にコンテンツをロードする処理を定義したクラスです。<br>
+ * 条件指定なしでコンテンツ情報をロードするための{@link #load(String, List)}メソッドと、
+ * 条件指定ありでコンテンツ情報をロードするための{@link #load(String, List, Map)}メソッドを提供しています。<br>
+ * <p>
+ * コンテンツに定義されたconditionIdの値が空文字列のレコードは無条件でロードされます。<br>
+ * コンテンツのconditionIdに値を定義した場合は必ずコンテンツに条件を定義し{@link #load(String, List, Map)}を呼び出してください。
+ * 
+ * <pre>
+ * 条件指定なしの使用例:
+ * <code>List&lt;Map&lt;String, String&gt;&gt; contents = ContentLoader.load(contentName, attributes);</code>
+ * </pre>
+ * 
+ * <pre>
+ * 条件指定ありの使用例:
+ * <code>List&lt;Map&lt;String, String&gt;&gt; contents = ContentLoader.load(contentName, attributes, conditions);</code>
+ * </pre>
+ * 
+ * @author Kato Shinya
+ * @since 1.0
+ * @version 1.0
+ * 
+ * @see #load(String, List)
+ * @see #load(String, List, Map)
+ */
 public final class ContentLoader {
 
     /**
@@ -86,14 +114,10 @@ public final class ContentLoader {
         }
 
         final Map<String, Object> rawContent = getContent(contentName);
-
         final List<Map<String, Object>> conditionNodes = getNodeList(rawContent, ConditionNodeKey.CONDITION_NODES);
 
-        if (!conditionNodes.isEmpty()) {
-
-        }
-
-        final List<String> conditionIdList = new ArrayList<>(0);
+        final List<String> conditionIdList = conditionNodes.isEmpty() ? new ArrayList<>(0)
+                : getConditionIdList(conditionNodes, conditions);
 
         return getContentList(attributes, rawContent, conditionIdList);
     }
@@ -196,6 +220,50 @@ public final class ContentLoader {
         }
 
         return contentList;
+    }
+
+    private static List<String> getConditionIdList(@NonNull List<Map<String, Object>> conditionNodes,
+            @NonNull Map<String, String> conditions) {
+
+        final List<String> conditionIdList = new ArrayList<>(0);
+
+        for (Map<String, Object> nodeList : conditionNodes) {
+            final List<Map<String, Object>> conditionList = getNodeList(nodeList, ConditionNodeKey.CONDITIONS);
+
+            for (Map<String, Object> condition : conditionList) {
+                if (all(condition, conditions)) {
+                    conditionIdList.add(getString(condition, ConditionNodeKey.CONDITION_ID));
+                }
+            }
+        }
+
+        return conditionIdList;
+    }
+
+    /**
+     * コンテンツに定義された条件と{@link #load(String, List, Map)}に渡された条件を照合し、
+     * 全ての条件を満たしているか判定します。<br>
+     * 全ての条件を満たしている場合は{@code true}を返却し、それ以外の場合は{@code false}を返却します。<br>
+     * <br>
+     * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
+     * 
+     * @param contentCondition コンテンツに定義された条件
+     * @param conditions       照合する値を格納したマップ
+     * @return 全ての条件を満たしている場合は{@code true}、それ以外は{@code false}
+     */
+    private static boolean all(@NonNull Map<String, Object> contentCondition, @NonNull Map<String, String> conditions) {
+
+        final String keyName = getString(contentCondition, ConditionNodeKey.KEY_NAME);
+        final String value = getString(contentCondition, ConditionNodeKey.VALUE);
+        final Set<Entry<String, String>> entrySet = conditions.entrySet();
+
+        for (Entry<String, String> entry : entrySet) {
+            if (Objects.equals(keyName, entry.getKey()) && !Objects.equals(value, entry.getValue())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -311,11 +379,6 @@ public final class ContentLoader {
          * 演算子
          */
         OPERAND(Key.operand),
-
-        /**
-         * データ型
-         */
-        DATA_TYPE(Key.dataType),
 
         /**
          * 値
