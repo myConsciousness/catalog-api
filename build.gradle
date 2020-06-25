@@ -22,7 +22,8 @@ tasks.withType(Javadoc) { options.encoding = "UTF-8" }
 
 dependencies {
     implementation 'com.google.guava:guava:28.2-jre'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 
     compile group: 'com.google.flogger', name: 'flogger', version: '0.4'
     runtime group: 'com.google.flogger', name: 'flogger-system-backend', version: '0.4'
@@ -41,4 +42,14 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
 	annotationProcessor 'org.projectlombok:lombok:1.18.12'
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        showStandardStreams true
+        events 'started', 'skipped', 'passed', 'failed'
+        exceptionFormat 'full'
+    }
 }
