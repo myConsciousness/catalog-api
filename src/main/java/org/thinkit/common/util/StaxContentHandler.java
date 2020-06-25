@@ -42,6 +42,7 @@ import lombok.Cleanup;
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
+ * @deprecated
  */
 @Deprecated
 public final class StaxContentHandler {
