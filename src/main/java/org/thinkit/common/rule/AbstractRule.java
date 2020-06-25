@@ -12,7 +12,6 @@
 
 package org.thinkit.common.rule;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +19,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.xml.stream.XMLStreamException;
-
 import org.thinkit.common.catalog.Catalog;
 import org.thinkit.common.rule.exception.RuleHandlingException;
-import org.thinkit.common.util.StaxContentHandler;
+import org.thinkit.common.util.ContentLoader;
 
 import com.google.common.flogger.FluentLogger;
 
@@ -205,15 +202,8 @@ public abstract class AbstractRule implements Rule {
         logger.atInfo().log("Attribute = (%s)", attributeSequences);
         logger.atInfo().log("Condition = (%s)", conditionSequences);
 
-        List<Map<String, String>> contents = new ArrayList<>(0);
-
-        try {
-            contents = StaxContentHandler.scrape(contentName, attributeSequences, conditionSequences);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        }
+        final List<Map<String, String>> contents = ContentLoader.load(contentName, attributeSequences,
+                conditionSequences);
 
         if (contents.isEmpty()) {
             throw new RuleHandlingException(
