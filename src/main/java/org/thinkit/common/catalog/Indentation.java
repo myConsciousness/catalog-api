@@ -13,6 +13,9 @@
 package org.thinkit.common.catalog;
 
 import lombok.RequiredArgsConstructor;
+
+import org.thinkit.common.exception.LogicException;
+
 import lombok.Getter;
 
 /**
@@ -111,6 +114,10 @@ public enum Indentation implements Catalog<Indentation> {
      */
     public static String getIndentSpaces(int number) {
 
+        if (number < 0) {
+            throw new LogicException("Indent count must be positive.");
+        }
+
         final StringBuilder indentSpaces = new StringBuilder(number);
         final String space = space();
 
@@ -144,6 +151,10 @@ public enum Indentation implements Catalog<Indentation> {
      * @see #getIndentTabs()
      */
     public static String getIndentTabs(int number) {
+
+        if (number < 0) {
+            throw new LogicException("Tab count must be positive.");
+        }
 
         final StringBuilder indentTabs = new StringBuilder(number);
         final String tabCode = tabCode();
