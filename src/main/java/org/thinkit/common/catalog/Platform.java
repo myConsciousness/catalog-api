@@ -27,6 +27,12 @@ import lombok.RequiredArgsConstructor;
  * 以下の静的メソッドを呼び出すことでプログラム実行時のプラットフォーム要素を取得することができます。<br>
  * {@link #getPlatform()}
  * 
+ * <pre>
+ * 使用例（実行環境がWindows OSの場合）:
+ * <code>Platform.getPlatform();
+ * >> WINDOWS</code>
+ * </pre>
+ * 
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
