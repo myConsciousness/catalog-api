@@ -68,22 +68,22 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
     /**
      * 改行コード（CR）
      */
-    CARRIAGE_RETURN(2, "&#x0D;"),
+    CARRIAGE_RETURN(2, "\\u000d"),
 
     /**
      * 改行コード（LF）
      */
-    LINE_FEED(3, "&#x0A;"),
+    LINE_FEED(3, "\\u000a"),
 
     /**
      * 改行コード（CR+LF）
      */
-    NEW_LINE(4, "&#x0D;&#x0A;"),
+    NEW_LINE(4, "\\u000d\\u000a"),
 
     /**
      * タブ (\t)
      */
-    TAB(5, "&#x08;"),
+    TAB(5, "\u0009"),
 
     /**
      * 左括弧 (<)
@@ -98,12 +98,12 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
     /**
      * シングルクオーテーション (')
      */
-    SINGLE_QUOTATION(8, "&apos;"),
+    SINGLE_QUOTATION(8, "\u0027"),
 
     /**
      * ダブルクオーテーション (")
      */
-    DOUBLE_QUOTATION(9, "&quot;");
+    DOUBLE_QUOTATION(9, "\\u0022");
 
     /**
      * コード値
