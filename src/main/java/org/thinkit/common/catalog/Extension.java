@@ -78,7 +78,7 @@ public enum Extension implements Catalog<Extension> {
      * @see #XML
      */
     public static String xml() {
-        return JAVA.getExtension();
+        return XML.getExtension();
     }
 
     /**
