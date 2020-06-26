@@ -36,6 +36,12 @@ public final class BraceTest {
     private static final String BRACE_END = "}";
 
     @Test
+    public void testCodeValues() {
+        assertEquals(0, Brace.START.getCode());
+        assertEquals(1, Brace.END.getCode());
+    }
+
+    @Test
     public void testStart() {
         assertEquals(BRACE_START, Brace.start());
     }
