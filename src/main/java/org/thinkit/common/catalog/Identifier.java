@@ -19,6 +19,12 @@ import lombok.RequiredArgsConstructor;
  * アクセス修飾子を管理するカタログです。<br>
  * {@link #toIdentifier()}を使用することでアクセス修飾子の文字列表現を取得することができます。
  * 
+ * <pre>
+ * 使用例:
+ * <code>Identifier.PUBLIC.toIdentifier();
+ * >> "public"</code>
+ * </pre>
+ * 
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
