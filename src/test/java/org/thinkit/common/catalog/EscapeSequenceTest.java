@@ -1,5 +1,5 @@
 /**
- * Project Name : Generator<br>
+ * Project Name : dev-utils<br>
  * File Name : EscapeSequenceTest.java<br>
  * Encoding : UTF-8<br>
  * Creation Date : 2020/06/26<br>
@@ -18,6 +18,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * {@link EscapeSequence}クラスのテストクラスです。
+ * 
+ * @author Kato Shinya
+ * @since 1.0
+ * @version 1.0
  */
 public class EscapeSequenceTest {
 
