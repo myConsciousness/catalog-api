@@ -51,7 +51,7 @@ public enum Delimiter implements Catalog<Delimiter> {
     /**
      * セミコロン
      */
-    SEMICOLON(4, ";");
+    SEMICOLON(3, ";");
 
     /**
      * コード値
