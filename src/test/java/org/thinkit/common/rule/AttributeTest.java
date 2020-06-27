@@ -25,6 +25,16 @@ import org.junit.jupiter.api.Test;
 public final class AttributeTest {
 
     /**
+     * 英名の期待値
+     */
+    private static final String EXPECTED_ENGLISH_SEQUENCE = "TEST_ATTRIBUTE";
+
+    /**
+     * 和名の期待値
+     */
+    private static final String EXPECTED_JAPANAESE_SEQUENCE = "テストアトリビュート";
+
+    /**
      * テスト用の具象Enumクラスです。
      */
     private enum TestAttribute implements Attribute {
@@ -63,7 +73,7 @@ public final class AttributeTest {
      */
     @Test
     public void testGetStringInEnglish() {
-        assertEquals("TEST_ATTRIBUTE", TestAttribute.TEST_ATTRIBUTE.getString());
+        assertEquals(EXPECTED_ENGLISH_SEQUENCE, TestAttribute.TEST_ATTRIBUTE.getString());
     }
 
     /**
@@ -85,6 +95,6 @@ public final class AttributeTest {
      */
     @Test
     public void testGetStringInJapanese() {
-        assertEquals("テストアトリビュート", TestAttribute.テストアトリビュート.getString());
+        assertEquals(EXPECTED_JAPANAESE_SEQUENCE, TestAttribute.テストアトリビュート.getString());
     }
 }
