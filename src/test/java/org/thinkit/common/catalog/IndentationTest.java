@@ -25,7 +25,7 @@ import org.thinkit.common.exception.LogicException;
  * @since 1.0
  * @version 1.0
  */
-public class IndentationTest {
+public final class IndentationTest {
 
     /**
      * 半角空白

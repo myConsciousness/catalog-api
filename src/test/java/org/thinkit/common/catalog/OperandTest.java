@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * @since 1.0
  * @version 1.0
  */
-public class OperandTest {
+public final class OperandTest {
 
     /**
      * 足し算

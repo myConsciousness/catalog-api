@@ -24,7 +24,7 @@ import org.thinkit.common.util.PlatformChecker;
  * @since 1.0
  * @version 1.0
  */
-public class PlatformTest {
+public final class PlatformTest {
 
     @Test
     public void testCodeValues() {

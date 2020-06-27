@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * @since 1.0
  * @version 1.0
  */
-public class EscapeSequenceTest {
+public final class EscapeSequenceTest {
 
     /**
      * 半角空白のエスケープ文字列

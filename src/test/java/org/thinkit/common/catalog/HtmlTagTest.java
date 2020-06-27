@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * @since 1.0
  * @version 1.0
  */
-public class HtmlTagTest {
+public final class HtmlTagTest {
 
     /**
      * 改行タグ
