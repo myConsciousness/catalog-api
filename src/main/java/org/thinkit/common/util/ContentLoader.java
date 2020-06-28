@@ -299,6 +299,8 @@ public final class ContentLoader {
      * @param contentCondition コンテンツに定義された条件
      * @param conditions       照合する値を格納したマップ
      * @return 全ての条件を満たしている場合は{@code true}、それ以外は{@code false}
+     * 
+     * @exception NullPointerException 引数として{@code null}が渡された場合
      */
     private static boolean all(@NonNull Map<String, Object> contentCondition, @NonNull Map<String, String> conditions) {
 
