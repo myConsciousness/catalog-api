@@ -25,9 +25,11 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
 import org.thinkit.common.catalog.Delimiter;
 import org.thinkit.common.catalog.Extension;
+import org.thinkit.common.key.ConditionNodeKey;
+import org.thinkit.common.key.Key;
+import org.thinkit.common.key.SelectionNodeKey;
 
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 /**
  * 指定されたコンテンツ定義を基にコンテンツをロードする処理を定義したクラスです。<br>
@@ -314,142 +316,5 @@ public final class ContentLoader {
         }
 
         return true;
-    }
-
-    /**
-     * コンテンツのキーに関する汎用的な処理を定義したインターフェースです。
-     * {@link Key}を実装する具象クラスは必ず{@link #getKey()}を実装してください。
-     * 
-     * @author Kato Shinya
-     * @since 1.0
-     * @version 1.0
-     * 
-     * @see SelectionNodeKey
-     * @see ConditionNodeKey
-     */
-    private interface Key {
-
-        /**
-         * キーの文字列表現を返却します。
-         * 
-         * @return キーの文字列表現
-         */
-        public String getKey();
-    }
-
-    /**
-     * コンテンツの選択ノードのキーを管理するEnumクラスです。
-     * 
-     * @author Kato Shinya
-     * @since 1.0
-     * @version 1.0
-     */
-    @RequiredArgsConstructor
-    private enum SelectionNodeKey implements Key {
-
-        /**
-         * 選択ノード群
-         */
-        SELECTION_NODES(Key.selectionNodes),
-
-        /**
-         * ノード
-         */
-        NODE(Key.node),
-
-        /**
-         * 条件ID
-         */
-        CONDITION_ID(Key.conditionId);
-
-        /**
-         * キー
-         */
-        private final Key key;
-
-        /**
-         * キー定数
-         */
-        private enum Key {
-            selectionNodes, node, conditionId;
-        }
-
-        @Override
-        public String getKey() {
-            return this.key.name();
-        }
-    }
-
-    /**
-     * コンテンツの条件ノードのキーを管理するEnumクラスです。
-     * 
-     * @author Kato Shinya
-     * @since 1.0
-     * @version 1.0
-     */
-    @RequiredArgsConstructor
-    private enum ConditionNodeKey implements Key {
-
-        /**
-         * 条件ノード群
-         */
-        CONDITION_NODES(Key.conditionNodes),
-
-        /**
-         * ノード
-         */
-        NODE(Key.node),
-
-        /**
-         * 条件ID
-         */
-        CONDITION_ID(Key.conditionId),
-
-        /**
-         * 除外
-         */
-        EXCLUDE(Key.exclude),
-
-        /**
-         * 条件群
-         */
-        CONDITIONS(Key.conditions),
-
-        /**
-         * 条件
-         */
-        CONDITION(Key.condition),
-
-        /**
-         * キー名
-         */
-        KEY_NAME(Key.keyName),
-
-        /**
-         * 演算子
-         */
-        OPERAND(Key.operand),
-
-        /**
-         * 値
-         */
-        VALUE(Key.value);
-
-        /**
-         * キー
-         */
-        private final Key key;
-
-        /**
-         * キー定数
-         */
-        private enum Key {
-            conditionNodes, node, conditionId, exclude, conditions, condition, keyName, operand, dataType, value;
-        }
-
-        @Override
-        public String getKey() {
-            return this.key.name();
-        }
     }
 }
