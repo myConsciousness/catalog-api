@@ -68,13 +68,22 @@ public final class ContentLoader {
     }
 
     /**
-     * 引数として指定された定義体ファイルに定義された各要素を取得し配列として返却します。
+     * 引数として指定された定義体ファイルに定義された各要素を取得し配列として返却します。<br>
+     * コンテンツ定義に取得条件が存在しない場合はこの {@link ContentLoader#load(String, List)}
+     * メソッドを使用してください。<br>
+     * 引数として {@code null} が渡された場合は実行時に必ず失敗します。
+     * 
+     * <pre>
+     * 使用例:
+     * <code>List<Map<String, String>> contents = ContentLoader.load(contentName, attributes);</code>
+     * </pre>
      *
      * @param contentName 定義体ファイル名
      * @param attributes  定義体から取得する要素名
      * @return 定義体ファイルから取得した要素を格納した配列
      * 
      * @exception NullPointerException 引数として{@code null}が渡された場合
+     * @throws IllegalArgumentException コンテンツ名が空文字列、またはアトリビュートリストが空の場合
      */
     public static List<Map<String, String>> load(@NonNull final String contentName,
             @NonNull final List<String> attributes) {
@@ -92,14 +101,23 @@ public final class ContentLoader {
     }
 
     /**
-     * 引数として指定された定義体ファイルに定義された各要素を取得し配列として返却します。
-     *
+     * 引数として指定された定義体ファイルに定義された各要素を取得し配列として返却します。<br>
+     * コンテンツ定義に取得条件が存在しない場合はこの {@link ContentLoader#load(String, List, Map)}
+     * メソッドを使用してください。<br>
+     * 引数として {@code null} が渡された場合は実行時に必ず失敗します。
+     * 
+     * <pre>
+     * 使用例:
+     * <code>List<Map<String, String>> contents = ContentLoader.load(contentName, attributes, conditions);</code>
+     * </pre>
+     * 
      * @param contentName 定義体ファイル名
      * @param attributes  定義体から取得する要素名
      * @param conditions  取得条件
      * @return 定義体ファイルから取得した要素を格納した配列
      * 
      * @exception NullPointerException 引数として{@code null}が渡された場合
+     * @throws IllegalArgumentException コンテンツ名が空文字列、またはアトリビュートリストが空の場合
      */
     public static List<Map<String, String>> load(@NonNull final String contentName, @NonNull List<String> attributes,
             @NonNull final Map<String, String> conditions) {
