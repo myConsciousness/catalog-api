@@ -381,17 +381,17 @@ public final class ContentLoaderTest {
         final List<String> attributes = new ArrayList<>(1);
         attributes.add(resultAttribute);
 
-        final Map<String, String> anotherConditions = new HashMap<>(2);
-        anotherConditions.put(TestCondition.testCondition1.getString(), "0");
-        anotherConditions.put(TestCondition.testCondition2.getString(), "");
+        final Map<String, String> conditions = new HashMap<>(2);
+        conditions.put(TestCondition.testCondition1.getString(), "0");
+        conditions.put(TestCondition.testCondition2.getString(), "");
 
-        final List<Map<String, String>> anotherContents = ContentLoader
-                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, anotherConditions);
+        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.SMALL_CONDITION_NODES.getString(),
+                attributes, conditions);
 
-        assertNotNull(anotherContents);
-        assertTrue(!anotherContents.isEmpty());
-        assertTrue(anotherContents.size() == 1);
-        assertEquals("0", anotherContents.get(0).get(resultAttribute));
+        assertNotNull(contents);
+        assertTrue(!contents.isEmpty());
+        assertTrue(contents.size() == 1);
+        assertEquals("0", contents.get(0).get(resultAttribute));
     }
 
     /**
@@ -425,15 +425,15 @@ public final class ContentLoaderTest {
         final List<String> attributes = new ArrayList<>(1);
         attributes.add(resultAttribute);
 
-        final Map<String, String> failureConditions = new HashMap<>(2);
-        failureConditions.put(TestCondition.testCondition1.getString(), "1");
-        failureConditions.put(TestCondition.testCondition2.getString(), "");
+        final Map<String, String> conditions = new HashMap<>(2);
+        conditions.put(TestCondition.testCondition1.getString(), "1");
+        conditions.put(TestCondition.testCondition2.getString(), "");
 
-        final List<Map<String, String>> failedContents = ContentLoader
-                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, failureConditions);
+        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.SMALL_CONDITION_NODES.getString(),
+                attributes, conditions);
 
-        assertNotNull(failedContents);
-        assertTrue(failedContents.isEmpty());
+        assertNotNull(contents);
+        assertTrue(contents.isEmpty());
     }
 
     /**
