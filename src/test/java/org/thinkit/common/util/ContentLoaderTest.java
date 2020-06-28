@@ -1,6 +1,7 @@
 package org.thinkit.common.util;
 
 import org.thinkit.common.rule.Attribute;
+import org.thinkit.common.rule.Condition;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -50,7 +51,12 @@ public final class ContentLoaderTest {
         /**
          * 大規模選択ノードのテスト用コンテンツ
          */
-        LARGE_SELECTION_NODES(Name.testContentWithLargeSelectionNodes);
+        LARGE_SELECTION_NODES(Name.testContentWithLargeSelectionNodes),
+
+        /**
+         * 小規模条件ノードのテスト用コンテンツ
+         */
+        SMALL_CONDITION_NODES(Name.testContentWithSmallConditionNodes);
 
         /**
          * コンテンツ名
@@ -70,7 +76,8 @@ public final class ContentLoaderTest {
          * コンテンツ名
          */
         private enum Name {
-            testContentWithSmallSelectionNodes, testContentWithMediumSelectionNodes, testContentWithLargeSelectionNodes
+            testContentWithSmallSelectionNodes, testContentWithMediumSelectionNodes, testContentWithLargeSelectionNodes,
+            testContentWithSmallConditionNodes;
         }
 
         @Override
@@ -84,6 +91,18 @@ public final class ContentLoaderTest {
      */
     private enum TestContentAttribute implements Attribute {
         test1, test2, test3, test4, test5;
+
+        @Override
+        public String getString() {
+            return this.name();
+        }
+    }
+
+    /**
+     * テスト用条件クラス
+     */
+    private enum TestCondition implements Condition {
+        testCondition1, testCondition2;
 
         @Override
         public String getString() {
@@ -267,6 +286,45 @@ public final class ContentLoaderTest {
     @Test
     public void testLoadWithConditions() {
 
+        final String resultAttribute = "result";
+        final List<String> attributes = new ArrayList<>(1);
+        attributes.add(resultAttribute);
+
+        final Map<String, String> conditions1 = new HashMap<>(2);
+        conditions1.put(TestCondition.testCondition1.getString(), "1");
+        conditions1.put(TestCondition.testCondition2.getString(), "0");
+
+        final List<Map<String, String>> contents1 = ContentLoader
+                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, conditions1);
+
+        assertNotNull(contents1);
+        assertTrue(!contents1.isEmpty());
+        assertTrue(contents1.size() == 1);
+        assertEquals("1", contents1.get(0).get(resultAttribute));
+
+        // try another pattern
+        final Map<String, String> conditions2 = new HashMap<>(2);
+        conditions2.put(TestCondition.testCondition1.getString(), "0");
+        conditions2.put(TestCondition.testCondition2.getString(), "");
+
+        final List<Map<String, String>> contents2 = ContentLoader
+                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, conditions2);
+
+        assertNotNull(contents2);
+        assertTrue(!contents2.isEmpty());
+        assertTrue(contents2.size() == 1);
+        assertEquals("0", contents2.get(0).get(resultAttribute));
+
+        // try failure pattern (no record)
+        final Map<String, String> conditions3 = new HashMap<>(2);
+        conditions3.put(TestCondition.testCondition1.getString(), "1");
+        conditions3.put(TestCondition.testCondition2.getString(), "");
+
+        final List<Map<String, String>> contents3 = ContentLoader
+                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, conditions3);
+
+        assertNotNull(contents3);
+        assertTrue(contents3.isEmpty());
     }
 
     /**
