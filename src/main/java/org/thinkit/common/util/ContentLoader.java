@@ -59,9 +59,19 @@ import lombok.NonNull;
 public final class ContentLoader {
 
     /**
-     * コンテンツファイルへのパス（形式）
+     * コンテンツファイルへのパス（本番）
      */
     private static final String FORMAT_FILE_PATH_TO_CONTENT = "%s/src/main/resources/content/%s%s";
+
+    /**
+     * コンテンツファイルへのパス（テスト）
+     */
+    private static final String FORMAT_FILE_PATH_TO_TEST_CONTENT = "%s/src/test/resources/content/%s%s";
+
+    /**
+     * テスト用コンテンツの接頭辞
+     */
+    private static final String TEST_CONTENT_PREFIX = "test";
 
     /**
      * デフォルトコンストラクタ
@@ -74,6 +84,15 @@ public final class ContentLoader {
      * コンテンツ定義に取得条件が存在しない場合はこの {@link ContentLoader#load(String, List)}
      * メソッドを使用してください。<br>
      * 引数として {@code null} が渡された場合は実行時に必ず失敗します。
+     * 
+     * <pre>
+     * ❏ 特記事項
+     * コンテンツのテストを行う際にはコンテンツ名を <code>"test"</code> で始めてください。
+     * コンテンツ名を <code>"test"</code> で始めることで自動的にテスト用のリソースフォルダを参照します。
+     * 以上の機能は必ず実行されるため、テスト以外で使用するコンテンツの名前は <code>"test"</code> で始めないでください。
+     * テスト以外の目的で使用するコンテンツ名が <code>"test"</code> で始まる場合は、
+     * テスト用のリソースフォルダに同名のコンテンツファイルが存在しない限り実行時に必ず失敗します。
+     * </pre>
      * 
      * <pre>
      * 使用例:
@@ -107,6 +126,15 @@ public final class ContentLoader {
      * コンテンツ定義に取得条件が存在しない場合はこの {@link ContentLoader#load(String, List, Map)}
      * メソッドを使用してください。<br>
      * 引数として {@code null} が渡された場合は実行時に必ず失敗します。
+     * 
+     * <pre>
+     * ❏ 特記事項
+     * コンテンツのテストを行う際にはコンテンツ名を <code>"test"</code> で始めてください。
+     * コンテンツ名を <code>"test"</code> で始めることで自動的にテスト用のリソースフォルダを参照します。
+     * 以上の機能は必ず実行されるため、テスト以外で使用するコンテンツの名前は <code>"test"</code> で始めないでください。
+     * テスト以外の目的で使用するコンテンツ名が <code>"test"</code> で始まる場合は、
+     * テスト用のリソースフォルダに同名のコンテンツファイルが存在しない限り実行時に必ず失敗します。
+     * </pre>
      * 
      * <pre>
      * 使用例:
@@ -216,10 +244,25 @@ public final class ContentLoader {
 
         final String currentDirectory = new File(Delimiter.period()).getAbsoluteFile().getParent();
         final File file = Paths
-                .get(String.format(FORMAT_FILE_PATH_TO_CONTENT, currentDirectory, contentName, Extension.json()))
+                .get(String.format(getFormatFilePath(contentName), currentDirectory, contentName, Extension.json()))
                 .toFile();
 
         return JsonConverter.toLinkedHashMap(JsonConverter.toJsonString(file));
+    }
+
+    /**
+     * コンテンツ名からコンテンツファイルへのパスのフォーマットを判定し返却します。<br>
+     * コンテンツ名が <code>"test"</code> で始まる場合はテスト用のコンテンツ定義へのパスを返却します。<br>
+     * 引数として {@code null} が渡された場合は実行時に必ず失敗します。
+     * 
+     * @param contentName コンテンツ名
+     * @return コンテンツファイルへのパスのフォーマット
+     * 
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    private static String getFormatFilePath(@NonNull String contentName) {
+        return contentName.startsWith(TEST_CONTENT_PREFIX) ? FORMAT_FILE_PATH_TO_TEST_CONTENT
+                : FORMAT_FILE_PATH_TO_CONTENT;
     }
 
     /**
