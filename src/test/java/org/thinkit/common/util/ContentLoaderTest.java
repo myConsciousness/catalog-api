@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.thinkit.common.rule.Content;
+
 import org.junit.jupiter.api.Test;
 
 public final class ContentLoaderTest {
@@ -30,6 +32,53 @@ public final class ContentLoaderTest {
     }
 
     /**
+     * テスト用コンテンツ名クラス
+     */
+    private enum TestContentName implements Content {
+
+        /**
+         * 小規模選択ノードのテスト用コンテンツ
+         */
+        SMALL_SELECTION_NODES(Name.testContentWithSmallSelectionNodes),
+
+        /**
+         * 中規模選択ノードのテスト用コンテンツ
+         */
+        MEDIUM_SELECTION_NODES(Name.testContentWithMediumSelectionNodes),
+
+        /**
+         * 大規模選択ノードのテスト用コンテンツ
+         */
+        LARGE_SELECTION_NODES(Name.testContentWithLargeSelectionNodes);
+
+        /**
+         * コンテンツ名
+         */
+        private Name contentName;
+
+        /**
+         * コンストラクタ
+         * 
+         * @param contentName コンテンツ名
+         */
+        TestContentName(Name contentName) {
+            this.contentName = contentName;
+        }
+
+        /**
+         * コンテンツ名
+         */
+        private enum Name {
+            testContentWithSmallSelectionNodes, testContentWithMediumSelectionNodes, testContentWithLargeSelectionNodes
+        }
+
+        @Override
+        public String getString() {
+            return this.contentName.name();
+        }
+    }
+
+    /**
      * テスト用アトリビュートクラス
      */
     private enum TestContentAttribute implements Attribute {
@@ -44,7 +93,7 @@ public final class ContentLoaderTest {
     @Test
     public void testLoadWithSmallSelectionNodes() {
 
-        final List<Map<String, String>> contents = ContentLoader.load("testContentWithSmallSelectionNodes",
+        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.SMALL_SELECTION_NODES.getString(),
                 TEST_ATTRIBUTE_LIST);
 
         assertNotNull(contents);
@@ -62,8 +111,8 @@ public final class ContentLoaderTest {
     @Test
     public void testLoadWithMediumSelectionNodes() {
 
-        final List<Map<String, String>> contents = ContentLoader.load("testContentWithMediumSelectionNodes",
-                TEST_ATTRIBUTE_LIST);
+        final List<Map<String, String>> contents = ContentLoader
+                .load(TestContentName.MEDIUM_SELECTION_NODES.getString(), TEST_ATTRIBUTE_LIST);
 
         assertNotNull(contents);
         assertTrue(!contents.isEmpty());
@@ -80,7 +129,7 @@ public final class ContentLoaderTest {
     @Test
     public void testLoadWithLargeSelectionNodes() {
 
-        final List<Map<String, String>> contents = ContentLoader.load("testContentWithLargeSelectionNodes",
+        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.LARGE_SELECTION_NODES.getString(),
                 TEST_ATTRIBUTE_LIST);
 
         assertNotNull(contents);
