@@ -110,8 +110,7 @@ public final class ContentLoader {
             @NonNull final List<String> attributes) {
 
         if (StringUtils.isBlank(contentName)) {
-            throw new IllegalArgumentException(
-                    String.format("wrong parameter (%s) was given. Content name is required.", contentName));
+            throw new IllegalArgumentException("wrong parameter was given. Content name is required.");
         }
 
         if (attributes.isEmpty()) {
@@ -153,8 +152,7 @@ public final class ContentLoader {
             @NonNull final Map<String, String> conditions) {
 
         if (StringUtils.isBlank(contentName)) {
-            throw new IllegalArgumentException(
-                    String.format("wrong parameter (%s) was given. Content name is required.", contentName));
+            throw new IllegalArgumentException("wrong parameter was given. Content name is required.");
         }
 
         if (attributes.isEmpty()) {
