@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -232,9 +233,8 @@ public final class ContentLoaderTest {
      */
     @Test
     public void testLoadWhenContentNameIsEmpty() {
-
         final Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> ContentLoader.load("", TEST_ATTRIBUTE_LIST));
+                () -> ContentLoader.load("", new ArrayList<>(0)));
         assertNotNull(exception);
         assertEquals("wrong parameter was given. Content name is required.", exception.getMessage());
     }
@@ -258,7 +258,6 @@ public final class ContentLoaderTest {
      */
     @Test
     public void testLoadWhenAttributeListIsEmpty() {
-
         final Throwable exception = assertThrows(IllegalArgumentException.class,
                 () -> ContentLoader.load("test", new ArrayList<>(0)));
         assertNotNull(exception);
@@ -268,5 +267,55 @@ public final class ContentLoaderTest {
     @Test
     public void testLoadWithConditions() {
 
+    }
+
+    /**
+     * <pre>
+     * ❏ 概要
+     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの引数として空のコンテンツ名が渡された際の機能を確認する。
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 観点
+     * ・例外として {@link IllegalArgumentException} が発生すること
+     * ・例外発生時のメッセージが <code>"wrong parameter was given. Content name is required."</code> であること
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 留意点
+     * なし
+     * </pre>
+     */
+    @Test
+    public void testLoadWithConditionsWhenContentNameIsEmpty() {
+        final Throwable exception = assertThrows(IllegalArgumentException.class,
+                () -> ContentLoader.load("", new ArrayList<>(0), new HashMap<>(0)));
+        assertNotNull(exception);
+        assertEquals("wrong parameter was given. Content name is required.", exception.getMessage());
+    }
+
+    /**
+     * <pre>
+     * ❏ 概要
+     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの引数として空のアトリビュートリストが渡された際の機能を確認する。
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 観点
+     * ・例外として {@link IllegalArgumentException} が発生すること
+     * ・例外発生時のメッセージが <code>"wrong parameter was given. Attribute is required."</code> であること
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 留意点
+     * なし
+     * </pre>
+     */
+    @Test
+    public void testLoadWithConditionsWhenAttributeListIsEmpty() {
+        final Throwable exception = assertThrows(IllegalArgumentException.class,
+                () -> ContentLoader.load("test", new ArrayList<>(0), new HashMap<>(0)));
+        assertNotNull(exception);
+        assertEquals("wrong parameter was given. Attribute is required.", exception.getMessage());
     }
 }
