@@ -141,38 +141,37 @@ public final class ContentLoader {
     }
 
     /**
-     * コンテンツマップから指定された{@link ContentKey}に紐づくノードリストを取得し返却します。
+     * コンテンツマップから指定された{@link Key}に紐づくノードリストを取得し返却します。
      * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
-     * {@link SuppressWarnings}でuncheckedをこの{@link #getNodeList(Map, ContentKey)}メソッドへ指定しています。
+     * {@link SuppressWarnings}でuncheckedをこの{@link #getNodeList(Map, Key)}メソッドへ指定しています。
      * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
      * 
      * @param content    コンテンツマップ
      * @param contentKey コンテンツキー
-     * @return {@link ContentKey}に紐づくノードリスト
+     * @return {@link Key}に紐づくノードリスト
      * 
      * @exception NullPointerException 引数として{@code null}が渡された場合
      */
     @SuppressWarnings("unchecked")
     private static List<Map<String, Object>> getNodeList(@NonNull Map<String, Object> content,
-            @NonNull ContentKey contentKey) {
+            @NonNull Key contentKey) {
         return (List<Map<String, Object>>) content.get(contentKey.getKey());
     }
 
     /**
-     * コンテンツマップから指定された{@link ContentKey}に紐づくノードマップを取得し返却します。
+     * コンテンツマップから指定された{@link Key}に紐づくノードマップを取得し返却します。
      * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
-     * {@link SuppressWarnings}でuncheckedをこの{@link #getNodeList(Map, ContentKey)}メソッドへ指定しています。
+     * {@link SuppressWarnings}でuncheckedをこの{@link #getNodeList(Map, Key)}メソッドへ指定しています。
      * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
      * 
      * @param content    コンテンツマップ
      * @param contentKey コンテンツキー
-     * @return {@link ContentKey}に紐づくノードマップ
+     * @return {@link Key}に紐づくノードマップ
      * 
      * @exception NullPointerException 引数として{@code null}が渡された場合
      */
     @SuppressWarnings("unchecked")
-    private static Map<String, Object> getNodeMap(@NonNull Map<String, Object> content,
-            @NonNull ContentKey contentKey) {
+    private static Map<String, Object> getNodeMap(@NonNull Map<String, Object> content, @NonNull Key contentKey) {
         return (Map<String, Object>) content.get(contentKey.getKey());
     }
 
@@ -184,7 +183,7 @@ public final class ContentLoader {
      * @param contentKey コンテンツキー
      * @return ノードマップに格納されたコンテンツキーに紐づく文字列型の値
      */
-    private static String getString(@NonNull Map<String, Object> nodeMap, @NonNull ContentKey contentKey) {
+    private static String getString(@NonNull Map<String, Object> nodeMap, @NonNull Key contentKey) {
         return (String) nodeMap.get(contentKey.getKey());
     }
 
@@ -319,7 +318,7 @@ public final class ContentLoader {
 
     /**
      * コンテンツのキーに関する汎用的な処理を定義したインターフェースです。
-     * {@link ContentKey}を実装する具象クラスは必ず{@link #getKey()}を実装してください。
+     * {@link Key}を実装する具象クラスは必ず{@link #getKey()}を実装してください。
      * 
      * @author Kato Shinya
      * @since 1.0
@@ -328,7 +327,7 @@ public final class ContentLoader {
      * @see SelectionNodeKey
      * @see ConditionNodeKey
      */
-    private interface ContentKey {
+    private interface Key {
 
         /**
          * キーの文字列表現を返却します。
@@ -346,7 +345,7 @@ public final class ContentLoader {
      * @version 1.0
      */
     @RequiredArgsConstructor
-    private enum SelectionNodeKey implements ContentKey {
+    private enum SelectionNodeKey implements Key {
 
         /**
          * 選択ノード群
@@ -389,7 +388,7 @@ public final class ContentLoader {
      * @version 1.0
      */
     @RequiredArgsConstructor
-    private enum ConditionNodeKey implements ContentKey {
+    private enum ConditionNodeKey implements Key {
 
         /**
          * 条件ノード群
