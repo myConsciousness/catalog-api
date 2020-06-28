@@ -1,3 +1,15 @@
+/**
+ * Project Name : dev-utils<br>
+ * File Name : ContentLoaderTest.java<br>
+ * Encoding : UTF-8<br>
+ * Creation Date : 2020/06/27<br>
+ * <p>
+ * Copyright © 2020 Kato Shinya. All rights reserved.
+ * <p>
+ * This source code or any portion thereof must not be<br>
+ * reproduced or used in any manner whatsoever.
+ */
+
 package org.thinkit.common.util;
 
 import org.thinkit.common.rule.Attribute;
@@ -17,6 +29,13 @@ import org.thinkit.common.rule.Content;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * {@link ContentLoader} クラスのテストクラスです。
+ * 
+ * @author Kato Shinya
+ * @since 1.0
+ * @version 1.0
+ */
 public final class ContentLoaderTest {
 
     /**
@@ -283,48 +302,138 @@ public final class ContentLoaderTest {
         assertEquals("wrong parameter was given. Attribute is required.", exception.getMessage());
     }
 
+    /**
+     * <pre>
+     * ❏ 概要
+     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+     * このテストでは条件ノードの個数が小規模のコンテンツファイルを使用する。
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 観点
+     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
+     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
+     * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"1"</code> であること
+     * </pre>
+     * 
+     * <pre>
+     * ❏ コンテンツ取得条件
+     * ・<code>"testCondition1" : "1"</code>
+     * ・<code>"testCondition2" : "0"</code>
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 留意点
+     * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+     * </pre>
+     */
     @Test
-    public void testLoadWithConditions() {
+    public void testLoadWithSmallConditionNodes1() {
 
         final String resultAttribute = "result";
         final List<String> attributes = new ArrayList<>(1);
         attributes.add(resultAttribute);
 
-        final Map<String, String> conditions1 = new HashMap<>(2);
-        conditions1.put(TestCondition.testCondition1.getString(), "1");
-        conditions1.put(TestCondition.testCondition2.getString(), "0");
+        final Map<String, String> conditions = new HashMap<>(2);
+        conditions.put(TestCondition.testCondition1.getString(), "1");
+        conditions.put(TestCondition.testCondition2.getString(), "0");
 
-        final List<Map<String, String>> contents1 = ContentLoader
-                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, conditions1);
+        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.SMALL_CONDITION_NODES.getString(),
+                attributes, conditions);
 
-        assertNotNull(contents1);
-        assertTrue(!contents1.isEmpty());
-        assertTrue(contents1.size() == 1);
-        assertEquals("1", contents1.get(0).get(resultAttribute));
+        assertNotNull(contents);
+        assertTrue(!contents.isEmpty());
+        assertTrue(contents.size() == 1);
+        assertEquals("1", contents.get(0).get(resultAttribute));
+    }
 
-        // try another pattern
-        final Map<String, String> conditions2 = new HashMap<>(2);
-        conditions2.put(TestCondition.testCondition1.getString(), "0");
-        conditions2.put(TestCondition.testCondition2.getString(), "");
+    /**
+     * <pre>
+     * ❏ 概要
+     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+     * このテストでは条件ノードの個数が小規模のコンテンツファイルを使用する。
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 観点
+     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
+     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
+     * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"0"</code> であること
+     * </pre>
+     * 
+     * <pre>
+     * ❏ コンテンツ取得条件
+     * ・<code>"testCondition1" : "0"</code>
+     * ・<code>"testCondition2" : ""</code>
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 留意点
+     * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+     * </pre>
+     */
+    @Test
+    public void testLoadWithSmallConditionNodes2() {
 
-        final List<Map<String, String>> contents2 = ContentLoader
-                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, conditions2);
+        final String resultAttribute = "result";
+        final List<String> attributes = new ArrayList<>(1);
+        attributes.add(resultAttribute);
 
-        assertNotNull(contents2);
-        assertTrue(!contents2.isEmpty());
-        assertTrue(contents2.size() == 1);
-        assertEquals("0", contents2.get(0).get(resultAttribute));
+        final Map<String, String> anotherConditions = new HashMap<>(2);
+        anotherConditions.put(TestCondition.testCondition1.getString(), "0");
+        anotherConditions.put(TestCondition.testCondition2.getString(), "");
 
-        // try failure pattern (no record)
-        final Map<String, String> conditions3 = new HashMap<>(2);
-        conditions3.put(TestCondition.testCondition1.getString(), "1");
-        conditions3.put(TestCondition.testCondition2.getString(), "");
+        final List<Map<String, String>> anotherContents = ContentLoader
+                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, anotherConditions);
 
-        final List<Map<String, String>> contents3 = ContentLoader
-                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, conditions3);
+        assertNotNull(anotherContents);
+        assertTrue(!anotherContents.isEmpty());
+        assertTrue(anotherContents.size() == 1);
+        assertEquals("0", anotherContents.get(0).get(resultAttribute));
+    }
 
-        assertNotNull(contents3);
-        assertTrue(contents3.isEmpty());
+    /**
+     * <pre>
+     * ❏ 概要
+     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+     * このテストでは条件ノードの個数が小規模のコンテンツファイルを使用する。
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 観点
+     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストであること
+     * </pre>
+     * 
+     * <pre>
+     * ❏ コンテンツ取得条件
+     * ・<code>"testCondition1" : "1"</code>
+     * ・<code>"testCondition2" : ""</code>
+     * </pre>
+     * 
+     * <pre>
+     * ❏ 留意点
+     * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+     * </pre>
+     */
+    @Test
+    public void testLoadWithSmallConditionNodes3() {
+
+        final String resultAttribute = "result";
+        final List<String> attributes = new ArrayList<>(1);
+        attributes.add(resultAttribute);
+
+        final Map<String, String> failureConditions = new HashMap<>(2);
+        failureConditions.put(TestCondition.testCondition1.getString(), "1");
+        failureConditions.put(TestCondition.testCondition2.getString(), "");
+
+        final List<Map<String, String>> failedContents = ContentLoader
+                .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, failureConditions);
+
+        assertNotNull(failedContents);
+        assertTrue(failedContents.isEmpty());
     }
 
     /**
