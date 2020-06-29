@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.thinkit.common.rule.Content;
-
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -130,359 +130,393 @@ public final class ContentLoaderTest {
     }
 
     /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの返却値を確認する。
-     * このテストでは選択ノードの個数が小規模のコンテンツファイルを使用する。
-     * </pre>
+     * {@link ContentLoader#load(String, List)} メソッドのテストメソッドを定義するネストクラスです。
      * 
-     * <pre>
-     * ❏ 観点
-     * ・{@link ContentLoader#load(String, List)} から取得したリストが {@code null} ではないこと
-     * ・{@link ContentLoader#load(String, List)} から取得したリストが空リストではないこと
-     * ・キー名 <code>"test1"</code> に紐づく項目の値が <code>"0"</code> であること
-     * ・キー名 <code>"test2"</code> に紐づく項目の値が <code>"false"</code> であること
-     * ・キー名 <code>"test3"</code> に紐づく項目の値が <code>"0L"</code> であること
-     * ・キー名 <code>"test4"</code> に紐づく項目の値が <code>"1.0"</code> であること
-     * ・キー名 <code>"test5"</code> に紐づく項目の値が <code>"test"</code> であること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
-     * </pre>
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
      */
-    @Test
-    public void testLoadWithSmallSelectionNodes() {
+    @Nested
+    class TestLoad {
 
-        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.SMALL_SELECTION_NODES.getString(),
-                TEST_ATTRIBUTE_LIST);
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの返却値を確認する。
+         * このテストでは選択ノードの個数が小規模のコンテンツファイルを使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#load(String, List)} から取得したリストが {@code null} ではないこと
+         * ・{@link ContentLoader#load(String, List)} から取得したリストが空リストではないこと
+         * ・キー名 <code>"test1"</code> に紐づく項目の値が <code>"0"</code> であること
+         * ・キー名 <code>"test2"</code> に紐づく項目の値が <code>"false"</code> であること
+         * ・キー名 <code>"test3"</code> に紐づく項目の値が <code>"0L"</code> であること
+         * ・キー名 <code>"test4"</code> に紐づく項目の値が <code>"1.0"</code> であること
+         * ・キー名 <code>"test5"</code> に紐づく項目の値が <code>"test"</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+         * </pre>
+         */
+        @Test
+        public void testSmallSelectionNodes() {
 
-        assertNotNull(contents);
-        assertTrue(!contents.isEmpty());
+            final List<Map<String, String>> contents = ContentLoader
+                    .load(TestContentName.SMALL_SELECTION_NODES.getString(), TEST_ATTRIBUTE_LIST);
 
-        for (Map<String, String> content : contents) {
-            assertEquals("0", content.get(TestContentAttribute.test1.getString()));
-            assertEquals("false", content.get(TestContentAttribute.test2.getString()));
-            assertEquals("0L", content.get(TestContentAttribute.test3.getString()));
-            assertEquals("1.0", content.get(TestContentAttribute.test4.getString()));
-            assertEquals("test", content.get(TestContentAttribute.test5.getString()));
+            assertNotNull(contents);
+            assertTrue(!contents.isEmpty());
+
+            for (Map<String, String> content : contents) {
+                assertEquals("0", content.get(TestContentAttribute.test1.getString()));
+                assertEquals("false", content.get(TestContentAttribute.test2.getString()));
+                assertEquals("0L", content.get(TestContentAttribute.test3.getString()));
+                assertEquals("1.0", content.get(TestContentAttribute.test4.getString()));
+                assertEquals("test", content.get(TestContentAttribute.test5.getString()));
+            }
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの返却値を確認する。
+         * このテストでは選択ノードの個数が中規模のコンテンツファイルを使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#load(String, List)} から取得したリストが {@code null} ではないこと
+         * ・{@link ContentLoader#load(String, List)} から取得したリストが空リストではないこと
+         * ・キー名 <code>"test1"</code> に紐づく項目の値が <code>"0"</code> であること
+         * ・キー名 <code>"test2"</code> に紐づく項目の値が <code>"false"</code> であること
+         * ・キー名 <code>"test3"</code> に紐づく項目の値が <code>"0L"</code> であること
+         * ・キー名 <code>"test4"</code> に紐づく項目の値が <code>"1.0"</code> であること
+         * ・キー名 <code>"test5"</code> に紐づく項目の値が <code>"test"</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+         * </pre>
+         */
+        @Test
+        public void testMediumSelectionNodes() {
+
+            final List<Map<String, String>> contents = ContentLoader
+                    .load(TestContentName.MEDIUM_SELECTION_NODES.getString(), TEST_ATTRIBUTE_LIST);
+
+            assertNotNull(contents);
+            assertTrue(!contents.isEmpty());
+
+            for (Map<String, String> content : contents) {
+                assertEquals("0", content.get(TestContentAttribute.test1.getString()));
+                assertEquals("false", content.get(TestContentAttribute.test2.getString()));
+                assertEquals("0L", content.get(TestContentAttribute.test3.getString()));
+                assertEquals("1.0", content.get(TestContentAttribute.test4.getString()));
+                assertEquals("test", content.get(TestContentAttribute.test5.getString()));
+            }
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの返却値を確認する。
+         * このテストでは選択ノードの個数が大規模のコンテンツファイルを使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#load(String, List)} から取得したリストが {@code null} ではないこと
+         * ・{@link ContentLoader#load(String, List)} から取得したリストが空リストではないこと
+         * ・キー名 <code>"test1"</code> に紐づく項目の値が <code>"0"</code> であること
+         * ・キー名 <code>"test2"</code> に紐づく項目の値が <code>"false"</code> であること
+         * ・キー名 <code>"test3"</code> に紐づく項目の値が <code>"0L"</code> であること
+         * ・キー名 <code>"test4"</code> に紐づく項目の値が <code>"1.0"</code> であること
+         * ・キー名 <code>"test5"</code> に紐づく項目の値が <code>"test"</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+         * </pre>
+         */
+        @Test
+        public void testLargeSelectionNodes() {
+
+            final List<Map<String, String>> contents = ContentLoader
+                    .load(TestContentName.LARGE_SELECTION_NODES.getString(), TEST_ATTRIBUTE_LIST);
+
+            assertNotNull(contents);
+            assertTrue(!contents.isEmpty());
+
+            for (Map<String, String> content : contents) {
+                assertEquals("0", content.get(TestContentAttribute.test1.getString()));
+                assertEquals("false", content.get(TestContentAttribute.test2.getString()));
+                assertEquals("0L", content.get(TestContentAttribute.test3.getString()));
+                assertEquals("1.0", content.get(TestContentAttribute.test4.getString()));
+                assertEquals("test", content.get(TestContentAttribute.test5.getString()));
+            }
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの引数として空のコンテンツ名が渡された際の機能を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・例外として {@link IllegalArgumentException} が発生すること
+         * ・例外発生時のメッセージが <code>"wrong parameter was given. Content name is required."</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWhenContentNameIsEmpty() {
+            final Throwable exception = assertThrows(IllegalArgumentException.class,
+                    () -> ContentLoader.load("", new ArrayList<>(0)));
+            assertNotNull(exception);
+            assertEquals("wrong parameter was given. Content name is required.", exception.getMessage());
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの引数として空のアトリビュートリストが渡された際の機能を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・例外として {@link IllegalArgumentException} が発生すること
+         * ・例外発生時のメッセージが <code>"wrong parameter was given. Attribute is required."</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWhenAttributeListIsEmpty() {
+            final Throwable exception = assertThrows(IllegalArgumentException.class,
+                    () -> ContentLoader.load("test", new ArrayList<>(0)));
+            assertNotNull(exception);
+            assertEquals("wrong parameter was given. Attribute is required.", exception.getMessage());
         }
     }
 
     /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの返却値を確認する。
-     * このテストでは選択ノードの個数が中規模のコンテンツファイルを使用する。
-     * </pre>
+     * {@link ContentLoader#load(String, List, Map)} メソッドのテストメソッドを定義するネストクラスです。
      * 
-     * <pre>
-     * ❏ 観点
-     * ・{@link ContentLoader#load(String, List)} から取得したリストが {@code null} ではないこと
-     * ・{@link ContentLoader#load(String, List)} から取得したリストが空リストではないこと
-     * ・キー名 <code>"test1"</code> に紐づく項目の値が <code>"0"</code> であること
-     * ・キー名 <code>"test2"</code> に紐づく項目の値が <code>"false"</code> であること
-     * ・キー名 <code>"test3"</code> に紐づく項目の値が <code>"0L"</code> であること
-     * ・キー名 <code>"test4"</code> に紐づく項目の値が <code>"1.0"</code> であること
-     * ・キー名 <code>"test5"</code> に紐づく項目の値が <code>"test"</code> であること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
-     * </pre>
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
      */
-    @Test
-    public void testLoadWithMediumSelectionNodes() {
+    @Nested
+    class TestLoadWithConditions {
 
-        final List<Map<String, String>> contents = ContentLoader
-                .load(TestContentName.MEDIUM_SELECTION_NODES.getString(), TEST_ATTRIBUTE_LIST);
+        /**
+         * {@link ContentLoader#load(String, List, Map)} メソッドのテストメソッドを定義するネストクラスです。
+         * このクラスに定義するテストメソッドは小規模な条件ノードを定義したコンテンツファイルを使用してください。
+         * 
+         * @author Kato Shinya
+         * @since 1.0
+         * @version 1.0
+         */
+        @Nested
+        class TestSmallConditionNodes {
 
-        assertNotNull(contents);
-        assertTrue(!contents.isEmpty());
+            /**
+             * <pre>
+             * ❏ 概要
+             * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+             * このテストでは条件ノードの個数が小規模のコンテンツファイルを使用する。
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 観点
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
+             * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"1"</code> であること
+             * </pre>
+             * 
+             * <pre>
+             * ❏ コンテンツ取得条件
+             * ・<code>"testCondition1" : "1"</code>
+             * ・<code>"testCondition2" : "0"</code>
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 留意点
+             * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+             * </pre>
+             */
+            @Test
+            public void testWithConditions() {
 
-        for (Map<String, String> content : contents) {
-            assertEquals("0", content.get(TestContentAttribute.test1.getString()));
-            assertEquals("false", content.get(TestContentAttribute.test2.getString()));
-            assertEquals("0L", content.get(TestContentAttribute.test3.getString()));
-            assertEquals("1.0", content.get(TestContentAttribute.test4.getString()));
-            assertEquals("test", content.get(TestContentAttribute.test5.getString()));
+                final String resultAttribute = "result";
+                final List<String> attributes = new ArrayList<>(1);
+                attributes.add(resultAttribute);
+
+                final Map<String, String> conditions = new HashMap<>(2);
+                conditions.put(TestCondition.testCondition1.getString(), "1");
+                conditions.put(TestCondition.testCondition2.getString(), "0");
+
+                final List<Map<String, String>> contents = ContentLoader
+                        .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, conditions);
+
+                assertNotNull(contents);
+                assertTrue(!contents.isEmpty());
+                assertTrue(contents.size() == 1);
+                assertEquals("1", contents.get(0).get(resultAttribute));
+            }
+
+            /**
+             * <pre>
+             * ❏ 概要
+             * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+             * このテストでは条件ノードの個数が小規模のコンテンツファイルを使用する。
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 観点
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
+             * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"0"</code> であること
+             * </pre>
+             * 
+             * <pre>
+             * ❏ コンテンツ取得条件
+             * ・<code>"testCondition1" : "0"</code>
+             * ・<code>"testCondition2" : ""</code>
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 留意点
+             * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+             * </pre>
+             */
+            @Test
+            public void testAnotherRecordWithConditions() {
+
+                final String resultAttribute = "result";
+                final List<String> attributes = new ArrayList<>(1);
+                attributes.add(resultAttribute);
+
+                final Map<String, String> conditions = new HashMap<>(2);
+                conditions.put(TestCondition.testCondition1.getString(), "0");
+                conditions.put(TestCondition.testCondition2.getString(), "");
+
+                final List<Map<String, String>> contents = ContentLoader
+                        .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, conditions);
+
+                assertNotNull(contents);
+                assertTrue(!contents.isEmpty());
+                assertTrue(contents.size() == 1);
+                assertEquals("0", contents.get(0).get(resultAttribute));
+            }
+
+            /**
+             * <pre>
+             * ❏ 概要
+             * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+             * このテストでは条件ノードの個数が小規模のコンテンツファイルを使用する。
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 観点
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストであること
+             * </pre>
+             * 
+             * <pre>
+             * ❏ コンテンツ取得条件
+             * ・<code>"testCondition1" : "1"</code>
+             * ・<code>"testCondition2" : ""</code>
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 留意点
+             * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+             * </pre>
+             */
+            @Test
+            public void testWhenNoRecord() {
+
+                final String resultAttribute = "result";
+                final List<String> attributes = new ArrayList<>(1);
+                attributes.add(resultAttribute);
+
+                final Map<String, String> conditions = new HashMap<>(2);
+                conditions.put(TestCondition.testCondition1.getString(), "1");
+                conditions.put(TestCondition.testCondition2.getString(), "");
+
+                final List<Map<String, String>> contents = ContentLoader
+                        .load(TestContentName.SMALL_CONDITION_NODES.getString(), attributes, conditions);
+
+                assertNotNull(contents);
+                assertTrue(contents.isEmpty());
+            }
         }
-    }
 
-    /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの返却値を確認する。
-     * このテストでは選択ノードの個数が大規模のコンテンツファイルを使用する。
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 観点
-     * ・{@link ContentLoader#load(String, List)} から取得したリストが {@code null} ではないこと
-     * ・{@link ContentLoader#load(String, List)} から取得したリストが空リストではないこと
-     * ・キー名 <code>"test1"</code> に紐づく項目の値が <code>"0"</code> であること
-     * ・キー名 <code>"test2"</code> に紐づく項目の値が <code>"false"</code> であること
-     * ・キー名 <code>"test3"</code> に紐づく項目の値が <code>"0L"</code> であること
-     * ・キー名 <code>"test4"</code> に紐づく項目の値が <code>"1.0"</code> であること
-     * ・キー名 <code>"test5"</code> に紐づく項目の値が <code>"test"</code> であること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
-     * </pre>
-     */
-    @Test
-    public void testLoadWithLargeSelectionNodes() {
-
-        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.LARGE_SELECTION_NODES.getString(),
-                TEST_ATTRIBUTE_LIST);
-
-        assertNotNull(contents);
-        assertTrue(!contents.isEmpty());
-
-        for (Map<String, String> content : contents) {
-            assertEquals("0", content.get(TestContentAttribute.test1.getString()));
-            assertEquals("false", content.get(TestContentAttribute.test2.getString()));
-            assertEquals("0L", content.get(TestContentAttribute.test3.getString()));
-            assertEquals("1.0", content.get(TestContentAttribute.test4.getString()));
-            assertEquals("test", content.get(TestContentAttribute.test5.getString()));
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの引数として空のコンテンツ名が渡された際の機能を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・例外として {@link IllegalArgumentException} が発生すること
+         * ・例外発生時のメッセージが <code>"wrong parameter was given. Content name is required."</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWhenContentNameIsEmpty() {
+            final Throwable exception = assertThrows(IllegalArgumentException.class,
+                    () -> ContentLoader.load("", new ArrayList<>(0), new HashMap<>(0)));
+            assertNotNull(exception);
+            assertEquals("wrong parameter was given. Content name is required.", exception.getMessage());
         }
-    }
 
-    /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの引数として空のコンテンツ名が渡された際の機能を確認する。
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 観点
-     * ・例外として {@link IllegalArgumentException} が発生すること
-     * ・例外発生時のメッセージが <code>"wrong parameter was given. Content name is required."</code> であること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * なし
-     * </pre>
-     */
-    @Test
-    public void testLoadWhenContentNameIsEmpty() {
-        final Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> ContentLoader.load("", new ArrayList<>(0)));
-        assertNotNull(exception);
-        assertEquals("wrong parameter was given. Content name is required.", exception.getMessage());
-    }
-
-    /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List)} メソッドの引数として空のアトリビュートリストが渡された際の機能を確認する。
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 観点
-     * ・例外として {@link IllegalArgumentException} が発生すること
-     * ・例外発生時のメッセージが <code>"wrong parameter was given. Attribute is required."</code> であること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * なし
-     * </pre>
-     */
-    @Test
-    public void testLoadWhenAttributeListIsEmpty() {
-        final Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> ContentLoader.load("test", new ArrayList<>(0)));
-        assertNotNull(exception);
-        assertEquals("wrong parameter was given. Attribute is required.", exception.getMessage());
-    }
-
-    /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
-     * このテストでは条件ノードの個数が小規模のコンテンツファイルを使用する。
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 観点
-     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
-     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
-     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
-     * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"1"</code> であること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ コンテンツ取得条件
-     * ・<code>"testCondition1" : "1"</code>
-     * ・<code>"testCondition2" : "0"</code>
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
-     * </pre>
-     */
-    @Test
-    public void testLoadWithSmallConditionNodes1() {
-
-        final String resultAttribute = "result";
-        final List<String> attributes = new ArrayList<>(1);
-        attributes.add(resultAttribute);
-
-        final Map<String, String> conditions = new HashMap<>(2);
-        conditions.put(TestCondition.testCondition1.getString(), "1");
-        conditions.put(TestCondition.testCondition2.getString(), "0");
-
-        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.SMALL_CONDITION_NODES.getString(),
-                attributes, conditions);
-
-        assertNotNull(contents);
-        assertTrue(!contents.isEmpty());
-        assertTrue(contents.size() == 1);
-        assertEquals("1", contents.get(0).get(resultAttribute));
-    }
-
-    /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
-     * このテストでは条件ノードの個数が小規模のコンテンツファイルを使用する。
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 観点
-     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
-     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
-     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
-     * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"0"</code> であること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ コンテンツ取得条件
-     * ・<code>"testCondition1" : "0"</code>
-     * ・<code>"testCondition2" : ""</code>
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
-     * </pre>
-     */
-    @Test
-    public void testLoadWithSmallConditionNodes2() {
-
-        final String resultAttribute = "result";
-        final List<String> attributes = new ArrayList<>(1);
-        attributes.add(resultAttribute);
-
-        final Map<String, String> conditions = new HashMap<>(2);
-        conditions.put(TestCondition.testCondition1.getString(), "0");
-        conditions.put(TestCondition.testCondition2.getString(), "");
-
-        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.SMALL_CONDITION_NODES.getString(),
-                attributes, conditions);
-
-        assertNotNull(contents);
-        assertTrue(!contents.isEmpty());
-        assertTrue(contents.size() == 1);
-        assertEquals("0", contents.get(0).get(resultAttribute));
-    }
-
-    /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
-     * このテストでは条件ノードの個数が小規模のコンテンツファイルを使用する。
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 観点
-     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
-     * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストであること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ コンテンツ取得条件
-     * ・<code>"testCondition1" : "1"</code>
-     * ・<code>"testCondition2" : ""</code>
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
-     * </pre>
-     */
-    @Test
-    public void testLoadWithSmallConditionNodes3() {
-
-        final String resultAttribute = "result";
-        final List<String> attributes = new ArrayList<>(1);
-        attributes.add(resultAttribute);
-
-        final Map<String, String> conditions = new HashMap<>(2);
-        conditions.put(TestCondition.testCondition1.getString(), "1");
-        conditions.put(TestCondition.testCondition2.getString(), "");
-
-        final List<Map<String, String>> contents = ContentLoader.load(TestContentName.SMALL_CONDITION_NODES.getString(),
-                attributes, conditions);
-
-        assertNotNull(contents);
-        assertTrue(contents.isEmpty());
-    }
-
-    /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの引数として空のコンテンツ名が渡された際の機能を確認する。
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 観点
-     * ・例外として {@link IllegalArgumentException} が発生すること
-     * ・例外発生時のメッセージが <code>"wrong parameter was given. Content name is required."</code> であること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * なし
-     * </pre>
-     */
-    @Test
-    public void testLoadWithConditionsWhenContentNameIsEmpty() {
-        final Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> ContentLoader.load("", new ArrayList<>(0), new HashMap<>(0)));
-        assertNotNull(exception);
-        assertEquals("wrong parameter was given. Content name is required.", exception.getMessage());
-    }
-
-    /**
-     * <pre>
-     * ❏ 概要
-     * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの引数として空のアトリビュートリストが渡された際の機能を確認する。
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 観点
-     * ・例外として {@link IllegalArgumentException} が発生すること
-     * ・例外発生時のメッセージが <code>"wrong parameter was given. Attribute is required."</code> であること
-     * </pre>
-     * 
-     * <pre>
-     * ❏ 留意点
-     * なし
-     * </pre>
-     */
-    @Test
-    public void testLoadWithConditionsWhenAttributeListIsEmpty() {
-        final Throwable exception = assertThrows(IllegalArgumentException.class,
-                () -> ContentLoader.load("test", new ArrayList<>(0), new HashMap<>(0)));
-        assertNotNull(exception);
-        assertEquals("wrong parameter was given. Attribute is required.", exception.getMessage());
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの引数として空のアトリビュートリストが渡された際の機能を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・例外として {@link IllegalArgumentException} が発生すること
+         * ・例外発生時のメッセージが <code>"wrong parameter was given. Attribute is required."</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWhenAttributeListIsEmpty() {
+            final Throwable exception = assertThrows(IllegalArgumentException.class,
+                    () -> ContentLoader.load("test", new ArrayList<>(0), new HashMap<>(0)));
+            assertNotNull(exception);
+            assertEquals("wrong parameter was given. Attribute is required.", exception.getMessage());
+        }
     }
 }
