@@ -12,6 +12,7 @@
 
 package org.thinkit.common.util;
 
+import org.thinkit.common.key.ConditionNodeKey;
 import org.thinkit.common.key.Key;
 import org.thinkit.common.key.SelectionNodeKey;
 import org.thinkit.common.rule.Attribute;
@@ -776,8 +777,8 @@ public final class ContentLoaderTest {
     }
 
     /**
-     * {@link ContentLoade#getNodeList} メソッドのテストメソッドを定義するテストクラスです。
-     * {@link ContentLoade#getNodeList} はprivateメソッドです。
+     * {@link ContentLoader#getNodeList(Map, Key)} メソッドのテストメソッドを定義するテストクラスです。
+     * {@link ContentLoader#getNodeList(Map, Key)} はprivateメソッドです。
      * 
      * @author Kato Shinya
      * @since 1.0
@@ -838,7 +839,7 @@ public final class ContentLoaderTest {
         }
 
         /**
-         * 引数の情報を基に {@link ContentLoade#getNodeList} メソッドを呼び出すメソッドです。
+         * 引数の情報を基に {@link ContentLoader#getNodeList(List, Key)} メソッドを呼び出すメソッドです。
          * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため {@link SuppressWarnings}
          * でuncheckedを指定しています。
          * 
@@ -861,14 +862,207 @@ public final class ContentLoaderTest {
         }
 
         /**
-         * {@link ContentLoade#getNodeList} メソッドを取得し返却します。
+         * {@link ContentLoader#getNodeList(List, Key)} メソッドを取得し返却します。
          * 
-         * @return {@link ContentLoade#getNodeList} メソッド
+         * @return {@link ContentLoader#getNodeList(List, Key)} メソッド
          */
         private Method getTestMethod() {
             if (this.testMethod == null) {
                 try {
                     final String testMethodName = "getNodeList";
+                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, Map.class, Key.class);
+                    this.testMethod.setAccessible(true);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return this.testMethod;
+        }
+    }
+
+    /**
+     * {@link ContentLoader#getNodeMap(Map, Key)} メソッドのテストメソッドを定義するテストクラスです。
+     * {@link ContentLoader#getNodeMap(Map, Key)} はprivateメソッドです。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    final class TestGetNodeMap {
+
+        /**
+         * テスト対象のクラスオブジェクト
+         */
+        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
+
+        /**
+         * テスト用メソッド
+         */
+        private Method testMethod = null;
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getNodeMap(Map, Key)} メソッドの返却値を確認する。
+         * 期待値は任意のコンテンツマップを使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getNodeMap(Map, Key)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getNodeMap(Map, Key)} の返却値が空マップではないこと
+         * ・{@link ContentLoader#getNodeMap(Map, Key)} の返却値と生成した任意の値が等価であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testSimplePattern() {
+            final Map<String, Object> nodes = new HashMap<>();
+            final Map<String, String> expectedNodeMap = new HashMap<>();
+            expectedNodeMap.put("testNode1", "something");
+            expectedNodeMap.put("testNode2", "something");
+            expectedNodeMap.put("testNode3", "something");
+
+            nodes.put(ConditionNodeKey.CONDITIONS.getKey(), expectedNodeMap);
+            final Map<String, Object> actualNodeMap = this.invoke(nodes, ConditionNodeKey.CONDITIONS);
+
+            assertNotNull(actualNodeMap);
+            assertTrue(!actualNodeMap.isEmpty());
+            assertEquals(expectedNodeMap, actualNodeMap);
+        }
+
+        /**
+         * 引数の情報を基に {@link ContentLoader#getNodeMap(Map, Key)} メソッドを呼び出すメソッドです。
+         * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため {@link SuppressWarnings}
+         * でuncheckedを指定しています。
+         * 
+         * @param content    コンテンツマップ
+         * @param contentKey コンテンツキー
+         * @return {@link Key}に紐づくノードマップ
+         */
+        @SuppressWarnings("unchecked")
+        private Map<String, Object> invoke(Map<String, Object> content, Key contentKey) {
+
+            Map<String, Object> nodeMap = new HashMap<>(0);
+
+            try {
+                nodeMap = (Map<String, Object>) this.getTestMethod().invoke(TEST_CLASS, content, contentKey);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            return nodeMap;
+        }
+
+        /**
+         * {@link ContentLoader#getNodeMap(Map, Key)} メソッドを取得し返却します。
+         * 
+         * @return {@link ContentLoader#getNodeMap(Map, Key)} メソッド
+         */
+        private Method getTestMethod() {
+            if (this.testMethod == null) {
+                try {
+                    final String testMethodName = "getNodeMap";
+                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, Map.class, Key.class);
+                    this.testMethod.setAccessible(true);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return this.testMethod;
+        }
+    }
+
+    /**
+     * {@link ContentLoader#getString(Map, Key)} メソッドのテストメソッドを定義するテストクラスです。
+     * {@link ContentLoader#getString(Map, Key)} はprivateメソッドです。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    final class TestGetString {
+
+        /**
+         * テスト対象のクラスオブジェクト
+         */
+        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
+
+        /**
+         * テスト用メソッド
+         */
+        private Method testMethod = null;
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getString(Map, Key)} メソッドの返却値を確認する。
+         * 期待値は任意のコンテンツ値を使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getString(Map, Key)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getString(Map, Key)} の返却値が空文字列ではないこと
+         * ・{@link ContentLoader#getString(Map, Key)} の返却値と生成した任意の値が等価であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testSimplePattern() {
+
+            final String expectedContentValue = "Hello World!";
+            final Map<String, Object> node = new HashMap<>();
+            node.put(SelectionNodeKey.CONDITION_ID.getKey(), expectedContentValue);
+
+            final String actualContentValue = this.invoke(node, SelectionNodeKey.CONDITION_ID);
+
+            assertNotNull(actualContentValue);
+            assertTrue(!actualContentValue.isEmpty());
+            assertEquals(expectedContentValue, actualContentValue);
+        }
+
+        /**
+         * 引数の情報を基に {@link ContentLoader#getString(Map, Key)} メソッドを呼び出すメソッドです。
+         * 
+         * @param content    コンテンツマップ
+         * @param contentKey コンテンツキー
+         * @return {@link Key}に紐づくコンテンツ値
+         */
+        private String invoke(Map<String, Object> content, Key contentKey) {
+
+            String contentValue = "";
+
+            try {
+                contentValue = (String) this.getTestMethod().invoke(TEST_CLASS, content, contentKey);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            return contentValue;
+        }
+
+        /**
+         * {@link ContentLoader#getString(Map, Key)} メソッドを取得し返却します。
+         * 
+         * @return {@link ContentLoader#getString(Map, Key)} メソッド
+         */
+        private Method getTestMethod() {
+            if (this.testMethod == null) {
+                try {
+                    final String testMethodName = "getString";
                     this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, Map.class, Key.class);
                     this.testMethod.setAccessible(true);
                 } catch (NoSuchMethodException e) {
