@@ -561,6 +561,163 @@ public final class ContentLoaderTest {
         @Nested
         class TestLargeConditionsNodes {
 
+            /**
+             * <pre>
+             * ❏ 概要
+             * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+             * このテストでは条件ノードの個数が大規模のコンテンツファイルを使用する。
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 観点
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
+             * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"5"</code> であること
+             * </pre>
+             * 
+             * <pre>
+             * ❏ コンテンツ取得条件
+             * ・<code>"testCondition1" : "1000"</code>
+             * ・<code>"testCondition2" : "false"</code>
+             * ・<code>"testCondition3" : "true"</code>
+             * ・<code>"testCondition4" : "100"</code>
+             * ・<code>"testCondition5" : "test"</code>
+             * ・<code>"testCondition6" : "10L"</code>
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 留意点
+             * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+             * </pre>
+             */
+            @Test
+            public void testWithConditions() {
+
+                final String resultAttribute = "result";
+                final List<String> attributes = new ArrayList<>(1);
+                attributes.add(resultAttribute);
+
+                final Map<String, String> conditions = new HashMap<>(2);
+                conditions.put(TestCondition.testCondition1.getString(), "1000");
+                conditions.put(TestCondition.testCondition2.getString(), "false");
+                conditions.put(TestCondition.testCondition3.getString(), "true");
+                conditions.put(TestCondition.testCondition4.getString(), "100");
+                conditions.put(TestCondition.testCondition5.getString(), "test");
+                conditions.put(TestCondition.testCondition6.getString(), "10L");
+
+                final List<Map<String, String>> contents = ContentLoader
+                        .load(TestContentName.LARGE_CONDITION_NODES.getString(), attributes, conditions);
+
+                assertNotNull(contents);
+                assertTrue(!contents.isEmpty());
+                assertTrue(contents.size() == 1);
+                assertEquals("5", contents.get(0).get(resultAttribute));
+            }
+
+            /**
+             * <pre>
+             * ❏ 概要
+             * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+             * このテストでは条件ノードの個数が大規模のコンテンツファイルを使用する。
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 観点
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
+             * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"6"</code> であること
+             * </pre>
+             * 
+             * <pre>
+             * ❏ コンテンツ取得条件
+             * ・<code>"testCondition1" : "1000"</code>
+             * ・<code>"testCondition2" : "true"</code>
+             * ・<code>"testCondition3" : "false"</code>
+             * ・<code>"testCondition4" : "100"</code>
+             * ・<code>"testCondition5" : "test"</code>
+             * ・<code>"testCondition6" : "10L"</code>
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 留意点
+             * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+             * </pre>
+             */
+            @Test
+            public void testAnotherRecordWithConditions() {
+
+                final String resultAttribute = "result";
+                final List<String> attributes = new ArrayList<>(1);
+                attributes.add(resultAttribute);
+
+                final Map<String, String> conditions = new HashMap<>(2);
+                conditions.put(TestCondition.testCondition1.getString(), "1000");
+                conditions.put(TestCondition.testCondition2.getString(), "true");
+                conditions.put(TestCondition.testCondition3.getString(), "false");
+                conditions.put(TestCondition.testCondition4.getString(), "100");
+                conditions.put(TestCondition.testCondition5.getString(), "test");
+                conditions.put(TestCondition.testCondition6.getString(), "10L");
+
+                final List<Map<String, String>> contents = ContentLoader
+                        .load(TestContentName.LARGE_CONDITION_NODES.getString(), attributes, conditions);
+
+                assertNotNull(contents);
+                assertTrue(!contents.isEmpty());
+                assertTrue(contents.size() == 1);
+                assertEquals("1", contents.get(0).get(resultAttribute));
+            }
+
+            /**
+             * <pre>
+             * ❏ 概要
+             * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+             * このテストでは条件ノードの個数が大規模のコンテンツファイルを使用する。
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 観点
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストであること
+             * </pre>
+             * 
+             * <pre>
+             * ❏ コンテンツ取得条件
+             * ・<code>"testCondition1" : "100"</code>
+             * ・<code>"testCondition2" : "true"</code>
+             * ・<code>"testCondition3" : "false"</code>
+             * ・<code>"testCondition4" : "1000"</code>
+             * ・<code>"testCondition5" : "test"</code>
+             * ・<code>"testCondition6" : "10L"</code>
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 留意点
+             * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+             * </pre>
+             */
+            @Test
+            public void testNoRecordWithConditions() {
+
+                final String resultAttribute = "result";
+                final List<String> attributes = new ArrayList<>(1);
+                attributes.add(resultAttribute);
+
+                final Map<String, String> conditions = new HashMap<>(2);
+                conditions.put(TestCondition.testCondition1.getString(), "100");
+                conditions.put(TestCondition.testCondition2.getString(), "true");
+                conditions.put(TestCondition.testCondition3.getString(), "false");
+                conditions.put(TestCondition.testCondition4.getString(), "1000");
+                conditions.put(TestCondition.testCondition5.getString(), "test");
+                conditions.put(TestCondition.testCondition6.getString(), "10L");
+
+                final List<Map<String, String>> contents = ContentLoader
+                        .load(TestContentName.MEDIUM_CONDITION_NODES.getString(), attributes, conditions);
+
+                assertNotNull(contents);
+                assertTrue(contents.isEmpty());
+            }
         }
 
         /**
@@ -642,7 +799,12 @@ public final class ContentLoaderTest {
         /**
          * 中規模条件ノードのテスト用コンテンツ
          */
-        MEDIUM_CONDITION_NODES(Name.testContentWithMediumConditionNodes);
+        MEDIUM_CONDITION_NODES(Name.testContentWithMediumConditionNodes),
+
+        /**
+         * 大規模条件ノードのテスト用コンテンツ
+         */
+        LARGE_CONDITION_NODES(Name.testContentWithLargeConditionNodes);
 
         /**
          * コンテンツ名
@@ -663,7 +825,7 @@ public final class ContentLoaderTest {
          */
         private enum Name {
             testContentWithSmallSelectionNodes, testContentWithMediumSelectionNodes, testContentWithLargeSelectionNodes,
-            testContentWithSmallConditionNodes, testContentWithMediumConditionNodes;
+            testContentWithSmallConditionNodes, testContentWithMediumConditionNodes, testContentWithLargeConditionNodes;
         }
 
         @Override
@@ -688,7 +850,7 @@ public final class ContentLoaderTest {
      * テスト用条件クラス
      */
     private enum TestCondition implements Condition {
-        testCondition1, testCondition2, testCondition3, testCondition4;
+        testCondition1, testCondition2, testCondition3, testCondition4, testCondition5, testCondition6;
 
         @Override
         public String getString() {
