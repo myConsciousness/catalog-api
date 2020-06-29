@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -1387,7 +1388,7 @@ public final class ContentLoaderTest {
          * ❏ 観点
          * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が {@code null} ではないこと
          * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が空リストではないこと
-         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値のサイズが <code>1</code> であること
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値のサイズが <code>5</code> であること
          * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードが {@code null} ではないこと
          * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードが空マップではないこと
          * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードのサイズが <code>5</code> であること
@@ -1409,7 +1410,7 @@ public final class ContentLoaderTest {
             attributes.add(TestContentAttribute.test5.getString());
 
             final Map<String, Object> selectionNodes = new HashMap<>(1);
-            final List<Map<String, Map<String, String>>> selectionNodesList = new ArrayList<>(2);
+            final List<Map<String, Map<String, String>>> selectionNodesList = new ArrayList<>(5);
 
             for (int i = 0; i < 5; i++) {
                 final Map<String, Map<String, String>> node = new HashMap<>(2);
@@ -1429,11 +1430,8 @@ public final class ContentLoaderTest {
 
             selectionNodes.put(SelectionNodeKey.SELECTION_NODES.getKey(), selectionNodesList);
 
-            final List<String> conditionIdList = new ArrayList<>(1);
-            conditionIdList.add("1");
-
             final List<Map<String, String>> actualContentList = this.invoke(attributes, selectionNodes,
-                    conditionIdList);
+                    new ArrayList<>(0));
 
             assertNotNull(actualContentList);
             assertTrue(!actualContentList.isEmpty());
@@ -1441,6 +1439,99 @@ public final class ContentLoaderTest {
 
             for (int i = 0; i < 5; i++) {
                 final String expectedItemValue = String.format("something%s", i);
+                final Map<String, String> actualRecord = actualContentList.get(i);
+
+                assertNotNull(actualRecord);
+                assertTrue(!actualRecord.isEmpty());
+                assertTrue(actualRecord.size() == 5);
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test1.getString()));
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test2.getString()));
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test3.getString()));
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test4.getString()));
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test5.getString()));
+            }
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getContentList(List, Map, List)} メソッドの返却値を確認する。
+         * このテストではコンテンツ定義のノードにconditionIdの値が設定されているレコードと設定されていないレコードが存在する場合を想定して行う。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が空リストではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値のサイズが <code>7</code> であること
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードが {@code null} ではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードが空マップではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードのサイズが <code>5</code> であること
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードの値が全て生成した期待値と等価であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWithConditionIdAndNoConditionId() {
+            final List<String> attributes = new ArrayList<>(5);
+            attributes.add(TestContentAttribute.test1.getString());
+            attributes.add(TestContentAttribute.test2.getString());
+            attributes.add(TestContentAttribute.test3.getString());
+            attributes.add(TestContentAttribute.test4.getString());
+            attributes.add(TestContentAttribute.test5.getString());
+
+            final Map<String, Object> selectionNodes = new LinkedHashMap<>(1);
+            final List<Map<String, Map<String, String>>> selectionNodesList = new ArrayList<>(10);
+
+            for (int i = 0; i < 10; i++) {
+                final Map<String, Map<String, String>> node = new LinkedHashMap<>(2);
+                final Map<String, String> items = new LinkedHashMap<>(5);
+                final String itemValue = String.format("something%s", i);
+
+                if (i % 2 == 0) {
+                    items.put(SelectionNodeKey.CONDITION_ID.getKey(), StringUtils.EMPTY);
+                } else {
+                    items.put(SelectionNodeKey.CONDITION_ID.getKey(), String.valueOf(i));
+                }
+
+                items.put(TestContentAttribute.test1.getString(), itemValue);
+                items.put(TestContentAttribute.test2.getString(), itemValue);
+                items.put(TestContentAttribute.test3.getString(), itemValue);
+                items.put(TestContentAttribute.test4.getString(), itemValue);
+                items.put(TestContentAttribute.test5.getString(), itemValue);
+
+                node.put(SelectionNodeKey.NODE.getKey(), items);
+                selectionNodesList.add(node);
+            }
+
+            selectionNodes.put(SelectionNodeKey.SELECTION_NODES.getKey(), selectionNodesList);
+
+            final List<String> conditionIdList = new ArrayList<>(2);
+            conditionIdList.add("1");
+            conditionIdList.add("7");
+
+            final List<Map<String, String>> actualContentList = this.invoke(attributes, selectionNodes,
+                    conditionIdList);
+
+            assertNotNull(actualContentList);
+            assertTrue(!actualContentList.isEmpty());
+            assertTrue(actualContentList.size() == 7);
+
+            final List<Integer> expectedRecordIndexes = new LinkedList<>();
+            expectedRecordIndexes.add(0);
+            expectedRecordIndexes.add(1);
+            expectedRecordIndexes.add(2);
+            expectedRecordIndexes.add(4);
+            expectedRecordIndexes.add(6);
+            expectedRecordIndexes.add(7);
+            expectedRecordIndexes.add(8);
+
+            for (int i = 0, size = expectedRecordIndexes.size(); i < size; i++) {
+                final String expectedItemValue = String.format("something%s", expectedRecordIndexes.get(i));
                 final Map<String, String> actualRecord = actualContentList.get(i);
 
                 assertNotNull(actualRecord);
