@@ -1,0 +1,261 @@
+{
+    "metadata": {
+        "author": "Kato Shinya",
+        "since": "1.0",
+        "version": "1.0",
+        "creationDate": "2020/06/29",
+        "encoding": "UTF-8",
+        "description": "条件ありのコンテンツロードをテストするためのコンテンツファイルです。このコンテンツファイルでは大規模な条件ノードを定義します。"
+    },
+
+    "selectionNodes": [{
+            "node": {
+                "conditionId": "0",
+                "result": "0"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "1",
+                "result": "1"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "2",
+                "result": "2"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "3",
+                "result": "3"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "4",
+                "result": "4"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "5",
+                "result": "5"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "6",
+                "result": "6"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "7",
+                "result": "7"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "8",
+                "result": "8"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "9",
+                "result": "9"
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "10",
+                "result": "10"
+            }
+        }
+    ],
+
+    "conditionNodes": [{
+            "node": {
+                "conditionId": "0",
+                "exclude": false,
+                "conditions": [{
+                        "keyName": "testCondition1",
+                        "operand": "=",
+                        "value": "1000"
+                    },
+
+                    {
+                        "keyName": "testCondition2",
+                        "operand": "=",
+                        "value": "true"
+                    },
+
+                    {
+                        "keyName": "testCondition3",
+                        "operand": "=",
+                        "value": "true"
+                    },
+
+                    {
+                        "keyName": "testCondition4",
+                        "operand": "=",
+                        "value": "100"
+                    },
+
+                    {
+                        "keyName": "testCondition5",
+                        "operand": "=",
+                        "value": "test"
+                    },
+
+                    {
+                        "keyName": "testCondition6",
+                        "operand": "=",
+                        "value": "10L"
+                    }
+                ]
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "1",
+                "exclude": false,
+                "conditions": [{
+                        "keyName": "testCondition1",
+                        "operand": "=",
+                        "value": "1000"
+                    },
+
+                    {
+                        "keyName": "testCondition2",
+                        "operand": "=",
+                        "value": "true"
+                    },
+
+                    {
+                        "keyName": "testCondition3",
+                        "operand": "=",
+                        "value": "false"
+                    },
+
+                    {
+                        "keyName": "testCondition4",
+                        "operand": "=",
+                        "value": "100"
+                    },
+
+                    {
+                        "keyName": "testCondition5",
+                        "operand": "=",
+                        "value": "test"
+                    },
+
+                    {
+                        "keyName": "testCondition6",
+                        "operand": "=",
+                        "value": "10L"
+                    }
+                ]
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "5",
+                "exclude": false,
+                "conditions": [{
+                        "keyName": "testCondition1",
+                        "operand": "=",
+                        "value": "1000"
+                    },
+
+                    {
+                        "keyName": "testCondition2",
+                        "operand": "=",
+                        "value": "false"
+                    },
+
+                    {
+                        "keyName": "testCondition3",
+                        "operand": "=",
+                        "value": "true"
+                    },
+
+                    {
+                        "keyName": "testCondition4",
+                        "operand": "=",
+                        "value": "100"
+                    },
+
+                    {
+                        "keyName": "testCondition5",
+                        "operand": "=",
+                        "value": "test"
+                    },
+
+                    {
+                        "keyName": "testCondition6",
+                        "operand": "=",
+                        "value": "10L"
+                    }
+                ]
+            }
+        },
+
+        {
+            "node": {
+                "conditionId": "6",
+                "exclude": false,
+                "conditions": [{
+                        "keyName": "testCondition1",
+                        "operand": "=",
+                        "value": "1000"
+                    },
+
+                    {
+                        "keyName": "testCondition2",
+                        "operand": "=",
+                        "value": "false"
+                    },
+
+                    {
+                        "keyName": "testCondition3",
+                        "operand": "=",
+                        "value": "false"
+                    },
+
+                    {
+                        "keyName": "testCondition4",
+                        "operand": "=",
+                        "value": "100"
+                    },
+
+                    {
+                        "keyName": "testCondition5",
+                        "operand": "=",
+                        "value": "test"
+                    },
+
+                    {
+                        "keyName": "testCondition6",
+                        "operand": "=",
+                        "value": "10L"
+                    }
+                ]
+            }
+        }
+    ]
+}
