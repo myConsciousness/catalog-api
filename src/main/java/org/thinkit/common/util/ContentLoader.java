@@ -212,7 +212,7 @@ public final class ContentLoader {
      * @return ノードマップに格納されたコンテンツキーに紐づく文字列型の値
      */
     private static String getString(@NonNull Map<String, Object> nodeMap, @NonNull Key contentKey) {
-        return (String) nodeMap.get(contentKey.getKey());
+        return getString(nodeMap, contentKey.getKey());
     }
 
     /**
