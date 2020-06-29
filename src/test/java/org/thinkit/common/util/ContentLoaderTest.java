@@ -53,88 +53,6 @@ public final class ContentLoaderTest {
     }
 
     /**
-     * テスト用コンテンツ名クラス
-     */
-    private enum TestContentName implements Content {
-
-        /**
-         * 小規模選択ノードのテスト用コンテンツ
-         */
-        SMALL_SELECTION_NODES(Name.testContentWithSmallSelectionNodes),
-
-        /**
-         * 中規模選択ノードのテスト用コンテンツ
-         */
-        MEDIUM_SELECTION_NODES(Name.testContentWithMediumSelectionNodes),
-
-        /**
-         * 大規模選択ノードのテスト用コンテンツ
-         */
-        LARGE_SELECTION_NODES(Name.testContentWithLargeSelectionNodes),
-
-        /**
-         * 小規模条件ノードのテスト用コンテンツ
-         */
-        SMALL_CONDITION_NODES(Name.testContentWithSmallConditionNodes),
-
-        /**
-         * 中規模条件ノードのテスト用コンテンツ
-         */
-        MEDIUM_CONDITION_NODES(Name.testContentWithMediumConditionNodes);
-
-        /**
-         * コンテンツ名
-         */
-        private Name contentName;
-
-        /**
-         * コンストラクタ
-         * 
-         * @param contentName コンテンツ名
-         */
-        TestContentName(Name contentName) {
-            this.contentName = contentName;
-        }
-
-        /**
-         * コンテンツ名
-         */
-        private enum Name {
-            testContentWithSmallSelectionNodes, testContentWithMediumSelectionNodes, testContentWithLargeSelectionNodes,
-            testContentWithSmallConditionNodes, testContentWithMediumConditionNodes;
-        }
-
-        @Override
-        public String getString() {
-            return this.contentName.name();
-        }
-    }
-
-    /**
-     * テスト用アトリビュートクラス
-     */
-    private enum TestContentAttribute implements Attribute {
-        test1, test2, test3, test4, test5;
-
-        @Override
-        public String getString() {
-            return this.name();
-        }
-    }
-
-    /**
-     * テスト用条件クラス
-     */
-    private enum TestCondition implements Condition {
-        testCondition1, testCondition2, testCondition3, testCondition4;
-
-        @Override
-        public String getString() {
-            return this.name();
-        }
-    }
-
-    /**
      * {@link ContentLoader#load(String, List)} メソッドのテストメソッドを定義するネストクラスです。
      * 
      * @author Kato Shinya
@@ -693,6 +611,88 @@ public final class ContentLoaderTest {
                     () -> ContentLoader.load("test", new ArrayList<>(0), new HashMap<>(0)));
             assertNotNull(exception);
             assertEquals("wrong parameter was given. Attribute is required.", exception.getMessage());
+        }
+    }
+
+    /**
+     * テスト用コンテンツ名クラス
+     */
+    private enum TestContentName implements Content {
+
+        /**
+         * 小規模選択ノードのテスト用コンテンツ
+         */
+        SMALL_SELECTION_NODES(Name.testContentWithSmallSelectionNodes),
+
+        /**
+         * 中規模選択ノードのテスト用コンテンツ
+         */
+        MEDIUM_SELECTION_NODES(Name.testContentWithMediumSelectionNodes),
+
+        /**
+         * 大規模選択ノードのテスト用コンテンツ
+         */
+        LARGE_SELECTION_NODES(Name.testContentWithLargeSelectionNodes),
+
+        /**
+         * 小規模条件ノードのテスト用コンテンツ
+         */
+        SMALL_CONDITION_NODES(Name.testContentWithSmallConditionNodes),
+
+        /**
+         * 中規模条件ノードのテスト用コンテンツ
+         */
+        MEDIUM_CONDITION_NODES(Name.testContentWithMediumConditionNodes);
+
+        /**
+         * コンテンツ名
+         */
+        private Name contentName;
+
+        /**
+         * コンストラクタ
+         * 
+         * @param contentName コンテンツ名
+         */
+        TestContentName(Name contentName) {
+            this.contentName = contentName;
+        }
+
+        /**
+         * コンテンツ名
+         */
+        private enum Name {
+            testContentWithSmallSelectionNodes, testContentWithMediumSelectionNodes, testContentWithLargeSelectionNodes,
+            testContentWithSmallConditionNodes, testContentWithMediumConditionNodes;
+        }
+
+        @Override
+        public String getString() {
+            return this.contentName.name();
+        }
+    }
+
+    /**
+     * テスト用アトリビュートクラス
+     */
+    private enum TestContentAttribute implements Attribute {
+        test1, test2, test3, test4, test5;
+
+        @Override
+        public String getString() {
+            return this.name();
+        }
+    }
+
+    /**
+     * テスト用条件クラス
+     */
+    private enum TestCondition implements Condition {
+        testCondition1, testCondition2, testCondition3, testCondition4;
+
+        @Override
+        public String getString() {
+            return this.name();
         }
     }
 }
