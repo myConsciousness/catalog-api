@@ -27,6 +27,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -1022,8 +1023,8 @@ public final class ContentLoaderTest {
          */
         @Test
         public void testSimplePattern() {
-
             final String expectedContentValue = "Hello World!";
+
             final Map<String, Object> node = new HashMap<>();
             node.put(SelectionNodeKey.CONDITION_ID.getKey(), expectedContentValue);
 
@@ -1075,6 +1076,97 @@ public final class ContentLoaderTest {
     }
 
     /**
+     * {@link ContentLoader#getContent(String)} メソッドのテストメソッドを定義するテストクラスです。
+     * {@link ContentLoader#getContent(String)} はprivateメソッドです。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    final class TestGetContent {
+
+        /**
+         * テスト対象のクラスオブジェクト
+         */
+        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
+
+        /**
+         * テスト用メソッド
+         */
+        private Method testMethod = null;
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getContent(String)} メソッドの返却値を確認する。
+         * 期待値として標準のテスト用コンテンツファイルを使用することとする。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getContent(String)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getContent(String)} の返却値が空リストではないこと
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+         * </pre>
+         */
+        @Test
+        public void testSimplePattern() {
+
+            final Map<String, Object> content = this.invoke(TestContentName.DEFAULT.getString());
+
+            assertNotNull(content);
+            assertTrue(!content.isEmpty());
+            assertTrue(content instanceof LinkedHashMap);
+        }
+
+        /**
+         * 引数の情報を基に {@link ContentLoader#getContent(String)} メソッドを呼び出すメソッドです。
+         * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため {@link SuppressWarnings}
+         * でuncheckedを指定しています。
+         * 
+         * @param contentName コンテンツ名
+         * @return コンテンツマップ
+         */
+        @SuppressWarnings("unchecked")
+        private Map<String, Object> invoke(String contentName) {
+
+            Map<String, Object> content = new LinkedHashMap<>();
+
+            try {
+                content = (LinkedHashMap<String, Object>) this.getTestMethod().invoke(TEST_CLASS, contentName);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            return content;
+        }
+
+        /**
+         * {@link ContentLoader#getContent(String)} メソッドを取得し返却します。
+         * 
+         * @return {@link ContentLoader#getContent(String)} メソッド
+         */
+        private Method getTestMethod() {
+            if (this.testMethod == null) {
+                try {
+                    final String testMethodName = "getContent";
+                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, String.class);
+                    this.testMethod.setAccessible(true);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return this.testMethod;
+        }
+    }
+
+    /**
      * テスト用コンテンツ名クラス
      */
     private enum TestContentName implements Content {
@@ -1107,7 +1199,12 @@ public final class ContentLoaderTest {
         /**
          * 大規模条件ノードのテスト用コンテンツ
          */
-        LARGE_CONDITION_NODES(Name.testContentWithLargeConditionNodes);
+        LARGE_CONDITION_NODES(Name.testContentWithLargeConditionNodes),
+
+        /**
+         * 標準のテスト用コンテンツ
+         */
+        DEFAULT(Name.testContent);
 
         /**
          * コンテンツ名
@@ -1128,7 +1225,8 @@ public final class ContentLoaderTest {
          */
         private enum Name {
             testContentWithSmallSelectionNodes, testContentWithMediumSelectionNodes, testContentWithLargeSelectionNodes,
-            testContentWithSmallConditionNodes, testContentWithMediumConditionNodes, testContentWithLargeConditionNodes;
+            testContentWithSmallConditionNodes, testContentWithMediumConditionNodes, testContentWithLargeConditionNodes,
+            testContent;
         }
 
         @Override
