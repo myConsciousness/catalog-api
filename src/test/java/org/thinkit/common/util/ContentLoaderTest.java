@@ -75,7 +75,12 @@ public final class ContentLoaderTest {
         /**
          * 小規模条件ノードのテスト用コンテンツ
          */
-        SMALL_CONDITION_NODES(Name.testContentWithSmallConditionNodes);
+        SMALL_CONDITION_NODES(Name.testContentWithSmallConditionNodes),
+
+        /**
+         * 中規模条件ノードのテスト用コンテンツ
+         */
+        MEDIUM_CONDITION_NODES(Name.testContentWithMediumConditionNodes);
 
         /**
          * コンテンツ名
@@ -96,7 +101,7 @@ public final class ContentLoaderTest {
          */
         private enum Name {
             testContentWithSmallSelectionNodes, testContentWithMediumSelectionNodes, testContentWithLargeSelectionNodes,
-            testContentWithSmallConditionNodes;
+            testContentWithSmallConditionNodes, testContentWithMediumConditionNodes;
         }
 
         @Override
@@ -121,7 +126,7 @@ public final class ContentLoaderTest {
      * テスト用条件クラス
      */
     private enum TestCondition implements Condition {
-        testCondition1, testCondition2;
+        testCondition1, testCondition2, testCondition3, testCondition4;
 
         @Override
         public String getString() {
@@ -451,7 +456,7 @@ public final class ContentLoaderTest {
              * </pre>
              */
             @Test
-            public void testWhenNoRecord() {
+            public void testNoRecordWithConditions() {
 
                 final String resultAttribute = "result";
                 final List<String> attributes = new ArrayList<>(1);
@@ -480,6 +485,151 @@ public final class ContentLoaderTest {
         @Nested
         class TestMediumConditionsNodes {
 
+            /**
+             * <pre>
+             * ❏ 概要
+             * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+             * このテストでは条件ノードの個数が中規模のコンテンツファイルを使用する。
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 観点
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
+             * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"1"</code> であること
+             * </pre>
+             * 
+             * <pre>
+             * ❏ コンテンツ取得条件
+             * ・<code>"testCondition1" : "false"</code>
+             * ・<code>"testCondition2" : "test"</code>
+             * ・<code>"testCondition3" : "100"</code>
+             * ・<code>"testCondition4" : "テスト"</code>
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 留意点
+             * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+             * </pre>
+             */
+            @Test
+            public void testWithConditions() {
+
+                final String resultAttribute = "result";
+                final List<String> attributes = new ArrayList<>(1);
+                attributes.add(resultAttribute);
+
+                final Map<String, String> conditions = new HashMap<>(2);
+                conditions.put(TestCondition.testCondition1.getString(), "false");
+                conditions.put(TestCondition.testCondition2.getString(), "test");
+                conditions.put(TestCondition.testCondition3.getString(), "100");
+                conditions.put(TestCondition.testCondition4.getString(), "テスト");
+
+                final List<Map<String, String>> contents = ContentLoader
+                        .load(TestContentName.MEDIUM_CONDITION_NODES.getString(), attributes, conditions);
+
+                assertNotNull(contents);
+                assertTrue(!contents.isEmpty());
+                assertTrue(contents.size() == 1);
+                assertEquals("1", contents.get(0).get(resultAttribute));
+            }
+
+            /**
+             * <pre>
+             * ❏ 概要
+             * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+             * このテストでは条件ノードの個数が中規模のコンテンツファイルを使用する。
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 観点
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} メソッドから取得したリストのサイズが <code>1</code> であること
+             * ・以下の条件でコンテンツをロードした場合 <code>"result"</code> に紐づく値が <code>"3"</code> であること
+             * </pre>
+             * 
+             * <pre>
+             * ❏ コンテンツ取得条件
+             * ・<code>"testCondition1" : "test"</code>
+             * ・<code>"testCondition2" : "100"</code>
+             * ・<code>"testCondition3" : "テスト"</code>
+             * ・<code>"testCondition4" : "true"</code>
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 留意点
+             * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+             * </pre>
+             */
+            @Test
+            public void testAnotherRecordWithConditions() {
+
+                final String resultAttribute = "result";
+                final List<String> attributes = new ArrayList<>(1);
+                attributes.add(resultAttribute);
+
+                final Map<String, String> conditions = new HashMap<>(2);
+                conditions.put(TestCondition.testCondition1.getString(), "test");
+                conditions.put(TestCondition.testCondition2.getString(), "100");
+                conditions.put(TestCondition.testCondition3.getString(), "テスト");
+                conditions.put(TestCondition.testCondition4.getString(), "true");
+
+                final List<Map<String, String>> contents = ContentLoader
+                        .load(TestContentName.MEDIUM_CONDITION_NODES.getString(), attributes, conditions);
+
+                assertNotNull(contents);
+                assertTrue(!contents.isEmpty());
+                assertTrue(contents.size() == 1);
+                assertEquals("3", contents.get(0).get(resultAttribute));
+            }
+
+            /**
+             * <pre>
+             * ❏ 概要
+             * {@link ContentLoader} クラスの {@link ContentLoader#load(String, List, Map)} メソッドの返却値を確認する。
+             * このテストでは条件ノードの個数が中規模のコンテンツファイルを使用する。
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 観点
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが {@code null} ではないこと
+             * ・以下の条件でコンテンツをロードした場合 {@link ContentLoader#load(String, List, Map)} から取得したリストが空リストであること
+             * </pre>
+             * 
+             * <pre>
+             * ❏ コンテンツ取得条件
+             * ・<code>"testCondition1" : "100"</code>
+             * ・<code>"testCondition2" : "true"</code>
+             * ・<code>"testCondition3" : "test"</code>
+             * ・<code>"testCondition4" : "テスト"</code>
+             * </pre>
+             * 
+             * <pre>
+             * ❏ 留意点
+             * このテストケースおよび期待値は使用するテスト用のコンテンツに定義されたキーと値に依存しています。
+             * </pre>
+             */
+            @Test
+            public void testNoRecordWithConditions() {
+
+                final String resultAttribute = "result";
+                final List<String> attributes = new ArrayList<>(1);
+                attributes.add(resultAttribute);
+
+                final Map<String, String> conditions = new HashMap<>(2);
+                conditions.put(TestCondition.testCondition1.getString(), "100");
+                conditions.put(TestCondition.testCondition2.getString(), "true");
+                conditions.put(TestCondition.testCondition3.getString(), "test");
+                conditions.put(TestCondition.testCondition4.getString(), "テスト");
+
+                final List<Map<String, String>> contents = ContentLoader
+                        .load(TestContentName.MEDIUM_CONDITION_NODES.getString(), attributes, conditions);
+
+                assertNotNull(contents);
+                assertTrue(contents.isEmpty());
+            }
         }
 
         /**
