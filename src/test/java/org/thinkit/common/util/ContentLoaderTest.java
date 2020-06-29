@@ -325,7 +325,7 @@ public final class ContentLoaderTest {
 
         /**
          * {@link ContentLoader#load(String, List, Map)} メソッドのテストメソッドを定義するネストクラスです。
-         * このクラスに定義するテストメソッドは小規模な条件ノードを定義したコンテンツファイルを使用してください。
+         * このクラスに定義するテストメソッドは小規模条件ノードを定義したコンテンツファイルを使用してください。
          * 
          * @author Kato Shinya
          * @since 1.0
@@ -467,6 +467,32 @@ public final class ContentLoaderTest {
                 assertNotNull(contents);
                 assertTrue(contents.isEmpty());
             }
+        }
+
+        /**
+         * {@link ContentLoader#load(String, List, Map)} メソッドのテストメソッドを定義するネストクラスです。
+         * このクラスに定義するテストメソッドは中規模条件ノードを定義したコンテンツファイルを使用してください。
+         * 
+         * @author Kato Shinya
+         * @since 1.0
+         * @version 1.0
+         */
+        @Nested
+        class TestMediumConditionsNodes {
+
+        }
+
+        /**
+         * {@link ContentLoader#load(String, List, Map)} メソッドのテストメソッドを定義するネストクラスです。
+         * このクラスに定義するテストメソッドは大規模条件ノードを定義したコンテンツファイルを使用してください。
+         * 
+         * @author Kato Shinya
+         * @since 1.0
+         * @version 1.0
+         */
+        @Nested
+        class TestLargeConditionsNodes {
+
         }
 
         /**

@@ -3,7 +3,7 @@
         "author": "Kato Shinya",
         "since": "1.0",
         "version": "1.0",
-        "creationDate": "2020/6/28",
+        "creationDate": "2020/06/28",
         "encoding": "UTF-8",
         "description": "条件なしのコンテンツロードをテストするためのコンテンツファイルです。このコンテンツファイルでは小規模な選択ノードを定義します。"
     },
