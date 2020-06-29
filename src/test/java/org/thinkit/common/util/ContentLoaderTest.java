@@ -1286,6 +1286,143 @@ public final class ContentLoaderTest {
     }
 
     /**
+     * {@link ContentLoader#getContentList(List, Map, List)}
+     * メソッドのテストメソッドを定義するテストクラスです。
+     * {@link ContentLoader#getContentList(List, Map, List)} はprivateメソッドです。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    final class TestGetContentList {
+
+        /**
+         * テスト対象のクラスオブジェクト
+         */
+        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
+
+        /**
+         * テスト用メソッド
+         */
+        private Method testMethod = null;
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getContentList(List, Map, List)} メソッドの返却値を確認する。
+         * このテストではコンテンツ定義の全ノードにconditionIdの値が設定されている場合を想定して行う。
+         * conditionIdが <code>"1"</code> のレコードを取得しテストを行う。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が空リストではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値のサイズが <code>1</code> であること
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードが {@code null} ではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードが空マップではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードのサイズが <code>3</code> であること
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードの値が全て <code>"something1"</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWithConditionId() {
+            final List<String> attributes = new ArrayList<>(3);
+            attributes.add(TestContentAttribute.test1.getString());
+            attributes.add(TestContentAttribute.test2.getString());
+            attributes.add(TestContentAttribute.test3.getString());
+
+            final Map<String, Object> selectionNodes = new HashMap<>(1);
+            final List<Map<String, Map<String, String>>> selectionNodesList = new ArrayList<>(2);
+
+            for (int i = 0; i < 2; i++) {
+                final Map<String, Map<String, String>> node = new HashMap<>(2);
+                final Map<String, String> items = new HashMap<>(3);
+                final String itemValue = String.format("something%s", i);
+
+                items.put(SelectionNodeKey.CONDITION_ID.getKey(), String.valueOf(i));
+                items.put(TestContentAttribute.test1.getString(), itemValue);
+                items.put(TestContentAttribute.test2.getString(), itemValue);
+                items.put(TestContentAttribute.test3.getString(), itemValue);
+
+                node.put(SelectionNodeKey.NODE.getKey(), items);
+                selectionNodesList.add(node);
+            }
+
+            selectionNodes.put(SelectionNodeKey.SELECTION_NODES.getKey(), selectionNodesList);
+
+            final List<String> conditionIdList = new ArrayList<>(1);
+            conditionIdList.add("1");
+
+            final List<Map<String, String>> actualContentList = this.invoke(attributes, selectionNodes,
+                    conditionIdList);
+            final Map<String, String> actualRecord = actualContentList.get(0);
+
+            assertNotNull(actualContentList);
+            assertNotNull(actualRecord);
+            assertTrue(!actualContentList.isEmpty());
+            assertTrue(!actualRecord.isEmpty());
+            assertTrue(actualContentList.size() == 1);
+            assertTrue(actualRecord.size() == 3);
+            assertEquals("something1", actualRecord.get(TestContentAttribute.test1.getString()));
+            assertEquals("something1", actualRecord.get(TestContentAttribute.test2.getString()));
+            assertEquals("something1", actualRecord.get(TestContentAttribute.test3.getString()));
+        }
+
+        /**
+         * 引数の情報を基に {@link ContentLoader#getContentList(List, Map, List)}
+         * メソッドを呼び出すメソッドです。 ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
+         * {@link SuppressWarnings}でuncheckedを指定しています。
+         * 
+         * @param attributes      コンテンツから取得する値に紐づくキー
+         * @param rawContent      加工されていないコンテンツオブジェクト
+         * @param conditionIdList 取得する対象の条件IDが格納されたリスト
+         * @return コンテンツリスト
+         */
+        @SuppressWarnings("unchecked")
+        private List<Map<String, String>> invoke(List<String> attributes, Map<String, Object> rawContent,
+                List<String> conditionIdList) {
+
+            List<Map<String, String>> contentList = new ArrayList<>(0);
+
+            try {
+                contentList = (ArrayList<Map<String, String>>) this.getTestMethod().invoke(TEST_CLASS, attributes,
+                        rawContent, conditionIdList);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            return contentList;
+        }
+
+        /**
+         * {@link ContentLoader#getContentList(List, Map, List)} メソッドを取得し返却します。
+         * 
+         * @return {@link ContentLoader#getContentList(List, Map, List)} メソッド
+         */
+        private Method getTestMethod() {
+            if (this.testMethod == null) {
+                try {
+                    final String testMethodName = "getContentList";
+                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, List.class, Map.class,
+                            List.class);
+                    this.testMethod.setAccessible(true);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return this.testMethod;
+        }
+    }
+
+    /**
      * テスト用コンテンツ名クラス
      */
     private enum TestContentName implements Content {
