@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.thinkit.common.rule.Content;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -1373,6 +1374,84 @@ public final class ContentLoaderTest {
             assertEquals("something1", actualRecord.get(TestContentAttribute.test1.getString()));
             assertEquals("something1", actualRecord.get(TestContentAttribute.test2.getString()));
             assertEquals("something1", actualRecord.get(TestContentAttribute.test3.getString()));
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getContentList(List, Map, List)} メソッドの返却値を確認する。
+         * このテストではコンテンツ定義の全ノードにconditionIdの値が設定されていない場合を想定して行う。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が空リストではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値のサイズが <code>1</code> であること
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードが {@code null} ではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードが空マップではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードのサイズが <code>3</code> であること
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードの値が全て <code>"something1"</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWithNoConditionId() {
+            final List<String> attributes = new ArrayList<>(5);
+            attributes.add(TestContentAttribute.test1.getString());
+            attributes.add(TestContentAttribute.test2.getString());
+            attributes.add(TestContentAttribute.test3.getString());
+            attributes.add(TestContentAttribute.test4.getString());
+            attributes.add(TestContentAttribute.test5.getString());
+
+            final Map<String, Object> selectionNodes = new HashMap<>(1);
+            final List<Map<String, Map<String, String>>> selectionNodesList = new ArrayList<>(2);
+
+            for (int i = 0; i < 5; i++) {
+                final Map<String, Map<String, String>> node = new HashMap<>(2);
+                final Map<String, String> items = new HashMap<>(5);
+                final String itemValue = String.format("something%s", i);
+
+                items.put(SelectionNodeKey.CONDITION_ID.getKey(), StringUtils.EMPTY);
+                items.put(TestContentAttribute.test1.getString(), itemValue);
+                items.put(TestContentAttribute.test2.getString(), itemValue);
+                items.put(TestContentAttribute.test3.getString(), itemValue);
+                items.put(TestContentAttribute.test4.getString(), itemValue);
+                items.put(TestContentAttribute.test5.getString(), itemValue);
+
+                node.put(SelectionNodeKey.NODE.getKey(), items);
+                selectionNodesList.add(node);
+            }
+
+            selectionNodes.put(SelectionNodeKey.SELECTION_NODES.getKey(), selectionNodesList);
+
+            final List<String> conditionIdList = new ArrayList<>(1);
+            conditionIdList.add("1");
+
+            final List<Map<String, String>> actualContentList = this.invoke(attributes, selectionNodes,
+                    conditionIdList);
+
+            assertNotNull(actualContentList);
+            assertTrue(!actualContentList.isEmpty());
+            assertTrue(actualContentList.size() == 5);
+
+            for (int i = 0; i < 5; i++) {
+                final String expectedItemValue = String.format("something%s", i);
+                final Map<String, String> actualRecord = actualContentList.get(i);
+
+                assertNotNull(actualRecord);
+                assertTrue(!actualRecord.isEmpty());
+                assertTrue(actualRecord.size() == 5);
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test1.getString()));
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test2.getString()));
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test3.getString()));
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test4.getString()));
+                assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test5.getString()));
+            }
         }
 
         /**
