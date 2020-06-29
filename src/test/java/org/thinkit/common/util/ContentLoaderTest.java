@@ -12,6 +12,8 @@
 
 package org.thinkit.common.util;
 
+import org.thinkit.common.key.Key;
+import org.thinkit.common.key.SelectionNodeKey;
 import org.thinkit.common.rule.Attribute;
 import org.thinkit.common.rule.Condition;
 
@@ -20,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +64,7 @@ public final class ContentLoaderTest {
      * @version 1.0
      */
     @Nested
-    class TestLoad {
+    final class TestLoad {
 
         /**
          * <pre>
@@ -244,7 +248,7 @@ public final class ContentLoaderTest {
      * @version 1.0
      */
     @Nested
-    class TestLoadWithConditions {
+    final class TestLoadWithConditions {
 
         /**
          * {@link ContentLoader#load(String, List, Map)} メソッドのテストメソッドを定義するネストクラスです。
@@ -255,7 +259,7 @@ public final class ContentLoaderTest {
          * @version 1.0
          */
         @Nested
-        class TestSmallConditionNodes {
+        final class TestSmallConditionNodes {
 
             /**
              * <pre>
@@ -401,7 +405,7 @@ public final class ContentLoaderTest {
          * @version 1.0
          */
         @Nested
-        class TestMediumConditionsNodes {
+        final class TestMediumConditionsNodes {
 
             /**
              * <pre>
@@ -559,7 +563,7 @@ public final class ContentLoaderTest {
          * @version 1.0
          */
         @Nested
-        class TestLargeConditionsNodes {
+        final class TestLargeConditionsNodes {
 
             /**
              * <pre>
@@ -768,6 +772,111 @@ public final class ContentLoaderTest {
                     () -> ContentLoader.load("test", new ArrayList<>(0), new HashMap<>(0)));
             assertNotNull(exception);
             assertEquals("wrong parameter was given. Attribute is required.", exception.getMessage());
+        }
+    }
+
+    /**
+     * {@link ContentLoade#getNodeList} メソッドのテストメソッドを定義するテストクラスです。
+     * {@link ContentLoade#getNodeList} はprivateメソッドです。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    final class TestGetNodeList {
+
+        /**
+         * テスト対象のクラスオブジェクト
+         */
+        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
+
+        /**
+         * テスト用メソッド
+         */
+        private Method testMethod = null;
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getNodeList(List, Key)} メソッドの返却値を確認する。
+         * 期待値は任意のコンテンツリストを使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getNodeList(List, Key)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getNodeList(List, Key)} の返却値が空リストではないこと
+         * ・{@link ContentLoader#getNodeList(List, Key)} の返却値と生成した任意の値が等価であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testSimplePattern() {
+            final Map<String, Object> content = new HashMap<>();
+            final List<Map<String, String>> expectedNodeList = new ArrayList<>();
+
+            for (int i = 0; i < 10; i++) {
+                final Map<String, String> node = new HashMap<>();
+                node.put("testNode1", "something");
+                node.put("testNode2", "something");
+                node.put("testNode3", "something");
+
+                expectedNodeList.add(node);
+            }
+
+            content.put(SelectionNodeKey.SELECTION_NODES.getKey(), expectedNodeList);
+            final List<Map<String, Object>> actualNodeList = this.invoke(content, SelectionNodeKey.SELECTION_NODES);
+
+            assertNotNull(actualNodeList);
+            assertTrue(!actualNodeList.isEmpty());
+            assertEquals(expectedNodeList, actualNodeList);
+        }
+
+        /**
+         * 引数の情報を基に {@link ContentLoade#getNodeList} メソッドを呼び出すメソッドです。
+         * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため {@link SuppressWarnings}
+         * でuncheckedを指定しています。
+         * 
+         * @param content    コンテンツマップ
+         * @param contentKey コンテンツキー
+         * @return {@link Key}に紐づくノードリスト
+         */
+        @SuppressWarnings("unchecked")
+        private List<Map<String, Object>> invoke(Map<String, Object> content, Key contentKey) {
+
+            List<Map<String, Object>> nodeList = new ArrayList<>(0);
+
+            try {
+                nodeList = (List<Map<String, Object>>) this.getTestMethod().invoke(TEST_CLASS, content, contentKey);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            return nodeList;
+        }
+
+        /**
+         * {@link ContentLoade#getNodeList} メソッドを取得し返却します。
+         * 
+         * @return {@link ContentLoade#getNodeList} メソッド
+         */
+        private Method getTestMethod() {
+            if (this.testMethod == null) {
+                try {
+                    final String testMethodName = "getNodeList";
+                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, Map.class, Key.class);
+                    this.testMethod.setAccessible(true);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return this.testMethod;
         }
     }
 
