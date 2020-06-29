@@ -1388,10 +1388,10 @@ public final class ContentLoaderTest {
          * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が {@code null} ではないこと
          * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値が空リストではないこと
          * ・{@link ContentLoader#getContentList(List, Map, List)} の返却値のサイズが <code>1</code> であること
-         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードが {@code null} ではないこと
-         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードが空マップではないこと
-         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードのサイズが <code>3</code> であること
-         * ・{@link ContentLoader#getContentList(List, Map, List)} の0番インデックスに紐づくレコードの値が全て <code>"something1"</code> であること
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードが {@code null} ではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードが空マップではないこと
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードのサイズが <code>5</code> であること
+         * ・{@link ContentLoader#getContentList(List, Map, List)} の各インデックスに紐づくレコードの値が全て生成した期待値と等価であること
          * </pre>
          * 
          * <pre>
