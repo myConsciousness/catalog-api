@@ -28,7 +28,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -1521,7 +1520,7 @@ public final class ContentLoaderTest {
             assertTrue(!actualContentList.isEmpty());
             assertTrue(actualContentList.size() == 7);
 
-            final List<Integer> expectedRecordIndexes = new LinkedList<>();
+            final List<Integer> expectedRecordIndexes = new ArrayList<>(7);
             expectedRecordIndexes.add(0);
             expectedRecordIndexes.add(1);
             expectedRecordIndexes.add(2);
