@@ -1732,6 +1732,74 @@ public final class ContentLoaderTest {
         }
 
         /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getConditionIdList(List, Map)} メソッドの返却値を確認する。
+         * このテストではコンテンツファイルに各条件ノードが10の条件を持っている状態を想定して行う。
+         * また、 {@link ContentLoader#getConditionIdList(List, Map)} メソッドを実行した結果、conditionIdが <code>"7"</code> の条件に合致するようにテストを行う。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値が空リストではない         
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値のサイズが <code>1</code> であること
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値のリストの0番目に紐づく値が <code>"7"</code> であるここと
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWithTenConditions() {
+
+            final List<Map<String, Object>> conditionNodes = new ArrayList<>();
+
+            for (int i = 0; i < 11; i++) {
+                final Map<String, Object> nodes = new HashMap<>();
+                final Map<String, Object> items = new HashMap<>();
+
+                items.put(ConditionNodeKey.CONDITION_ID.getKey(), String.valueOf(i));
+                items.put(ConditionNodeKey.EXCLUDE.getKey(), "false");
+
+                final List<Map<String, Object>> conditionList = new ArrayList<>();
+                final Map<String, Object> condition = new HashMap<>();
+
+                for (int j = 0; j < 3; j++) {
+                    condition.put(ConditionNodeKey.KEY_NAME.getKey(), String.format("testCondition%s", j + 1));
+                    condition.put(ConditionNodeKey.OPERAND.getKey(), "=");
+                    condition.put(ConditionNodeKey.VALUE.getKey(), String.format("testValue%s%s", i, j));
+                    conditionList.add(condition);
+                }
+
+                items.put(ConditionNodeKey.CONDITIONS.getKey(), conditionList);
+                nodes.put(ConditionNodeKey.NODE.getKey(), items);
+                conditionNodes.add(nodes);
+            }
+
+            final Map<String, String> conditions = new HashMap<>();
+            conditions.put(TestCondition.testCondition1.getString(), "testValue70");
+            conditions.put(TestCondition.testCondition2.getString(), "testValue71");
+            conditions.put(TestCondition.testCondition3.getString(), "testValue72");
+            conditions.put(TestCondition.testCondition4.getString(), "testValue73");
+            conditions.put(TestCondition.testCondition5.getString(), "testValue74");
+            conditions.put(TestCondition.testCondition6.getString(), "testValue75");
+            conditions.put(TestCondition.testCondition7.getString(), "testValue76");
+            conditions.put(TestCondition.testCondition8.getString(), "testValue77");
+            conditions.put(TestCondition.testCondition9.getString(), "testValue78");
+            conditions.put(TestCondition.testCondition10.getString(), "testValue79");
+
+            final List<String> actualConditionIdList = this.invoke(conditionNodes, conditions);
+
+            assertNotNull(actualConditionIdList);
+            assertTrue(!actualConditionIdList.isEmpty());
+            assertTrue(actualConditionIdList.size() == 1);
+            assertEquals("7", actualConditionIdList.get(0));
+        }
+
+        /**
          * 引数の情報を基に {@link ContentLoader#getContentList(List, Map, List)}
          * メソッドを呼び出すメソッドです。 ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
          * {@link SuppressWarnings}でuncheckedを指定しています。
@@ -1864,7 +1932,8 @@ public final class ContentLoaderTest {
      * テスト用条件クラス
      */
     private enum TestCondition implements Condition {
-        testCondition1, testCondition2, testCondition3, testCondition4, testCondition5, testCondition6;
+        testCondition1, testCondition2, testCondition3, testCondition4, testCondition5, testCondition6, testCondition7,
+        testCondition8, testCondition9, testCondition10;
 
         @Override
         public String getString() {
