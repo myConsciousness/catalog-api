@@ -1592,6 +1592,127 @@ public final class ContentLoaderTest {
     }
 
     /**
+     * {@link ContentLoader#getContentList(List, Map, List)}
+     * メソッドのテストメソッドを定義するテストクラスです。
+     * {@link ContentLoader#getContentList(List, Map, List)} はprivateメソッドです。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    final class TestGetConditionIdList {
+
+        /**
+         * テスト対象のクラスオブジェクト
+         */
+        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
+
+        /**
+         * テスト用メソッド
+         */
+        private Method testMethod = null;
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getConditionIdList(List, Map)} メソッドの返却値を確認する。
+         * このテストではコンテンツファイルに各条件ノードが一つの条件のみを持っている状態を想定して行う。
+         * また、 {@link ContentLoader#getConditionIdList(List, Map)} メソッドを実行した結果、conditionIdが <code>"1"</code> の条件に合致するようにテストを行う。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値が空リストではないこと
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWithOneCondition() {
+
+            final List<Map<String, Object>> conditionNodes = new ArrayList<>();
+
+            for (int i = 0; i < 3; i++) {
+                final Map<String, Object> nodes = new HashMap<>();
+                final Map<String, Object> items = new HashMap<>();
+
+                items.put(ConditionNodeKey.CONDITION_ID.getKey(), String.valueOf(i));
+                items.put(ConditionNodeKey.EXCLUDE.getKey(), "false");
+
+                final List<Map<String, Object>> conditionList = new ArrayList<>();
+                final Map<String, Object> condition = new HashMap<>();
+
+                condition.put(ConditionNodeKey.KEY_NAME.getKey(), "testCondition1");
+                condition.put(ConditionNodeKey.OPERAND.getKey(), "=");
+                condition.put(ConditionNodeKey.VALUE.getKey(), String.valueOf(i));
+
+                conditionList.add(condition);
+                items.put(ConditionNodeKey.CONDITIONS.getKey(), conditionList);
+                nodes.put(ConditionNodeKey.NODE.getKey(), items);
+                conditionNodes.add(nodes);
+            }
+
+            final String expectedConditionId = "1";
+            final Map<String, String> conditions = new HashMap<>();
+            conditions.put(TestCondition.testCondition1.getString(), expectedConditionId);
+
+            final List<String> actualConditionIdList = this.invoke(conditionNodes, conditions);
+
+            assertNotNull(actualConditionIdList);
+            assertTrue(!actualConditionIdList.isEmpty());
+            assertTrue(actualConditionIdList.size() == 1);
+            assertEquals(expectedConditionId, actualConditionIdList.get(0));
+        }
+
+        /**
+         * 引数の情報を基に {@link ContentLoader#getContentList(List, Map, List)}
+         * メソッドを呼び出すメソッドです。 ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
+         * {@link SuppressWarnings}でuncheckedを指定しています。
+         * 
+         * @param conditionNodes 条件ノードリスト
+         * @param conditions     条件の照合時に使用する条件マップ
+         * @return 条件IDのリスト
+         */
+        @SuppressWarnings("unchecked")
+        private List<String> invoke(List<Map<String, Object>> conditionNodes, Map<String, String> conditions) {
+
+            List<String> conditionIdList = new ArrayList<>(0);
+
+            try {
+                conditionIdList = (List<String>) this.getTestMethod().invoke(TEST_CLASS, conditionNodes, conditions);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            return conditionIdList;
+        }
+
+        /**
+         * {@link ContentLoader#getConditionIdList(List, Map)} メソッドを取得し返却します。
+         * 
+         * @return {@link ContentLoader#getConditionIdList(List, Map)} メソッド
+         */
+        private Method getTestMethod() {
+            if (this.testMethod == null) {
+                try {
+                    final String testMethodName = "getConditionIdList";
+                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, List.class, Map.class);
+                    this.testMethod.setAccessible(true);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return this.testMethod;
+        }
+    }
+
+    /**
      * テスト用コンテンツ名クラス
      */
     private enum TestContentName implements Content {
