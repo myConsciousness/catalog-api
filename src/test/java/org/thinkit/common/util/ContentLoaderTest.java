@@ -1617,7 +1617,7 @@ public final class ContentLoaderTest {
          * <pre>
          * ❏ 概要
          * {@link ContentLoader} クラスの {@link ContentLoader#getConditionIdList(List, Map)} メソッドの返却値を確認する。
-         * このテストではコンテンツファイルに各条件ノードが一つの条件のみを持っている状態を想定して行う。
+         * このテストではコンテンツファイルに各条件ノードが1つの条件のみを持っている状態を想定して行う。
          * また、 {@link ContentLoader#getConditionIdList(List, Map)} メソッドを実行した結果、conditionIdが <code>"1"</code> の条件に合致するようにテストを行う。
          * </pre>
          * 
@@ -1625,6 +1625,8 @@ public final class ContentLoaderTest {
          * ❏ 観点
          * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値が {@code null} ではないこと
          * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値が空リストではないこと
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値のサイズが <code>1</code> であること
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値のリストの0番目に紐づく値が <code>"1"</code> であること
          * </pre>
          * 
          * <pre>
@@ -1650,23 +1652,83 @@ public final class ContentLoaderTest {
                 condition.put(ConditionNodeKey.KEY_NAME.getKey(), "testCondition1");
                 condition.put(ConditionNodeKey.OPERAND.getKey(), "=");
                 condition.put(ConditionNodeKey.VALUE.getKey(), String.valueOf(i));
-
                 conditionList.add(condition);
+
                 items.put(ConditionNodeKey.CONDITIONS.getKey(), conditionList);
                 nodes.put(ConditionNodeKey.NODE.getKey(), items);
                 conditionNodes.add(nodes);
             }
 
-            final String expectedConditionId = "1";
             final Map<String, String> conditions = new HashMap<>();
-            conditions.put(TestCondition.testCondition1.getString(), expectedConditionId);
+            conditions.put(TestCondition.testCondition1.getString(), "1");
 
             final List<String> actualConditionIdList = this.invoke(conditionNodes, conditions);
 
             assertNotNull(actualConditionIdList);
             assertTrue(!actualConditionIdList.isEmpty());
             assertTrue(actualConditionIdList.size() == 1);
-            assertEquals(expectedConditionId, actualConditionIdList.get(0));
+            assertEquals("1", actualConditionIdList.get(0));
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#getConditionIdList(List, Map)} メソッドの返却値を確認する。
+         * このテストではコンテンツファイルに各条件ノードが3つの条件を持っている状態を想定して行う。
+         * また、 {@link ContentLoader#getConditionIdList(List, Map)} メソッドを実行した結果、conditionIdが <code>"4"</code> の条件に合致するようにテストを行う。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値が空リストではない         
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値のサイズが <code>1</code> であること
+         * ・{@link ContentLoader#getConditionIdList(List, Map)} の返却値のリストの0番目に紐づく値が <code>"4"</code> であるここと
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWithThreeConditions() {
+
+            final List<Map<String, Object>> conditionNodes = new ArrayList<>();
+
+            for (int i = 0; i < 5; i++) {
+                final Map<String, Object> nodes = new HashMap<>();
+                final Map<String, Object> items = new HashMap<>();
+
+                items.put(ConditionNodeKey.CONDITION_ID.getKey(), String.valueOf(i));
+                items.put(ConditionNodeKey.EXCLUDE.getKey(), "false");
+
+                final List<Map<String, Object>> conditionList = new ArrayList<>();
+                final Map<String, Object> condition = new HashMap<>();
+
+                for (int j = 0; j < 3; j++) {
+                    condition.put(ConditionNodeKey.KEY_NAME.getKey(), String.format("testCondition%s", j + 1));
+                    condition.put(ConditionNodeKey.OPERAND.getKey(), "=");
+                    condition.put(ConditionNodeKey.VALUE.getKey(), String.format("testValue%s%s", i, j));
+                    conditionList.add(condition);
+                }
+
+                items.put(ConditionNodeKey.CONDITIONS.getKey(), conditionList);
+                nodes.put(ConditionNodeKey.NODE.getKey(), items);
+                conditionNodes.add(nodes);
+            }
+
+            final Map<String, String> conditions = new HashMap<>();
+            conditions.put(TestCondition.testCondition1.getString(), "testValue40");
+            conditions.put(TestCondition.testCondition2.getString(), "testValue41");
+            conditions.put(TestCondition.testCondition3.getString(), "testValue42");
+
+            final List<String> actualConditionIdList = this.invoke(conditionNodes, conditions);
+
+            assertNotNull(actualConditionIdList);
+            assertTrue(!actualConditionIdList.isEmpty());
+            assertTrue(actualConditionIdList.size() == 1);
+            assertEquals("4", actualConditionIdList.get(0));
         }
 
         /**
