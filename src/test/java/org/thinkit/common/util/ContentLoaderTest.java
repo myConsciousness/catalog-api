@@ -1800,8 +1800,8 @@ public final class ContentLoaderTest {
         }
 
         /**
-         * 引数の情報を基に {@link ContentLoader#getContentList(List, Map, List)}
-         * メソッドを呼び出すメソッドです。 ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
+         * 引数の情報を基に {@link ContentLoader#getConditionIdList(List, Map)} メソッドを呼び出すメソッドです。
+         * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
          * {@link SuppressWarnings}でuncheckedを指定しています。
          * 
          * @param conditionNodes 条件ノードリスト
@@ -1831,6 +1831,100 @@ public final class ContentLoaderTest {
             if (this.testMethod == null) {
                 try {
                     final String testMethodName = "getConditionIdList";
+                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, List.class, Map.class);
+                    this.testMethod.setAccessible(true);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return this.testMethod;
+        }
+    }
+
+    /**
+     * {@link ContentLoader#all(List, Map)} メソッドのテストメソッドを定義するテストクラスです。
+     * {@link ContentLoader#all(List, Map)} はprivateメソッドです。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    final class TestAll {
+
+        /**
+         * テスト対象のクラスオブジェクト
+         */
+        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
+
+        /**
+         * テスト用メソッド
+         */
+        private Method testMethod = null;
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ContentLoader} クラスの {@link ContentLoader#all(List, Map)} メソッドの返却値を確認する。
+         * このテストではコンテンツファイルに各条件ノードが1つの条件のみを持っている状態を想定して行う。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ContentLoader#all(List, Map)} の返却値が {@code true} であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        public void testWithOneCondition() {
+            final List<Map<String, Object>> conditionList = new ArrayList<>();
+            final Map<String, Object> condition = new HashMap<>();
+
+            condition.put(ConditionNodeKey.KEY_NAME.getKey(), "testCondition1");
+            condition.put(ConditionNodeKey.OPERAND.getKey(), "=");
+            condition.put(ConditionNodeKey.VALUE.getKey(), "1");
+            conditionList.add(condition);
+
+            final Map<String, String> conditions = new HashMap<>();
+            conditions.put(TestCondition.testCondition1.getString(), "1");
+
+            assertTrue(this.invoke(conditionList, conditions));
+        }
+
+        /**
+         * 引数の情報を基に {@link ContentLoader#all(List, Map)} メソッドを呼び出すメソッドです。
+         * 
+         * @param contentConditionList コンテンツに定義された条件リスト
+         * @param conditions           照合する値を格納したマップ
+         * @return 全ての条件を満たしている場合は{@code true}、それ以外は{@code false}
+         */
+        private boolean invoke(List<Map<String, Object>> contentConditionList, Map<String, String> conditions) {
+
+            boolean isAll = false;
+
+            try {
+                isAll = (Boolean) this.getTestMethod().invoke(TEST_CLASS, contentConditionList, conditions);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            return isAll;
+        }
+
+        /**
+         * {@link ContentLoader#all(List, Map)} メソッドを取得し返却します。
+         * 
+         * @return {@link ContentLoader#all(List, Map)} メソッド
+         */
+        private Method getTestMethod() {
+            if (this.testMethod == null) {
+                try {
+                    final String testMethodName = "all";
                     this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, List.class, Map.class);
                     this.testMethod.setAccessible(true);
                 } catch (NoSuchMethodException e) {
