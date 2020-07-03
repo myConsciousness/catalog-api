@@ -1867,7 +1867,6 @@ public final class ContentLoaderTest {
          * <pre>
          * ❏ 概要
          * {@link ContentLoader} クラスの {@link ContentLoader#all(List, Map)} メソッドの返却値を確認する。
-         * このテストではコンテンツファイルに各条件ノードが1つの条件のみを持っている状態を想定して行う。
          * </pre>
          * 
          * <pre>
@@ -1881,17 +1880,39 @@ public final class ContentLoaderTest {
          * </pre>
          */
         @Test
-        public void testWithOneCondition() {
+        public void testSimplePatterns() {
+            final List<Integer> counts = new ArrayList<>();
+            counts.add(1);
+            counts.add(3);
+            counts.add(5);
+            counts.add(10);
+            counts.add(100);
+            counts.add(1000);
+
+            for (Integer count : counts) {
+                this.testSimplePatterns(count);
+            }
+        }
+
+        /**
+         * {@link ContentLoader#all(List, Map)} の返却値を確認します。<br>
+         * 引数として指定された数に応じた条件を生成します。
+         * 
+         * @param count テストする条件の数
+         */
+        private void testSimplePatterns(final int count) {
             final List<Map<String, Object>> conditionList = new ArrayList<>();
             final Map<String, Object> condition = new HashMap<>();
-
-            condition.put(ConditionNodeKey.KEY_NAME.getKey(), "testCondition1");
-            condition.put(ConditionNodeKey.OPERAND.getKey(), "=");
-            condition.put(ConditionNodeKey.VALUE.getKey(), "1");
-            conditionList.add(condition);
-
             final Map<String, String> conditions = new HashMap<>();
-            conditions.put(TestCondition.testCondition1.getString(), "1");
+
+            for (int i = 1; i <= count; i++) {
+                condition.put(ConditionNodeKey.KEY_NAME.getKey(), String.valueOf(i));
+                condition.put(ConditionNodeKey.OPERAND.getKey(), "=");
+                condition.put(ConditionNodeKey.VALUE.getKey(), String.valueOf(i));
+                conditionList.add(condition);
+
+                conditions.put(TestCondition.testCondition1.getString(), String.valueOf(i));
+            }
 
             assertTrue(this.invoke(conditionList, conditions));
         }
