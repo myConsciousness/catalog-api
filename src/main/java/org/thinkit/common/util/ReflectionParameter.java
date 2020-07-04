@@ -38,7 +38,7 @@ import lombok.NonNull;
  * @since 1.0
  * @version 1.0
  */
-public final class ReflectionParameter {
+final class ReflectionParameter {
 
     /**
      * リフレクション実行時に使用する引数情報を持つリスト
