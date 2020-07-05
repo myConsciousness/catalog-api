@@ -69,7 +69,7 @@ final class ReflectionParameter {
      * 
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public <T> void add(@NonNull Class<T> argumentType, @NonNull T argumentValue) {
+    public <T> void add(@NonNull Class<?> argumentType, @NonNull Object argumentValue) {
         this.parameters.add(new Parameter(argumentType, argumentValue));
     }
 

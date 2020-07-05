@@ -82,6 +82,9 @@ public final class ReflectionWrapper<T> {
      * <p>
      * リフレクション実行時に引数情報が必要な場合は {@link ReflectionWrapper#add(Class, Object)}
      * メソッドを使用してください。
+     * <p>
+     * 返却値を取得する際に未確定の型に変換する必要があるためメソッド全体に {@code @SuppressWarnings("unchecked")}
+     * を指定していますがこの型変換は必ず成功します。また、このメソッド全体の処理の整合性の担保はテストクラスで行っているため安定しています。
      * 
      * <pre>
      * 使用例:
@@ -95,6 +98,7 @@ public final class ReflectionWrapper<T> {
      * @exception NullPointerException 引数として {@code null} が渡された場合
      * @throws LogicException 引数として渡された {@code methodName} の値が空文字列の場合
      */
+    @SuppressWarnings("unchecked")
     public T invoke(@NonNull final String methodName) {
 
         if (methodName.isEmpty()) {
@@ -102,21 +106,15 @@ public final class ReflectionWrapper<T> {
         }
 
         try {
-            Method method = null;
             if (this.parameter.isEmpty()) {
-                method = clazz.getClass().getDeclaredMethod(methodName);
+                Method method = this.clazz.getDeclaredMethod(methodName);
+                method.setAccessible(true);
+                return (T) method.invoke(this.clazz);
             } else {
-                method = clazz.getClass().getDeclaredMethod(methodName, this.parameter.getTypes());
+                Method method = this.clazz.getDeclaredMethod(methodName, this.parameter.getTypes());
+                method.setAccessible(true);
+                return (T) method.invoke(this.clazz, this.parameter.getValues());
             }
-
-            method.setAccessible(true);
-
-            // This type conversion always works
-            @SuppressWarnings("unchecked")
-            final T result = (T) method.invoke(clazz, this.parameter.getValues());
-
-            return result;
-
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
             e.printStackTrace();
@@ -154,7 +152,7 @@ public final class ReflectionWrapper<T> {
      * 
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public ReflectionWrapper<T> add(@NonNull Class<T> argumentType, @NonNull T argumentValue) {
+    public ReflectionWrapper<T> add(@NonNull Class<?> argumentType, @NonNull Object argumentValue) {
         this.parameter.add(argumentType, argumentValue);
         return this;
     }
