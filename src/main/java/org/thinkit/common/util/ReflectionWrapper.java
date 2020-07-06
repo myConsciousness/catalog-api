@@ -83,8 +83,36 @@ public final class ReflectionWrapper<T> {
      * リフレクション実行時に引数情報が必要な場合は {@link ReflectionWrapper#add(Class, Object)}
      * メソッドを使用してください。
      * <p>
-     * 返却値を取得する際に未確定の型に変換する必要があるためメソッド全体に {@code @SuppressWarnings("unchecked")}
-     * を指定していますがこの型変換は必ず成功します。また、このメソッド全体の処理の整合性の担保はテストクラスで行っているため安定しています。
+     * このメソッドは静的メソッドをリフレクションで処理することを想定しているため、インスタンスメソッドをリフレクションで処理する場合は
+     * {@link ReflectionWrapper#invoke(String)} メソッドを使用してください。
+     * 
+     * <pre>
+     * 使用例:
+     * <code>ReflectionWrapper&lt;String&gt; wrapper = new ReflectionWrapper&lt;&gt;(ContentLoader.class);
+     * String result = wrapper.invokeStatic(methodName);</code>
+     * </pre>
+     * 
+     * @param methodName リフレクション処理を行う対象のメソッド名
+     * @return リフレクション処理の実行結果
+     * 
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     * @throws LogicException 引数として渡された {@code methodName} の値が空文字列の場合
+     */
+    public T invokeStatic(@NonNull final String methodName) {
+        return this.invoke(methodName, true);
+    }
+
+    /**
+     * 引数として指定されたメソッド名に紐づく処理を実行し処理結果を返却します。<br>
+     * この {@link ReflectionWrapper#invoke(Object, String)}
+     * メソッドはprivateメソッドに対して処理を行うことを想定しています。<br>
+     * 引数として {@code null} が渡された場合は実行時に必ず失敗します。<br>
+     * <p>
+     * リフレクション実行時に引数情報が必要な場合は {@link ReflectionWrapper#add(Class, Object)}
+     * メソッドを使用してください。
+     * <p>
+     * このメソッドはインスタンスメソッドをリフレクションで処理することを想定しているため、静的メソッドをリフレクションで処理する場合は
+     * {@link ReflectionWrapper#invokeStatic(String)} メソッドを使用してください。
      * 
      * <pre>
      * 使用例:
@@ -98,8 +126,39 @@ public final class ReflectionWrapper<T> {
      * @exception NullPointerException 引数として {@code null} が渡された場合
      * @throws LogicException 引数として渡された {@code methodName} の値が空文字列の場合
      */
-    @SuppressWarnings("unchecked")
     public T invoke(@NonNull final String methodName) {
+        return this.invoke(methodName, false);
+    }
+
+    /**
+     * 引数として指定されたメソッド名に紐づく処理を実行し処理結果を返却します。<br>
+     * この {@link ReflectionWrapper#invoke(Object, String)}
+     * メソッドはprivateメソッドに対して処理を行うことを想定しています。<br>
+     * 引数として {@code null} が渡された場合は実行時に必ず失敗します。<br>
+     * <p>
+     * リフレクション実行時に引数情報が必要な場合は {@link ReflectionWrapper#add(Class, Object)}
+     * メソッドを使用してください。
+     * <p>
+     * 静的メソッドをリフレクションで実行する際には引数 {@code isStatic} に {@code false} を渡してください。
+     * <p>
+     * 返却値を取得する際に未確定の型に変換する必要があるためメソッド全体に {@code @SuppressWarnings("unchecked")}
+     * を指定していますがこの型変換は必ず成功します。また、このメソッド全体の処理の整合性の担保はテストクラスで行っているため安定しています。
+     * 
+     * <pre>
+     * 使用例:
+     * <code>ReflectionWrapper&lt;String&gt; wrapper = new ReflectionWrapper&lt;&gt;(ContentLoader.class);
+     * String result = wrapper.invoke(methodName);</code>
+     * </pre>
+     * 
+     * @param methodName リフレクション処理を行う対象のメソッド名
+     * @param isStatic   静的メソッドの可否を表現するフラグ
+     * @return リフレクション処理の実行結果
+     * 
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     * @throws LogicException 引数として渡された {@code methodName} の値が空文字列の場合
+     */
+    @SuppressWarnings("unchecked")
+    private T invoke(@NonNull final String methodName, final boolean isStatic) {
 
         if (methodName.isEmpty()) {
             throw new LogicException("Method name is required.");
@@ -109,14 +168,24 @@ public final class ReflectionWrapper<T> {
             if (this.parameter.isEmpty()) {
                 Method method = this.clazz.getDeclaredMethod(methodName);
                 method.setAccessible(true);
-                return (T) method.invoke(this.clazz);
+
+                if (isStatic) {
+                    return (T) method.invoke(this.clazz);
+                }
+
+                return (T) method.invoke(this.clazz.newInstance());
             } else {
                 Method method = this.clazz.getDeclaredMethod(methodName, this.parameter.getTypes());
                 method.setAccessible(true);
-                return (T) method.invoke(this.clazz, this.parameter.getValues());
+
+                if (isStatic) {
+                    return (T) method.invoke(this.clazz, this.parameter.getValues());
+                }
+
+                return (T) method.invoke(this.clazz.newInstance(), this.parameter.getValues());
             }
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-                | InvocationTargetException e) {
+                | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
         }
 
