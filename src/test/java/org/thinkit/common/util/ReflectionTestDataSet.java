@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * このクラスは {@link ReflectionWrapper} クラスをテストする {@link ReflectionWrapperTest}
+ * このクラスは {@link FluentReflection} クラスをテストする {@link FluentReflectionTest}
  * クラスで使用するテスト用データセットを定義するクラスです。
  * <p>
- * このクラスは {@link ReflectionWrapperTest} クラスでのみ使用することを想定しています。
+ * このクラスは {@link FluentReflectionTest} クラスでのみ使用することを想定しています。
  * 
  * @author Kato Shinya
  * @since 1.0
