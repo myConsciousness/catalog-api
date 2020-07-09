@@ -141,7 +141,8 @@ public final class ReflectionTestDataSet {
 
     /**
      * 渡された複数の引数を格納したマップを返却します。<br>
-     * マップに格納された値の各キーは <code>n = 1</code> から <code>"result" + n</code> で設定されます。
+     * マップに格納された値の各キーは <code>n = 1</code> から <code>"result" + n</code>
+     * <code>"result3"/code> まで設定されます。
      * 
      * @return 渡された全引数を格納したマップ
      */
