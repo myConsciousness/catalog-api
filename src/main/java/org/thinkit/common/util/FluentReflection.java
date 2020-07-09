@@ -155,35 +155,28 @@ public final class FluentReflection<T> {
      * @return リフレクション処理の実行結果
      * 
      * @exception NullPointerException 引数として {@code null} が渡された場合
-     * @throws LogicException 引数として渡された {@code methodName} の値が空文字列の場合
+     * @throws IllegalArgumentException 引数として渡された {@code methodName} の値が空文字列の場合
      */
     @SuppressWarnings("unchecked")
     private T invoke(@NonNull final String methodName, final boolean isStatic) {
 
         if (methodName.isEmpty()) {
-            throw new LogicException("Method name is required.");
+            throw new IllegalArgumentException("Method name is required.");
         }
 
         try {
+            final Object clazzObject = isStatic ? this.clazz : this.clazz.newInstance();
+
             if (this.parameter.isEmpty()) {
                 Method method = this.clazz.getDeclaredMethod(methodName);
                 method.setAccessible(true);
-
-                if (isStatic) {
-                    return (T) method.invoke(this.clazz);
-                }
-
-                return (T) method.invoke(this.clazz.newInstance());
-            } else {
-                Method method = this.clazz.getDeclaredMethod(methodName, this.parameter.getTypes());
-                method.setAccessible(true);
-
-                if (isStatic) {
-                    return (T) method.invoke(this.clazz, this.parameter.getValues());
-                }
-
-                return (T) method.invoke(this.clazz.newInstance(), this.parameter.getValues());
+                return (T) method.invoke(clazzObject);
             }
+
+            Method method = this.clazz.getDeclaredMethod(methodName, this.parameter.getTypes());
+            method.setAccessible(true);
+            return (T) method.invoke(clazzObject, this.parameter.getValues());
+
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
