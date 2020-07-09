@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.thinkit.common.exception.LogicException;
 
-import lombok.Getter;
 import lombok.NonNull;
 
 /**
@@ -69,7 +68,7 @@ final class ReflectionParameter {
      * 
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public <T> void add(@NonNull Class<?> argumentType, @NonNull Object argumentValue) {
+    public <T> void add(@NonNull Class<?> argumentType, @NonNull T argumentValue) {
         this.parameters.add(new Parameter(argumentType, argumentValue));
     }
 
@@ -151,47 +150,5 @@ final class ReflectionParameter {
      */
     public boolean isEmpty() {
         return this.parameters.isEmpty();
-    }
-
-    /**
-     * リフレクション実行時に使用する引数情報を表現したデータクラスです。<br>
-     * リフレクション実行時に使用する引数の型と値をセットで管理します。
-     * 
-     * @author Kato Shinya
-     * @since 1.0
-     * @version 1.0
-     */
-    @Getter
-    private static class Parameter {
-
-        /**
-         * 引数の型
-         */
-        private Class<?> type;
-
-        /**
-         * 引数の値
-         */
-        private Object value;
-
-        /**
-         * デフォルトコンストラクタ
-         */
-        @SuppressWarnings("unused")
-        private Parameter() {
-        }
-
-        /**
-         * コンストラクタ
-         * 
-         * @param type  引数の型
-         * @param value 引数の値
-         * 
-         * @exception NullPointerException 引数として {@code null} が渡された場合
-         */
-        public Parameter(@NonNull Class<?> type, @NonNull Object value) {
-            this.type = type;
-            this.value = value;
-        }
     }
 }
