@@ -141,14 +141,4 @@ final class ReflectionParameter {
 
         return values;
     }
-
-    /**
-     * 引数情報が設定されているか判定します。<br>
-     * 引数情報が設定されていない場合は {@code true} を返却し、それ以外は {@code false} を返却します。
-     * 
-     * @return 引数情報が設定されていない場合は {@code true} を返却し、それ以外は {@code false}
-     */
-    public boolean isEmpty() {
-        return this.parameters.isEmpty();
-    }
 }
