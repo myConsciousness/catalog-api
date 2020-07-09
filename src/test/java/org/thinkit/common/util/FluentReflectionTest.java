@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -380,7 +381,6 @@ final class FluentReflectionTest {
          * <pre>
          * ❏ 観点
          * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>null</code> ではないこと
-         * 
          * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が空ではないこと
          * ・{@link FluentReflection#invoke(String)} メソッドから取得したリストのサイズが <code>3</code> であること
          * ・{@link FluentReflection#invoke(String)} メソッドから取得したリストの0番目の値が <code>"test6"</code> であること
@@ -404,12 +404,57 @@ final class FluentReflectionTest {
 
             final List<String> actualResult = reflection.invoke("returnListWithArguments");
             final int actualSize = actualResult.size();
+
             assertNotNull(actualResult);
             assertTrue(!actualResult.isEmpty());
             assertTrue(actualSize == expectedSequences.length);
 
             for (int i = 0; i < actualSize; i++) {
                 assertEquals(expectedSequences[i], actualResult.get(i));
+            }
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link FluentReflection} クラスの {@link FluentReflection#invoke(String)} メソッドの返却値を確認する。
+         * テストデータセットは {@link ReflectionTestDataSet#returnMapWithArguments(int, int, int)} を使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>null</code> ではないこと
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が空ではないこと
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得したマップのサイズが <code>3</code> であること
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得したマップの0番目の値が <code>100</code> であること
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得したマップの1番目の値が <code>1000</code> であること
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得したマップの2番目の値が <code>1</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testReturnMapWithArguments() {
+            final FluentReflection<Map<String, Integer>> reflection = new FluentReflection<>(
+                    ReflectionTestDataSet.class);
+            final int[] expectedNumbers = new int[] { 100, 1000, 1 };
+
+            for (Integer expectedSequence : expectedNumbers) {
+                reflection.add(int.class, expectedSequence.intValue());
+            }
+
+            final Map<String, Integer> actualResult = reflection.invoke("returnMapWithArguments");
+            final int actualSize = actualResult.size();
+
+            assertNotNull(actualResult);
+            assertTrue(!actualResult.isEmpty());
+            assertTrue(actualSize == expectedNumbers.length);
+
+            for (int i = 0; i < actualSize; i++) {
+                assertEquals(expectedNumbers[i], actualResult.get(String.format("result%s", i + 1)).intValue());
             }
         }
     }
