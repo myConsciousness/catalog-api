@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -265,6 +267,150 @@ final class FluentReflectionTest {
             final int actualResult = reflection.invoke("returnIntegerWithArguments");
 
             assertEquals(1, actualResult);
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link FluentReflection} クラスの {@link FluentReflection#invoke(String)} メソッドの返却値を確認する。
+         * テストデータセットは {@link ReflectionTestDataSet#returnBooleanWithNoArgument()} を使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>true</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testReturnBooleanWithNoArgument() {
+            final FluentReflection<Boolean> reflection = new FluentReflection<>(ReflectionTestDataSet.class);
+            final boolean actualResult = reflection.invoke("returnBooleanWithNoArgument");
+
+            assertEquals(true, actualResult);
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link FluentReflection} クラスの {@link FluentReflection#invoke(String)} メソッドの返却値を確認する。
+         * テストデータセットは {@link ReflectionTestDataSet#returnBooleanWithArgument(int)} を使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>true</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testReturnBooleanTrueWithArgument() {
+            final FluentReflection<Boolean> reflection = new FluentReflection<>(ReflectionTestDataSet.class);
+            final boolean actualResult = reflection.add(int.class, 1).invoke("returnBooleanWithArgument");
+
+            assertEquals(true, actualResult);
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link FluentReflection} クラスの {@link FluentReflection#invoke(String)} メソッドの返却値を確認する。
+         * テストデータセットは {@link ReflectionTestDataSet#returnBooleanWithArgument(int)} を使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>false</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testReturnBooleanFalseWithArgument() {
+            final FluentReflection<Boolean> reflection = new FluentReflection<>(ReflectionTestDataSet.class);
+            final boolean actualResult = reflection.add(int.class, 0).invoke("returnBooleanWithArgument");
+
+            assertEquals(false, actualResult);
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link FluentReflection} クラスの {@link FluentReflection#invoke(String)} メソッドの返却値を確認する。
+         * テストデータセットは {@link ReflectionTestDataSet#returnBooleanWithArguments(int, String, boolean)} を使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>true</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testReturnBooleanWithArguments() {
+            final FluentReflection<Boolean> reflection = new FluentReflection<>(ReflectionTestDataSet.class);
+            reflection.add(int.class, 0).add(String.class, "test").add(boolean.class, true);
+            final boolean actualResult = reflection.invoke("returnBooleanWithArguments");
+
+            assertEquals(true, actualResult);
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link FluentReflection} クラスの {@link FluentReflection#invoke(String)} メソッドの返却値を確認する。
+         * テストデータセットは {@link ReflectionTestDataSet#returnListWithArguments(String, String, String)} を使用する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>null</code> ではないこと
+         * 
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が空ではないこと
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得したリストのサイズが <code>3</code> であること
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得したリストの0番目の値が <code>"test6"</code> であること
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得したリストの1番目の値が <code>"test1"</code> であること
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得したリストの2番目の値が <code>"test100"</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testReturnListWithArguments() {
+            final FluentReflection<List<String>> reflection = new FluentReflection<>(ReflectionTestDataSet.class);
+            final String[] expectedSequences = new String[] { "test6", "test1", "test100" };
+
+            for (String expectedSequence : expectedSequences) {
+                reflection.add(String.class, expectedSequence);
+            }
+
+            final List<String> actualResult = reflection.invoke("returnListWithArguments");
+            final int actualSize = actualResult.size();
+            assertNotNull(actualResult);
+            assertTrue(!actualResult.isEmpty());
+            assertTrue(actualSize == expectedSequences.length);
+
+            for (int i = 0; i < actualSize; i++) {
+                assertEquals(expectedSequences[i], actualResult.get(i));
+            }
         }
     }
 }
