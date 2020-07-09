@@ -57,7 +57,7 @@ public final class ReflectionTestDataSet {
      * @return <code>"success"</code>
      */
     @SuppressWarnings("unused")
-    private String returnStringWithArguments(String arg1, Integer arg2, Boolean arg3) {
+    private String returnStringWithArguments(String arg1, int arg2, boolean arg3) {
         return "success";
     }
 
@@ -89,7 +89,7 @@ public final class ReflectionTestDataSet {
      * @return <code>1</code>
      */
     @SuppressWarnings("unused")
-    private int returnIntegerWithArguments(Integer arg1, String arg2, Boolean arg3) {
+    private int returnIntegerWithArguments(int arg1, String arg2, boolean arg3) {
         return 1;
     }
 
@@ -121,7 +121,7 @@ public final class ReflectionTestDataSet {
      * @return <code>true</code>
      */
     @SuppressWarnings("unused")
-    private boolean returnBooleanWithArguments(Integer arg1, String arg2, Boolean arg3) {
+    private boolean returnBooleanWithArguments(int arg1, String arg2, boolean arg3) {
         return true;
     }
 
