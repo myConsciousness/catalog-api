@@ -144,4 +144,113 @@ final class ReflectionParameterTest {
             assertEquals("No parameter is set. Parameter is required.", exception.getMessage());
         }
     }
+
+    /**
+     * {@link ReflectionParameter#getValues()} メソッドのテストメソッドを定義するテストクラスです。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    final class TestGetValues {
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ReflectionParameter} クラスの {@link ReflectionParameter#getValues()} メソッドの返却値を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値が <code>null</code> ではないこと
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値の長さが <code>1</code> であること
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値の0番目が <code>"test"</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testSimplePattern() {
+            final ReflectionParameter parameter = new ReflectionParameter();
+            parameter.add(String.class, "test");
+            final Object[] values = parameter.getValues();
+
+            assertNotNull(values);
+            assertTrue(values.length == 1);
+            assertEquals("test", values[0]);
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ReflectionParameter} クラスの {@link ReflectionParameter#getValues()} メソッドの返却値を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値が <code>null</code> ではないこと
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値の長さが <code>5</code> であること
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値の0番目が <code>""</code> であること
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値の1番目が <code>0</code> であること
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値の2番目が <code>true</code> であること
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値の3番目が <code>1</code> であること
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値の4番目が <code>false</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testComplicatedPattern() {
+            final ReflectionParameter parameter = new ReflectionParameter();
+            parameter.add(String.class, "");
+            parameter.add(Integer.class, 0);
+            parameter.add(Boolean.class, true);
+            parameter.add(int.class, 1);
+            parameter.add(boolean.class, false);
+            final Object[] values = parameter.getValues();
+
+            assertNotNull(values);
+            assertTrue(values.length == 5);
+            assertEquals("", values[0]);
+            assertEquals(0, values[1]);
+            assertEquals(true, values[2]);
+            assertEquals(1, values[3]);
+            assertEquals(false, values[4]);
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ReflectionParameter} クラスの {@link ReflectionParameter#getValues()} メソッドの返却値を確認する。
+         * {@link ReflectionParameter#add(Class, Object)} メソッドを使用しない状態で {@link ReflectionParameter#getTypes()} を呼び出す。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link ReflectionParameter#getValues()} メソッドの返却値が <code>null</code> ではないこと
+         * ・{@link ReflectionParameter#getValues()} メソッドを実行した際の例外が <code>LogicException.class</code> であること
+         * ・{@link ReflectionParameter#getValues()} メソッドを実行した際のエラーメッセージが <code>"No parameter is set. Parameter is required."</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testWhenParameterIsNotSet() {
+            final ReflectionParameter parameter = new ReflectionParameter();
+
+            final LogicException exception = assertThrows(LogicException.class, () -> parameter.getValues());
+            assertNotNull(exception);
+            assertEquals("No parameter is set. Parameter is required.", exception.getMessage());
+        }
+    }
 }
