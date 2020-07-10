@@ -790,27 +790,17 @@ public final class ContentLoaderTest {
     final class TestGetNodeList {
 
         /**
-         * テスト対象のクラスオブジェクト
-         */
-        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
-
-        /**
-         * テスト用メソッド
-         */
-        private Method testMethod = null;
-
-        /**
          * <pre>
          * ❏ 概要
-         * {@link ContentLoader} クラスの {@link ContentLoader#getNodeList(List, Key)} メソッドの返却値を確認する。
+         * {@link ContentLoader} クラスの {@link ContentLoader#getNodeList(Map, Key)} メソッドの返却値を確認する。
          * 期待値は任意のコンテンツリストを使用する。
          * </pre>
          * 
          * <pre>
          * ❏ 観点
-         * ・{@link ContentLoader#getNodeList(List, Key)} の返却値が {@code null} ではないこと
-         * ・{@link ContentLoader#getNodeList(List, Key)} の返却値が空リストではないこと
-         * ・{@link ContentLoader#getNodeList(List, Key)} の返却値と生成した任意の値が等価であること
+         * ・{@link ContentLoader#getNodeList(Map, Key)} の返却値が {@code null} ではないこと
+         * ・{@link ContentLoader#getNodeList(Map, Key)} の返却値が空リストではないこと
+         * ・{@link ContentLoader#getNodeList(Map, Key)} の返却値と生成した任意の値が等価であること
          * </pre>
          * 
          * <pre>
@@ -833,53 +823,14 @@ public final class ContentLoaderTest {
             }
 
             content.put(SelectionNodeKey.SELECTION_NODES.getKey(), expectedNodeList);
-            final List<Map<String, Object>> actualNodeList = this.invoke(content, SelectionNodeKey.SELECTION_NODES);
+
+            final FluentReflection<List<Map<String, Object>>> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(Map.class, content).add(Key.class, SelectionNodeKey.SELECTION_NODES);
+            final List<Map<String, Object>> actualNodeList = reflection.invokeStatic("getNodeList");
 
             assertNotNull(actualNodeList);
             assertTrue(!actualNodeList.isEmpty());
             assertEquals(expectedNodeList, actualNodeList);
-        }
-
-        /**
-         * 引数の情報を基に {@link ContentLoader#getNodeList(List, Key)} メソッドを呼び出すメソッドです。
-         * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため {@link SuppressWarnings}
-         * でuncheckedを指定しています。
-         * 
-         * @param content    コンテンツマップ
-         * @param contentKey コンテンツキー
-         * @return {@link Key}に紐づくノードリスト
-         */
-        @SuppressWarnings("unchecked")
-        private List<Map<String, Object>> invoke(Map<String, Object> content, Key contentKey) {
-
-            List<Map<String, Object>> nodeList = new ArrayList<>(0);
-
-            try {
-                nodeList = (List<Map<String, Object>>) this.getTestMethod().invoke(TEST_CLASS, content, contentKey);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return nodeList;
-        }
-
-        /**
-         * {@link ContentLoader#getNodeList(List, Key)} メソッドを取得し返却します。
-         * 
-         * @return {@link ContentLoader#getNodeList(List, Key)} メソッド
-         */
-        private Method getTestMethod() {
-            if (this.testMethod == null) {
-                try {
-                    final String testMethodName = "getNodeList";
-                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, Map.class, Key.class);
-                    this.testMethod.setAccessible(true);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return this.testMethod;
         }
     }
 
@@ -893,16 +844,6 @@ public final class ContentLoaderTest {
      */
     @Nested
     final class TestGetNodeMap {
-
-        /**
-         * テスト対象のクラスオブジェクト
-         */
-        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
-
-        /**
-         * テスト用メソッド
-         */
-        private Method testMethod = null;
 
         /**
          * <pre>
@@ -932,53 +873,14 @@ public final class ContentLoaderTest {
             expectedNodeMap.put("testNode3", "something");
 
             nodes.put(ConditionNodeKey.CONDITIONS.getKey(), expectedNodeMap);
-            final Map<String, Object> actualNodeMap = this.invoke(nodes, ConditionNodeKey.CONDITIONS);
+
+            final FluentReflection<Map<String, Object>> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(Map.class, nodes).add(Key.class, ConditionNodeKey.CONDITIONS);
+            final Map<String, Object> actualNodeMap = reflection.invokeStatic("getNodeMap");
 
             assertNotNull(actualNodeMap);
             assertTrue(!actualNodeMap.isEmpty());
             assertEquals(expectedNodeMap, actualNodeMap);
-        }
-
-        /**
-         * 引数の情報を基に {@link ContentLoader#getNodeMap(Map, Key)} メソッドを呼び出すメソッドです。
-         * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため {@link SuppressWarnings}
-         * でuncheckedを指定しています。
-         * 
-         * @param content    コンテンツマップ
-         * @param contentKey コンテンツキー
-         * @return {@link Key}に紐づくノードマップ
-         */
-        @SuppressWarnings("unchecked")
-        private Map<String, Object> invoke(Map<String, Object> content, Key contentKey) {
-
-            Map<String, Object> nodeMap = new HashMap<>(0);
-
-            try {
-                nodeMap = (Map<String, Object>) this.getTestMethod().invoke(TEST_CLASS, content, contentKey);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return nodeMap;
-        }
-
-        /**
-         * {@link ContentLoader#getNodeMap(Map, Key)} メソッドを取得し返却します。
-         * 
-         * @return {@link ContentLoader#getNodeMap(Map, Key)} メソッド
-         */
-        private Method getTestMethod() {
-            if (this.testMethod == null) {
-                try {
-                    final String testMethodName = "getNodeMap";
-                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, Map.class, Key.class);
-                    this.testMethod.setAccessible(true);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return this.testMethod;
         }
     }
 
@@ -992,16 +894,6 @@ public final class ContentLoaderTest {
      */
     @Nested
     final class TestGetString {
-
-        /**
-         * テスト対象のクラスオブジェクト
-         */
-        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
-
-        /**
-         * テスト用メソッド
-         */
-        private Method testMethod = null;
 
         /**
          * <pre>
@@ -1029,50 +921,13 @@ public final class ContentLoaderTest {
             final Map<String, Object> node = new HashMap<>();
             node.put(SelectionNodeKey.CONDITION_ID.getKey(), expectedContentValue);
 
-            final String actualContentValue = this.invoke(node, SelectionNodeKey.CONDITION_ID);
+            final FluentReflection<String> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(Map.class, node).add(String.class, SelectionNodeKey.CONDITION_ID.getKey());
+            final String actualContentValue = reflection.invokeStatic("getString");
 
             assertNotNull(actualContentValue);
             assertTrue(!actualContentValue.isEmpty());
             assertEquals(expectedContentValue, actualContentValue);
-        }
-
-        /**
-         * 引数の情報を基に {@link ContentLoader#getString(Map, Key)} メソッドを呼び出すメソッドです。
-         * 
-         * @param content    コンテンツマップ
-         * @param contentKey コンテンツキー
-         * @return {@link Key}に紐づくコンテンツ値
-         */
-        private String invoke(Map<String, Object> content, Key contentKey) {
-
-            String contentValue = "";
-
-            try {
-                contentValue = (String) this.getTestMethod().invoke(TEST_CLASS, content, contentKey);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return contentValue;
-        }
-
-        /**
-         * {@link ContentLoader#getString(Map, Key)} メソッドを取得し返却します。
-         * 
-         * @return {@link ContentLoader#getString(Map, Key)} メソッド
-         */
-        private Method getTestMethod() {
-            if (this.testMethod == null) {
-                try {
-                    final String testMethodName = "getString";
-                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, Map.class, Key.class);
-                    this.testMethod.setAccessible(true);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return this.testMethod;
         }
     }
 
@@ -1086,16 +941,6 @@ public final class ContentLoaderTest {
      */
     @Nested
     final class TestGetContent {
-
-        /**
-         * テスト対象のクラスオブジェクト
-         */
-        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
-
-        /**
-         * テスト用メソッド
-         */
-        private Method testMethod = null;
 
         /**
          * <pre>
@@ -1117,53 +962,12 @@ public final class ContentLoaderTest {
          */
         @Test
         public void testSimplePattern() {
-
-            final Map<String, Object> content = this.invoke(TestContentName.DEFAULT.getString());
+            final Map<String, Object> content = new FluentReflection<Map<String, Object>>(ContentLoader.class)
+                    .add(String.class, TestContentName.DEFAULT.getString()).invokeStatic("getContent");
 
             assertNotNull(content);
             assertTrue(!content.isEmpty());
             assertTrue(content instanceof LinkedHashMap);
-        }
-
-        /**
-         * 引数の情報を基に {@link ContentLoader#getContent(String)} メソッドを呼び出すメソッドです。
-         * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため {@link SuppressWarnings}
-         * でuncheckedを指定しています。
-         * 
-         * @param contentName コンテンツ名
-         * @return コンテンツマップ
-         */
-        @SuppressWarnings("unchecked")
-        private Map<String, Object> invoke(String contentName) {
-
-            Map<String, Object> content = new LinkedHashMap<>();
-
-            try {
-                content = (LinkedHashMap<String, Object>) this.getTestMethod().invoke(TEST_CLASS, contentName);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return content;
-        }
-
-        /**
-         * {@link ContentLoader#getContent(String)} メソッドを取得し返却します。
-         * 
-         * @return {@link ContentLoader#getContent(String)} メソッド
-         */
-        private Method getTestMethod() {
-            if (this.testMethod == null) {
-                try {
-                    final String testMethodName = "getContent";
-                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, String.class);
-                    this.testMethod.setAccessible(true);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return this.testMethod;
         }
     }
 
@@ -1177,16 +981,6 @@ public final class ContentLoaderTest {
      */
     @Nested
     final class TestGetFormatFilePath {
-
-        /**
-         * テスト対象のクラスオブジェクト
-         */
-        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
-
-        /**
-         * テスト用メソッド
-         */
-        private Method testMethod = null;
 
         /**
          * <pre>
@@ -1209,8 +1003,12 @@ public final class ContentLoaderTest {
          */
         @Test
         public void testFormatFilePathForProduction() {
+
             final String expectedFormatFilePath = "%s/src/main/resources/content/%s%s";
-            final String actualFormatFilePath = this.invoke(TestContentName.PRODUCTION.getString());
+
+            final FluentReflection<String> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(String.class, TestContentName.PRODUCTION.getString());
+            final String actualFormatFilePath = reflection.invokeStatic("getFormatFilePath");
 
             assertNotNull(actualFormatFilePath);
             assertTrue(!actualFormatFilePath.isEmpty());
@@ -1238,51 +1036,16 @@ public final class ContentLoaderTest {
          */
         @Test
         public void testFormatFilePathForTest() {
+
             final String expectedFormatFilePath = "%s/src/test/resources/content/%s%s";
-            final String actualFormatFilePath = this.invoke(TestContentName.DEFAULT.getString());
+
+            final FluentReflection<String> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(String.class, TestContentName.DEFAULT.getString());
+            final String actualFormatFilePath = reflection.invokeStatic("getFormatFilePath");
 
             assertNotNull(actualFormatFilePath);
             assertTrue(!actualFormatFilePath.isEmpty());
             assertEquals(expectedFormatFilePath, actualFormatFilePath);
-        }
-
-        /**
-         * 引数の情報を基に {@link ContentLoader#getCgetFormatFilePathontent(String)}
-         * メソッドを呼び出すメソッドです。
-         * 
-         * @param contentName コンテンツ名
-         * @return コンテンツファイルへのパスのフォーマット
-         */
-        private String invoke(String contentName) {
-
-            String formatFilePath = "";
-
-            try {
-                formatFilePath = (String) this.getTestMethod().invoke(TEST_CLASS, contentName);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return formatFilePath;
-        }
-
-        /**
-         * {@link ContentLoader#getFormatFilePath(String)} メソッドを取得し返却します。
-         * 
-         * @return {@link ContentLoader#getFormatFilePath(String)} メソッド
-         */
-        private Method getTestMethod() {
-            if (this.testMethod == null) {
-                try {
-                    final String testMethodName = "getFormatFilePath";
-                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, String.class);
-                    this.testMethod.setAccessible(true);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return this.testMethod;
         }
     }
 
