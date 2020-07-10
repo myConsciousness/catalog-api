@@ -14,6 +14,7 @@ package org.thinkit.common.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -456,6 +457,31 @@ final class FluentReflectionTest {
             for (int i = 0; i < actualSize; i++) {
                 assertEquals(expectedNumbers[i], actualResult.get(String.format("result%s", i + 1)).intValue());
             }
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link FluentReflection} クラスの {@link FluentReflection#invoke(String)} メソッドの引数として
+         * 空文字列を渡した際の動作を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link FluentReflection#invoke(String)} メソッドを実行した際に {@link IllegalArgumentException} が発生すること
+         * ・{@link IllegalArgumentException} のエラーメッセージが <code>"Method name is required."</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testWhenMethodNameIsEmpty() {
+            final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                    () -> new FluentReflection<>(ReflectionTestDataSet.class).invoke(""));
+            assertEquals("Method name is required.", exception.getMessage());
         }
     }
 }
