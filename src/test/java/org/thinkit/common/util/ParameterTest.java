@@ -15,6 +15,9 @@ package org.thinkit.common.util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -62,6 +65,31 @@ final class ParameterTest {
             assertNotNull(parameter);
             assertEquals(String.class, parameter.getType());
             assertEquals("test", parameter.getValue());
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link Parameter} クラスの {@link Parameter#Parameter(Class, Object)} コンストラクタの機能を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link Parameter#Parameter(Class, Object)} コンストラクタで生成したインスタンスが <code>null</code> ではないこと
+         * ・{@link Parameter#getType()} メソッドの返却値が <code>Map.class</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testCollectionPattern() {
+            final Parameter parameter = new Parameter(Map.class, new HashMap<>(0));
+
+            assertNotNull(parameter);
+            assertEquals(Map.class, parameter.getType());
         }
     }
 }
