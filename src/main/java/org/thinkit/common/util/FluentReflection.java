@@ -33,6 +33,10 @@ import lombok.NonNull;
  * リフレクション処理を実行する際にはリフレクション処理対象のメソッド名を引数として
  * {@link FluentReflection#invoke(String)} メソッドを呼び出してください。
  * <p>
+ * インスタンスメソッドまたは静的メソッドを問わず {@link FluentReflection#invoke(String)}
+ * メソッドを使用することでリフレクション処理が可能ですが、静的メソッドに対してリフレクション処理を行う際には静的メソッドのために最適化された
+ * {@link FluentReflection#invokeStatic(String)} の使用が推奨されます。
+ * <p>
  * リフレクション処理を行う際にリフレクション処理対象のメソッドが引数を必要とする場合は、
  * {@link FluentReflection#add(Class, Object)} メソッドを使用し引数情報を設定してください。
  * 
@@ -41,6 +45,7 @@ import lombok.NonNull;
  * @version 1.0
  * 
  * @see #invoke(String)
+ * @see #invokeStatic(String)
  * @see #add(Class, Object)
  */
 public final class FluentReflection<T> {
@@ -66,10 +71,67 @@ public final class FluentReflection<T> {
      * コンストラクタ
      * 
      * @param clazz リフレクション処理を行う対象のクラス
+     * @exception NullPointerException 引数として {@code null} が渡された場合
      */
     public FluentReflection(@NonNull final Class<?> clazz) {
         this.parameter = new ReflectionParameter();
         this.clazz = clazz;
+    }
+
+    /**
+     * 引数として指定されたメソッド名に紐づく処理を実行し処理結果を返却します。<br>
+     * この {@link FluentReflection#invoke(Object, String)}
+     * メソッドはprivateメソッドに対して処理を行うことを想定しています。<br>
+     * 引数として {@code null} が渡された場合は実行時に必ず失敗します。<br>
+     * <p>
+     * リフレクション実行時に引数情報が必要な場合は {@link FluentReflection#add(Class, Object)}
+     * メソッドを使用してください。
+     * <p>
+     * このメソッドは静的メソッドをリフレクションで処理することを想定しているため、インスタンスメソッドをリフレクションで処理する場合は
+     * {@link FluentReflection#invoke(String)} メソッドを使用してください。
+     * 
+     * <pre>
+     * 使用例:
+     * <code>FluentReflection&lt;String&gt; reflection = new FluentReflection&lt;&gt;(ContentLoader.class);
+     * String result = reflection.invokeStatic(methodName);</code>
+     * </pre>
+     * 
+     * @param methodName リフレクション処理を行う対象のメソッド名
+     * @return リフレクション処理の実行結果
+     * 
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     * @throws IllegalArgumentException 引数として渡された {@code methodName} の値が空文字列の場合
+     */
+    public T invokeStatic(@NonNull final String methodName) {
+        return this.invoke(methodName, true);
+    }
+
+    /**
+     * 引数として指定されたメソッド名に紐づく処理を実行し処理結果を返却します。<br>
+     * この {@link FluentReflection#invoke(Object, String)}
+     * メソッドはprivateメソッドに対して処理を行うことを想定しています。<br>
+     * 引数として {@code null} が渡された場合は実行時に必ず失敗します。<br>
+     * <p>
+     * リフレクション実行時に引数情報が必要な場合は {@link FluentReflection#add(Class, Object)}
+     * メソッドを使用してください。
+     * <p>
+     * このメソッドはインスタンスメソッドをリフレクションで処理することを想定しているため、静的メソッドをリフレクションで処理する場合は
+     * {@link FluentReflection#invokeStatic(String)} メソッドを使用してください。
+     * 
+     * <pre>
+     * 使用例:
+     * <code>FluentReflection&lt;String&gt; reflection = new FluentReflection&lt;&gt;(ContentLoader.class);
+     * String result = reflection.invoke(methodName);</code>
+     * </pre>
+     * 
+     * @param methodName リフレクション処理を行う対象のメソッド名
+     * @return リフレクション処理の実行結果
+     * 
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     * @throws IllegalArgumentException 引数として渡された {@code methodName} の値が空文字列の場合
+     */
+    public T invoke(@NonNull final String methodName) {
+        return this.invoke(methodName, false);
     }
 
     /**
@@ -91,28 +153,31 @@ public final class FluentReflection<T> {
      * </pre>
      * 
      * @param methodName リフレクション処理を行う対象のメソッド名
+     * @param isStatic   静的メソッドの可否を表現するフラグ
      * @return リフレクション処理の実行結果
      * 
      * @exception NullPointerException 引数として {@code null} が渡された場合
      * @throws IllegalArgumentException 引数として渡された {@code methodName} の値が空文字列の場合
      */
     @SuppressWarnings("unchecked")
-    public T invoke(@NonNull final String methodName) {
+    private T invoke(@NonNull final String methodName, final boolean isStatic) {
 
         if (methodName.isEmpty()) {
             throw new IllegalArgumentException("Method name is required.");
         }
 
         try {
+            final Object clazzInstance = isStatic ? null : this.clazz.newInstance();
+
             if (this.parameter.isEmpty()) {
                 Method method = this.clazz.getDeclaredMethod(methodName);
                 method.setAccessible(true);
-                return (T) method.invoke(this.clazz.newInstance());
+                return (T) method.invoke(clazzInstance);
             }
 
             Method method = this.clazz.getDeclaredMethod(methodName, this.parameter.getTypes());
             method.setAccessible(true);
-            return (T) method.invoke(this.clazz.newInstance(), this.parameter.getValues());
+            return (T) method.invoke(clazzInstance, this.parameter.getValues());
 
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException | InstantiationException e) {
