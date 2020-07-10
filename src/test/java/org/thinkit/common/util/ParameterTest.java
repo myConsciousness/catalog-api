@@ -38,7 +38,7 @@ final class ParameterTest {
      * @version 1.0
      */
     @Nested
-    class TestParameter {
+    final class TestParameter {
 
         /**
          * <pre>
