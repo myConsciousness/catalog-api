@@ -23,8 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -1062,16 +1060,6 @@ public final class ContentLoaderTest {
     final class TestGetContentList {
 
         /**
-         * テスト対象のクラスオブジェクト
-         */
-        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
-
-        /**
-         * テスト用メソッド
-         */
-        private Method testMethod = null;
-
-        /**
          * <pre>
          * ❏ 概要
          * {@link ContentLoader} クラスの {@link ContentLoader#getContentList(List, Map, List)} メソッドの返却値を確認する。
@@ -1124,8 +1112,10 @@ public final class ContentLoaderTest {
             final List<String> conditionIdList = new ArrayList<>(1);
             conditionIdList.add("1");
 
-            final List<Map<String, String>> actualContentList = this.invoke(attributes, selectionNodes,
-                    conditionIdList);
+            final FluentReflection<List<Map<String, String>>> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(List.class, attributes).add(Map.class, selectionNodes).add(List.class, conditionIdList);
+            final List<Map<String, String>> actualContentList = reflection.invokeStatic("getContentList");
+
             final Map<String, String> actualRecord = actualContentList.get(0);
 
             assertNotNull(actualContentList);
@@ -1192,8 +1182,9 @@ public final class ContentLoaderTest {
 
             selectionNodes.put(SelectionNodeKey.SELECTION_NODES.getKey(), selectionNodesList);
 
-            final List<Map<String, String>> actualContentList = this.invoke(attributes, selectionNodes,
-                    new ArrayList<>(0));
+            final FluentReflection<List<Map<String, String>>> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(List.class, attributes).add(Map.class, selectionNodes).add(List.class, new ArrayList<>(0));
+            final List<Map<String, String>> actualContentList = reflection.invokeStatic("getContentList");
 
             assertNotNull(actualContentList);
             assertTrue(!actualContentList.isEmpty());
@@ -1276,8 +1267,9 @@ public final class ContentLoaderTest {
             conditionIdList.add("1");
             conditionIdList.add("7");
 
-            final List<Map<String, String>> actualContentList = this.invoke(attributes, selectionNodes,
-                    conditionIdList);
+            final FluentReflection<List<Map<String, String>>> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(List.class, attributes).add(Map.class, selectionNodes).add(List.class, conditionIdList);
+            final List<Map<String, String>> actualContentList = reflection.invokeStatic("getContentList");
 
             assertNotNull(actualContentList);
             assertTrue(!actualContentList.isEmpty());
@@ -1306,52 +1298,6 @@ public final class ContentLoaderTest {
                 assertEquals(expectedItemValue, actualRecord.get(TestContentAttribute.test5.getString()));
             }
         }
-
-        /**
-         * 引数の情報を基に {@link ContentLoader#getContentList(List, Map, List)}
-         * メソッドを呼び出すメソッドです。 ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
-         * {@link SuppressWarnings}でuncheckedを指定しています。
-         * 
-         * @param attributes      コンテンツから取得する値に紐づくキー
-         * @param rawContent      加工されていないコンテンツオブジェクト
-         * @param conditionIdList 取得する対象の条件IDが格納されたリスト
-         * @return コンテンツリスト
-         */
-        @SuppressWarnings("unchecked")
-        private List<Map<String, String>> invoke(List<String> attributes, Map<String, Object> rawContent,
-                List<String> conditionIdList) {
-
-            List<Map<String, String>> contentList = new ArrayList<>(0);
-
-            try {
-                contentList = (ArrayList<Map<String, String>>) this.getTestMethod().invoke(TEST_CLASS, attributes,
-                        rawContent, conditionIdList);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return contentList;
-        }
-
-        /**
-         * {@link ContentLoader#getContentList(List, Map, List)} メソッドを取得し返却します。
-         * 
-         * @return {@link ContentLoader#getContentList(List, Map, List)} メソッド
-         */
-        private Method getTestMethod() {
-            if (this.testMethod == null) {
-                try {
-                    final String testMethodName = "getContentList";
-                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, List.class, Map.class,
-                            List.class);
-                    this.testMethod.setAccessible(true);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return this.testMethod;
-        }
     }
 
     /**
@@ -1365,16 +1311,6 @@ public final class ContentLoaderTest {
      */
     @Nested
     final class TestGetConditionIdList {
-
-        /**
-         * テスト対象のクラスオブジェクト
-         */
-        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
-
-        /**
-         * テスト用メソッド
-         */
-        private Method testMethod = null;
 
         /**
          * <pre>
@@ -1425,7 +1361,9 @@ public final class ContentLoaderTest {
             final Map<String, String> conditions = new HashMap<>();
             conditions.put(TestCondition.testCondition1.getString(), "1");
 
-            final List<String> actualConditionIdList = this.invoke(conditionNodes, conditions);
+            final FluentReflection<List<String>> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(List.class, conditionNodes).add(Map.class, conditions);
+            final List<String> actualConditionIdList = reflection.invokeStatic("getConditionIdList");
 
             assertNotNull(actualConditionIdList);
             assertTrue(!actualConditionIdList.isEmpty());
@@ -1486,7 +1424,9 @@ public final class ContentLoaderTest {
             conditions.put(TestCondition.testCondition2.getString(), "testValue41");
             conditions.put(TestCondition.testCondition3.getString(), "testValue42");
 
-            final List<String> actualConditionIdList = this.invoke(conditionNodes, conditions);
+            final FluentReflection<List<String>> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(List.class, conditionNodes).add(Map.class, conditions);
+            final List<String> actualConditionIdList = reflection.invokeStatic("getConditionIdList");
 
             assertNotNull(actualConditionIdList);
             assertTrue(!actualConditionIdList.isEmpty());
@@ -1554,54 +1494,14 @@ public final class ContentLoaderTest {
             conditions.put(TestCondition.testCondition9.getString(), "testValue78");
             conditions.put(TestCondition.testCondition10.getString(), "testValue79");
 
-            final List<String> actualConditionIdList = this.invoke(conditionNodes, conditions);
+            final FluentReflection<List<String>> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(List.class, conditionNodes).add(Map.class, conditions);
+            final List<String> actualConditionIdList = reflection.invokeStatic("getConditionIdList");
 
             assertNotNull(actualConditionIdList);
             assertTrue(!actualConditionIdList.isEmpty());
             assertTrue(actualConditionIdList.size() == 1);
             assertEquals("7", actualConditionIdList.get(0));
-        }
-
-        /**
-         * 引数の情報を基に {@link ContentLoader#getConditionIdList(List, Map)} メソッドを呼び出すメソッドです。
-         * ジェネリクスを使用したキャスト処理の際にはunchecked警告を避けられないため
-         * {@link SuppressWarnings}でuncheckedを指定しています。
-         * 
-         * @param conditionNodes 条件ノードリスト
-         * @param conditions     条件の照合時に使用する条件マップ
-         * @return 条件IDのリスト
-         */
-        @SuppressWarnings("unchecked")
-        private List<String> invoke(List<Map<String, Object>> conditionNodes, Map<String, String> conditions) {
-
-            List<String> conditionIdList = new ArrayList<>(0);
-
-            try {
-                conditionIdList = (List<String>) this.getTestMethod().invoke(TEST_CLASS, conditionNodes, conditions);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return conditionIdList;
-        }
-
-        /**
-         * {@link ContentLoader#getConditionIdList(List, Map)} メソッドを取得し返却します。
-         * 
-         * @return {@link ContentLoader#getConditionIdList(List, Map)} メソッド
-         */
-        private Method getTestMethod() {
-            if (this.testMethod == null) {
-                try {
-                    final String testMethodName = "getConditionIdList";
-                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, List.class, Map.class);
-                    this.testMethod.setAccessible(true);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return this.testMethod;
         }
     }
 
@@ -1615,16 +1515,6 @@ public final class ContentLoaderTest {
      */
     @Nested
     final class TestAll {
-
-        /**
-         * テスト対象のクラスオブジェクト
-         */
-        private final Class<ContentLoader> TEST_CLASS = ContentLoader.class;
-
-        /**
-         * テスト用メソッド
-         */
-        private Method testMethod = null;
 
         /**
          * <pre>
@@ -1677,46 +1567,9 @@ public final class ContentLoaderTest {
                 conditions.put(TestCondition.testCondition1.getString(), String.valueOf(i));
             }
 
-            assertTrue(this.invoke(conditionList, conditions));
-        }
-
-        /**
-         * 引数の情報を基に {@link ContentLoader#all(List, Map)} メソッドを呼び出すメソッドです。
-         * 
-         * @param contentConditionList コンテンツに定義された条件リスト
-         * @param conditions           照合する値を格納したマップ
-         * @return 全ての条件を満たしている場合は{@code true}、それ以外は{@code false}
-         */
-        private boolean invoke(List<Map<String, Object>> contentConditionList, Map<String, String> conditions) {
-
-            boolean isAll = false;
-
-            try {
-                isAll = (Boolean) this.getTestMethod().invoke(TEST_CLASS, contentConditionList, conditions);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return isAll;
-        }
-
-        /**
-         * {@link ContentLoader#all(List, Map)} メソッドを取得し返却します。
-         * 
-         * @return {@link ContentLoader#all(List, Map)} メソッド
-         */
-        private Method getTestMethod() {
-            if (this.testMethod == null) {
-                try {
-                    final String testMethodName = "all";
-                    this.testMethod = this.TEST_CLASS.getDeclaredMethod(testMethodName, List.class, Map.class);
-                    this.testMethod.setAccessible(true);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return this.testMethod;
+            final FluentReflection<Boolean> reflection = new FluentReflection<>(ContentLoader.class);
+            reflection.add(List.class, conditionList).add(Map.class, conditions);
+            assertTrue(reflection.invokeStatic("all"));
         }
     }
 
