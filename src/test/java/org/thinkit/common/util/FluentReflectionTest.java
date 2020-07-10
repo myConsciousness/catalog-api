@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -938,6 +939,75 @@ final class FluentReflectionTest {
             final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                     () -> new FluentReflection<>(ReflectionTestDataSet.class).invokeStatic(""));
             assertEquals("Method name is required.", exception.getMessage());
+        }
+    }
+
+    /**
+     * {@link FluentReflection#add(Class, Object)} メソッドのテストメソッドを定義するテストクラスです。
+     * {@link FluentReflection#add(Class, Object)} はprivateメソッドです。
+     * 
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    class TestAdd {
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link FluentReflection} クラスの {@link FluentReflection#add(Class, Object)} メソッドの機能を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>null</code> ではないこと
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が空文字列ではないこと
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>"success"</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testSimplePattern() {
+            final String actualResult = new FluentReflection<String>(ReflectionTestDataSet.class)
+                    .add(String.class, "test").invoke(TestMethod.RETURN_STRING_WITH_ARGUMENT.getName());
+
+            assertNotNull(actualResult);
+            assertTrue(!actualResult.isEmpty());
+            assertEquals("success", actualResult);
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link FluentReflection} クラスの {@link FluentReflection#add(Class, Object)} メソッドの機能を確認する。
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 観点
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>null</code> ではないこと
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が空文字列ではないこと
+         * ・{@link FluentReflection#invoke(String)} メソッドから取得した値が <code>"success"</code> であること
+         * </pre>
+         * 
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testMethodChainPattern() {
+            final String actualResult = new FluentReflection<String>(ReflectionTestDataSet.class)
+                    .add(String.class, "test").add(int.class, 0).add(boolean.class, true)
+                    .invoke(TestMethod.RETURN_STRING_WITH_ARGUMENTS.getName());
+
+            assertNotNull(actualResult);
+            assertTrue(!actualResult.isEmpty());
+            assertEquals("success", actualResult);
         }
     }
 
