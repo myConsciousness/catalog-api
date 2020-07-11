@@ -253,4 +253,62 @@ final class ReflectionParameterTest {
             assertEquals("No parameter is set. Parameter is required.", exception.getMessage());
         }
     }
+
+    /**
+     * {@link ReflectionParameter#isEmpty()} メソッドのテストメソッドを定義するテストクラスです。
+     *
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    final class TestIsEmpty {
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ReflectionParameter} クラスの {@link ReflectionParameter#isEmpty()} メソッドの返却値を確認する。
+         * {@link ReflectionParameter#add(Class, Object)} メソッドを使用した状態で {@link ReflectionParameter#isEmpty()} を呼び出す。
+         * </pre>
+         *
+         * <pre>
+         * ❏ 観点
+         * ・{@link ReflectionParameter#isEmpty()} メソッドの返却値が <code>false</code> であること
+         * </pre>
+         *
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testWhenParameterisSet() {
+            final ReflectionParameter parameter = new ReflectionParameter();
+            parameter.add(String.class, "test");
+            assertTrue(!parameter.isEmpty());
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link ReflectionParameter} クラスの {@link ReflectionParameter#isEmpty()} メソッドの返却値を確認する。
+         * {@link ReflectionParameter#add(Class, Object)} メソッドを使用していない状態で {@link ReflectionParameter#isEmpty()} を呼び出す。
+         * </pre>
+         *
+         * <pre>
+         * ❏ 観点
+         * ・{@link ReflectionParameter#isEmpty()} メソッドの返却値が <code>true</code> であること
+         * </pre>
+         *
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testWhenParameterisNotSet() {
+            final ReflectionParameter parameter = new ReflectionParameter();
+            assertTrue(parameter.isEmpty());
+        }
+    }
 }
