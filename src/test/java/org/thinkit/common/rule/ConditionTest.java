@@ -13,11 +13,12 @@
 package org.thinkit.common.rule;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 /**
  * {@link Condition} インターフェースのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -61,12 +62,12 @@ public final class ConditionTest {
      * {@link Condition} インターフェースの {@link Condition#getString()} メソッドの機能を確認する。
      * テスト用の具象クラスは {@link TestCondition} を使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link TestCondition#TEST_CONDITION#getString()} の返却値が <code>"TEST_CONDITION"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -83,12 +84,12 @@ public final class ConditionTest {
      * {@link Condition} インターフェースの {@link Condition#getString()} メソッドの機能を確認する。
      * テスト用の具象クラスは {@link TestCondition} を使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link TestCondition#テストコンディション#getString()} の返却値が <code>"テストコンディション"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし

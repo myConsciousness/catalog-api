@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * {@link PlatformPrefix} クラスのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -46,14 +46,14 @@ public final class PlatformPrefixTest {
      * {@link PlatformPrefix} クラスの各要素に定義されたコード値を確認する。
      * コード値は {@link PlatformPrefix#getCode()} メソッドから取得する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link PlatformPrefix#WINDOWS} に定義されたコード値が <code>0</code> であること。
      * ・{@link PlatformPrefix#MAC} に定義されたコード値が <code>1</code> であること。
      * ・{@link PlatformPrefix#LINUX} に定義されたコード値が <code>2</code> であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -71,12 +71,12 @@ public final class PlatformPrefixTest {
      * ❏ 概要
      * {@link PlatformPrefix} クラスの {@link PlatformPrefix#windows()} メソッドの返却値を確認する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link PlatformPrefix#windows()} メソッドの返却値が <code>"windows"</code> であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -92,12 +92,12 @@ public final class PlatformPrefixTest {
      * ❏ 概要
      * {@link PlatformPrefix} クラスの {@link PlatformPrefix#mac()} メソッドの返却値を確認する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link PlatformPrefix#mac()} メソッドの返却値が <code>"mac"</code> であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -113,12 +113,12 @@ public final class PlatformPrefixTest {
      * ❏ 概要
      * {@link PlatformPrefix} クラスの {@link PlatformPrefix#linux()} メソッドの返却値を確認する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link PlatformPrefix#linux()} メソッドの返却値が <code>"linux"</code> であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし

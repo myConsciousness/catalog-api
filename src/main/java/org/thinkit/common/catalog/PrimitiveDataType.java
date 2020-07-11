@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * プリミティブデータ型区分を管理するカテゴリです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -75,7 +75,7 @@ public enum PrimitiveDataType implements Catalog<PrimitiveDataType> {
      * データ型の文字列表現を返却します。<br>
      * 言語仕様として基本データ型が全て小文字で定義されている特性を利用し、<br>
      * このEnumクラスで定義されている要素を小文字に変換して返却します。
-     * 
+     *
      * @return データ型の文字列表現
      */
     public String toDataType() {
@@ -94,7 +94,7 @@ public enum PrimitiveDataType implements Catalog<PrimitiveDataType> {
      * 6, {@link #LONG}<br>
      * 7, {@link #FLOAT}<br>
      * 8, {@link #DOUBLE}<br>
-     * 
+     *
      * @param dataType データ型
      * @return 引数として渡されたデータ型がプリミティブ型の場合は{@code true}、それ以外は{@code false}
      */

@@ -15,7 +15,7 @@ package org.thinkit.common.key;
 /**
  * コンテンツのキーに関する汎用的な処理を定義したインターフェースです。<br>
  * {@link Key} の具象クラスは必ず {@link #getKey()} を実装してください。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -24,7 +24,7 @@ public interface Key {
 
     /**
      * キーの文字列表現を返却します。
-     * 
+     *
      * @return キーの文字列表現
      */
     public String getKey();

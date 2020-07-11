@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * {@link Parameter} クラスのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -32,7 +32,7 @@ final class ParameterTest {
 
     /**
      * {@link Parameter#Parameter(Class, Object)} コンストラクタのテストメソッドを定義するテストクラスです。
-     * 
+     *
      * @author Kato Shinya
      * @since 1.0
      * @version 1.0
@@ -45,14 +45,14 @@ final class ParameterTest {
          * ❏ 概要
          * {@link Parameter} クラスの {@link Parameter#Parameter(Class, Object)} コンストラクタの機能を確認する。
          * </pre>
-         * 
+         *
          * <pre>
          * ❏ 観点
          * ・{@link Parameter#Parameter(Class, Object)} コンストラクタで生成したインスタンスが <code>null</code> ではないこと
          * ・{@link Parameter#getType()} メソッドの返却値が <code>String.class</code> であること
          * ・{@link Parameter#getValue()} メソッドの返却値が <code>"test"</code> であること
          * </pre>
-         * 
+         *
          * <pre>
          * ❏ 留意点
          * なし
@@ -72,13 +72,13 @@ final class ParameterTest {
          * ❏ 概要
          * {@link Parameter} クラスの {@link Parameter#Parameter(Class, Object)} コンストラクタの機能を確認する。
          * </pre>
-         * 
+         *
          * <pre>
          * ❏ 観点
          * ・{@link Parameter#Parameter(Class, Object)} コンストラクタで生成したインスタンスが <code>null</code> ではないこと
          * ・{@link Parameter#getType()} メソッドの返却値が <code>Map.class</code> であること
          * </pre>
-         * 
+         *
          * <pre>
          * ❏ 留意点
          * なし

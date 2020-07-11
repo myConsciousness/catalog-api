@@ -23,11 +23,11 @@ import lombok.RequiredArgsConstructor;
  * {@link #java()}<br>
  * {@link #xml()}<br>
  * {@link #json()}<br>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
- * 
+ *
  * @see #java()
  * @see #xml()
  * @see #json()
@@ -63,7 +63,7 @@ public enum Extension implements Catalog<Extension> {
 
     /**
      * Javaの拡張子を返却します。
-     * 
+     *
      * @return Javaの拡張子
      * @see #JAVA
      */
@@ -73,7 +73,7 @@ public enum Extension implements Catalog<Extension> {
 
     /**
      * XMLの拡張子を返却します。
-     * 
+     *
      * @return XMLの拡張子
      * @see #XML
      */
@@ -83,7 +83,7 @@ public enum Extension implements Catalog<Extension> {
 
     /**
      * jsonの拡張子を返却します。
-     * 
+     *
      * @return jsonの拡張子
      * @see #JSON
      */

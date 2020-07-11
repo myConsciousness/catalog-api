@@ -32,22 +32,22 @@ import lombok.NonNull;
  * オブジェクトに含まれる情報をjson文字列へ変換する際には{@link JsonConverter#toJsonString()}を使用してください。
  * json文字列を特定のオブジェクトへ変換する際には{@link JsonConverter#toObject(String, Class)}を使用し、
  * ジェネリクス情報を持つオブジェクトへ変換したい場合は{@link JsonConverter#toObject(String, TypeReference)}を使用してください。
- * 
+ *
  * <pre>
  * オブジェクトをjson文字列へ変換する場合:
  * <code>String jsonString = JsonConverter.toJsonString(object);</code>
  * </pre>
- * 
+ *
  * <pre>
  * json文字列を特定のオブジェクトへ変換する場合:
  * <code>Sample sample = JsonConverter.toObject(jsonString, Sample.class);</code>
  * </pre>
- * 
+ *
  * <pre>
  * json文字列を特定のジェネリクスを持つオブジェクトへ変換する場合:
  * <code>Map<String, String> map = JsonConverter.toObject(jsonString, new TypeReference&lt;Map&lt;String, String&gt;&gt;() {});</code>
  * </pre>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -71,10 +71,10 @@ public final class JsonConverter {
     /**
      * 引数として渡されたオブジェクト情報をjson文字列へ変換します。<br>
      * 引数として{@code null}が渡された場合は実行時に必ず例外が発生します。<br>
-     * 
+     *
      * @param object json文字列へ変換するオブジェクト
      * @return json文字列
-     * 
+     *
      * @exception NullPointerException 引数として{@code null}が発生した場合
      * @throws JsonConvertingException jsonコンテンツの解析または生成処理が異常終了した場合
      */
@@ -89,10 +89,10 @@ public final class JsonConverter {
     /**
      * 引数として渡されたオブジェクト情報をjson文字列へ変換します。<br>
      * 引数として{@code null}が渡された場合は実行時に必ず例外が発生します。<br>
-     * 
+     *
      * @param file jsonが定義されたファイルオブジェクト
      * @return json文字列
-     * 
+     *
      * @exception NullPointerException 引数として{@code null}が発生した場合
      * @throws JsonConvertingException jsonコンテンツの解析または生成処理が異常終了した場合
      */
@@ -111,19 +111,19 @@ public final class JsonConverter {
      * {@link #toObject(String, TypeReference)}を使用することでも同様の返却値を得ることができますが、
      * json文字列を{@link HashMap}へ変換する際にはこの{@link #HashMap(String)}を使用してください。
      * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
-     * 
+     *
      * <p>
      * この{@link #toHashMap(String)}が返却するマップは{@link HashMap}で実装されます。
      * そのため、変換の際にjson文字列で定義された順序は保持されません。
-     * 
+     *
      * <pre>
      * 使用例:
      * <code>Map map = JsonConverter.toHashMap(jsonString);</code>
      * </pre>
-     * 
+     *
      * @param jsonString json文字列
      * @return json文字列を変換した{@link HashMap}オブジェクト
-     * 
+     *
      * @exception NullPointerException 引数として{@code null}が指定された場合
      * @throws JsonConvertingException jsonコンテンツの解析または生成処理が異常終了した場合
      */
@@ -137,19 +137,19 @@ public final class JsonConverter {
      * {@link #toObject(String, TypeReference)}を使用することでも同様の返却値を得ることができますが、
      * json文字列を{@link LinkedHashMap}へ変換する際にはこの{@link #toLinkedHashMap(String)}を使用してください。
      * 引数として{@code null}が渡された場合は実行時に必ず失敗します。
-     * 
+     *
      * <p>
      * この{@link #toLinkedHashMap(String)}が返却するマップは{@link LinkedHashMap}で実装されます。
      * そのため、json文字列で定義された順序を保持した状態で変換が行われます。
-     * 
+     *
      * <pre>
      * 使用例:
      * <code>Map map = JsonConverter.toLinkedHashMap(jsonString);</code>
      * </pre>
-     * 
+     *
      * @param jsonString json文字列
      * @return json文字列を変換した{@link LinkedHashMap}オブジェクト
-     * 
+     *
      * @exception NullPointerException 引数として{@code null}が指定された場合
      * @throws JsonConvertingException jsonコンテンツの解析または生成処理が異常終了した場合
      */
@@ -161,12 +161,12 @@ public final class JsonConverter {
     /**
      * 引数として指定されたオブジェクト情報を基にjson文字列を特定のオブジェクトへ変換します。<br>
      * 引数として{@code null}が渡された場合は実行時に必ず失敗します。<br>
-     * 
+     *
      * @param <T>        型ワイルドカード
      * @param jsonString json文字列
      * @param clazz      変換先の型情報
      * @return 変換されたjson文字列情報を含むオブジェクト
-     * 
+     *
      * @exception NullPointerException 引数として{@code null}が発生した場合
      * @throws JsonConvertingException jsonコンテンツの解析または生成処理が異常終了した場合
      */
@@ -182,17 +182,17 @@ public final class JsonConverter {
      * 引数として指定されたオブジェクト情報を基にjson文字列を特定のオブジェクトへ変換します。<br>
      * {@link TypeReference<T>}を使用したjson文字列の変換はこのメソッドを使用してください。<br>
      * 引数として{@code null}が渡された場合は実行時に必ず失敗します。<br>
-     * 
+     *
      * <pre>
      * 使用例:
      * <code>JsonConverter.toObject(jsonString, new TypeReference&lt;Map&lt;String, String&gt;&gt;() {});</code>
      * </pre>
-     * 
+     *
      * @param <T>          型ワイルドカード
      * @param jsonString   json文字列
      * @param valueTypeRef 変換先の型情報
      * @return 変換されたjson文字列情報を含むオブジェクト
-     * 
+     *
      * @exception NullPointerException 引数として{@code null}が発生した場合
      * @throws JsonConvertingException jsonコンテンツの解析または生成処理が異常終了した場合
      */
@@ -207,7 +207,7 @@ public final class JsonConverter {
     /**
      * Thrown to indicate that an illegal operation has been detected during the
      * conversion of an object to a json string, or a json string to an object.
-     * 
+     *
      * <pre>
      * Example:
      * <code>throw new JsonConvertingException();</code>

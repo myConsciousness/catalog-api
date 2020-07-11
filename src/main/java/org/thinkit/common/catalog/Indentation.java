@@ -12,11 +12,10 @@
 
 package org.thinkit.common.catalog;
 
-import lombok.RequiredArgsConstructor;
-
 import org.thinkit.common.exception.LogicException;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * インデントを管理するカタログです。<br>
@@ -26,7 +25,7 @@ import lombok.Getter;
  * {@link #space()}<br>
  * {@link #tabCode()}<br>
  * {@link #returnCode()}<br>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -62,7 +61,7 @@ public enum Indentation implements Catalog<Indentation> {
 
     /**
      * 半角空白を返却します。
-     * 
+     *
      * @return 半角空白
      * @see #SPACE
      */
@@ -72,7 +71,7 @@ public enum Indentation implements Catalog<Indentation> {
 
     /**
      * タブコードを返却します。
-     * 
+     *
      * @return タブコード
      * @see #TAB
      */
@@ -82,7 +81,7 @@ public enum Indentation implements Catalog<Indentation> {
 
     /**
      * 改行コードを返却します。
-     * 
+     *
      * @return 改行コード
      * @see #RETURN
      */
@@ -94,7 +93,7 @@ public enum Indentation implements Catalog<Indentation> {
      * インデント用の半角空白を返却します。<br>
      * このメソッドからは必ず半角空白4個を結合したインデント用文字列が返却されます。<br>
      * 任意の個数のインデント用文字列を取得したい場合は{@link #getIndentSpaces(int)}を使用してください。
-     * 
+     *
      * @return 半角空白4個のインデント用文字列
      * @see #getIndentSpaces(int)
      */
@@ -107,7 +106,7 @@ public enum Indentation implements Catalog<Indentation> {
      * このメソッドからは引数として指定された任意の個数分のインデント用文字列が返却されます。<br>
      * 半角空白4個のインデント用文字列を取得したい場合はこのメソッドを使用しても問題はありませんが、<br>
      * 専用のメソッドを用意しているので{@link #getIndentSpaces()}を使用するようにしてください。
-     * 
+     *
      * @param number インデント用文字列を生成する際に使用する任意の空白数
      * @return 指定された空白数に対応したインデント用文字列
      * @see #getIndentSpaces()
@@ -132,7 +131,7 @@ public enum Indentation implements Catalog<Indentation> {
      * インデント用のタブコードを返却します。<br>
      * このメソッドからは必ずタブコード1個が返却されます。<br>
      * 任意の個数のインデント用文字列を取得したい場合は{@link #getIndentTabs(int)}を使用してください。
-     * 
+     *
      * @return タブコード1個のインデント用文字列
      * @see #getIndentTabs(int)
      */
@@ -145,7 +144,7 @@ public enum Indentation implements Catalog<Indentation> {
      * このメソッドからは引数として指定された任意の個数分のインデント用文字列が返却されます。<br>
      * タブコード1個のインデント用文字列を取得したい場合はこのメソッドを使用しても問題はありませんが、<br>
      * 専用のメソッドを用意しているので{@link #getIndentTab()}を使用するようにしてください。
-     * 
+     *
      * @param number インデント用文字列を生成する際に使用する任意のタブコード数
      * @return 指定されたタブコード数に対応したインデント用文字列
      * @see #getIndentTabs()

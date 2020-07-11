@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * {@link Brace} クラスのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -41,13 +41,13 @@ public final class BraceTest {
      * {@link Brace} クラスの各要素に定義されたコード値を確認する。
      * コード値は {@link Brace#getCode()} メソッドから取得する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link Brace#START} に定義されたコード値が <code>0</code> であること。
      * ・{@link Brace#END} に定義されたコード値が <code>1</code> であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -64,12 +64,12 @@ public final class BraceTest {
      * ❏ 概要
      * {@link Brace} クラスの {@link Brace#start()} メソッドの返却値を確認する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link Brace#start()} メソッドの返却値が <code>"{"</code> であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -85,12 +85,12 @@ public final class BraceTest {
      * ❏ 概要
      * {@link Brace} クラスの {@link Brace#end()} メソッドの返却値を確認する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link Brace#end()} メソッドの返却値が <code>"}"</code> であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * {@link Catalog} インターフェースのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -34,12 +34,12 @@ public final class CatalogTest {
      * {@link Catalog} インターフェースの抽象メソッド {@link Catalog#getCode()} を確認する。
      * テストの際には {@link Brace} クラスを使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link Catalog} インターフェースを実装した具象クラスが {@link Catalog#getCode()} メソッドを呼び出した際に正常に処理が終了すること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -57,16 +57,16 @@ public final class CatalogTest {
      * {@link Catalog} インターフェースの {@link Catalog#getOrderedList(Class)} メソッドの返却値を確認する。
      * テストの際には {@link Brace} クラスを使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・期待値と{@link Catalog#getOrderedList(Class)} メソッドから取得したリストが等価であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * 以下のリストを期待値とする。
-     * 
+     *
      * {@code final List<Brace> expectedBraceList = new ArrayList<>(2);
      *        expectedBraceList.add(Brace.START);
      *        expectedBraceList.add(Brace.END);}
@@ -87,13 +87,13 @@ public final class CatalogTest {
      * {@link Catalog} インターフェースの {@link Catalog#getEnum(Class, int)} メソッドの返却値を確認する。
      * テストの際には {@link Brace} クラスを使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link Brace#START} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#START} が返却されること。
      * ・{@link Brace#END} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#END} が返却されること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし

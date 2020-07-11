@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
  * 以下の静的メソッドを使用することでも各要素の文字列表現を取得できます。<br>
  * {@link #start()}<br>
  * {@link #end()}<br>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -53,7 +53,7 @@ public enum Parenthesis implements Catalog<Parenthesis> {
 
     /**
      * 開始括弧の文字列表現を返却します。
-     * 
+     *
      * @return 開始括弧の文字列表現
      */
     public static String start() {
@@ -62,7 +62,7 @@ public enum Parenthesis implements Catalog<Parenthesis> {
 
     /**
      * 終了括弧の文字列表現を返却します。
-     * 
+     *
      * @return 終了括弧の文字列表現
      */
     public static String end() {

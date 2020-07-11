@@ -20,7 +20,7 @@ import org.thinkit.common.exception.LogicException;
 
 /**
  * {@link Indentation}クラスのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -168,7 +168,7 @@ public final class IndentationTest {
 
     /**
      * 引数として指定された回数分の半角空白を返却します。
-     * 
+     *
      * @param count 繰り返し回数
      * @return 指定された繰り返し回数分の半角空白
      */
@@ -184,7 +184,7 @@ public final class IndentationTest {
 
     /**
      * 引数として指定された回数分のタブを返却します。
-     * 
+     *
      * @param count 繰り返し回数
      * @return 指定された繰り返し回数分のタブ
      */

@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * {@link Parenthesis}クラスのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0

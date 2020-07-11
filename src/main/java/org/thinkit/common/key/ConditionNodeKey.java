@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * コンテンツの条件ノードのキーを管理するEnumクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0

@@ -20,11 +20,11 @@ import org.thinkit.common.catalog.PlatformPrefix;
  * {@link #isWindows()}<br>
  * {@link #isMac()}<br>
  * {@link #isLinux()}<br>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
- * 
+ *
  * @see #isWindows()
  * @see #isMac()
  * @see #isLinux()
@@ -51,7 +51,7 @@ public final class PlatformChecker {
      * プログラムを実行しているプラットフォームの判定を行います。<br>
      * プログラムを実行しているプラットフォームがWindows OSの場合は{@code true}を返却します。<br>
      * 実行プラットフォームがWindows OS以外の場合は必ず{@code false}を返却します。
-     * 
+     *
      * @return プログラムの実行プラットフォームがWindows OSの場合は{@code true}、それ以外は{@code false}
      */
     public static boolean isWindows() {
@@ -62,7 +62,7 @@ public final class PlatformChecker {
      * プログラムを実行しているプラットフォームの判定を行います。<br>
      * プログラムを実行しているプラットフォームがMac OSの場合は{@code true}を返却します。<br>
      * 実行プラットフォームがMac OS以外の場合は必ず{@code false}を返却します。
-     * 
+     *
      * @return プログラムの実行プラットフォームがMac OSの場合は{@code true}、それ以外は{@code false}
      */
     public static boolean isMac() {
@@ -73,7 +73,7 @@ public final class PlatformChecker {
      * プログラムを実行しているプラットフォームの判定を行います。<br>
      * プログラムを実行しているプラットフォームがLinux OSの場合は{@code true}を返却します。<br>
      * 実行プラットフォームがLinux OS以外の場合は必ず{@code false}を返却します。
-     * 
+     *
      * @return プログラムの実行プラットフォームがLinux OSの場合は{@code true}、それ以外は{@code false}
      */
     public static boolean isLinux() {

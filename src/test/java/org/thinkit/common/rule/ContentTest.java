@@ -13,11 +13,12 @@
 package org.thinkit.common.rule;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 /**
  * {@link Content} インターフェースのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -61,12 +62,12 @@ public final class ContentTest {
      * {@link Content} インターフェースの {@link Content#getString()} メソッドの機能を確認する。
      * テスト用の具象クラスは {@link TestContent} を使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link TestContent#TEST_CONTENT#getString()} の返却値が <code>"TEST_CONTENT"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -83,12 +84,12 @@ public final class ContentTest {
      * {@link Content} インターフェースの {@link Content#getString()} メソッドの機能を確認する。
      * テスト用の具象クラスは {@link TestContent} を使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link TestContent#テストコンテンツ#getString()} の返却値が <code>"テストコンテンツ"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし

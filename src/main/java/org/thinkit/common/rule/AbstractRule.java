@@ -19,11 +19,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import com.google.common.flogger.FluentLogger;
+
 import org.thinkit.common.catalog.Catalog;
 import org.thinkit.common.rule.exception.RuleHandlingException;
 import org.thinkit.common.util.ContentLoader;
-
-import com.google.common.flogger.FluentLogger;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

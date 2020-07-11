@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * {@link Key} インターフェースのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -57,7 +57,7 @@ public final class KeyTest {
 
         /**
          * テスト用コンストラクタ
-         * 
+         *
          * @param key キー
          */
         TestKey(Key key) {
@@ -83,12 +83,12 @@ public final class KeyTest {
      * {@link Key} インターフェースの {@link Key#getKey()} メソッドの機能を確認する。
      * テスト用の具象クラスは {@link TestKey} を使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link TestKey#TEST_KEY#getKey()} の返却値が <code>"testKey"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -105,12 +105,12 @@ public final class KeyTest {
      * {@link Key} インターフェースの {@link Key#getKey()} メソッドの機能を確認する。
      * テスト用の具象クラスは {@link TestKey} を使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link TestKey#テストキー#getKey()} の返却値が <code>"テストキー"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし

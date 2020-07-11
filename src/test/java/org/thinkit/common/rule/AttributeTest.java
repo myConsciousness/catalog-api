@@ -13,11 +13,12 @@
 package org.thinkit.common.rule;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 /**
  * {@link Attribute} インターフェースのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -60,12 +61,12 @@ public final class AttributeTest {
      * {@link Attibute} インターフェースの {@link Attribute#getString()} メソッドの機能を確認する。
      * テスト用の具象クラスは {@link TestAttribute} を使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link TestAttribute#TEST_ATTRIBUTE#getString()} の返却値が <code>"TEST_ATTRIBUTE"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -82,12 +83,12 @@ public final class AttributeTest {
      * {@link Attibute} インターフェースの {@link Attribute#getString()} メソッドの機能を確認する。
      * テスト用の具象クラスは {@link TestAttribute} を使用する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link TestAttribute#テストアトリビュート#getString()} の返却値が <code>"テストアトリビュート"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし

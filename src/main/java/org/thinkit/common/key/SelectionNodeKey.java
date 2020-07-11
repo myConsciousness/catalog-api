@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * コンテンツの選択ノードのキーを管理するクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0

@@ -30,7 +30,7 @@ import lombok.ToString;
  * {@link FileHandler}では以下の操作を提供しています。<br>
  * <br>
  * {@link #write(String, String, String)}
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -79,7 +79,7 @@ public final class FileHandler {
     /**
      * コンストラクタ。<br>
      * 指定された出力先のディレクトリが存在しない場合は生成します。
-     * 
+     *
      * @param output 出力先
      * @exception NullPointerException 引数として{@code null}が渡された場合
      */
@@ -100,12 +100,12 @@ public final class FileHandler {
      * 出力先を変更した場合は{@link #setOutput(String)}を使用してください。 <br>
      * <br>
      * 書き込み処理で{@link IOException}が発生した場合は{@code false}を返却します。
-     * 
+     *
      * @param fileName  ファイル名
      * @param extension 拡張子
      * @param content   書き込む内容
      * @return 書き込み処理が正常終了した場合は{@code true}、{@link IOException}が発生した場合は{@code false}
-     * 
+     *
      * @exception IOException 出力処理が異常終了した場合
      */
     public boolean write(@NonNull String fileName, @NonNull String extension, @NonNull String content) {
@@ -132,7 +132,7 @@ public final class FileHandler {
 
     /**
      * プラットフォームに対応したファイルの区切り文字を返却します。
-     * 
+     *
      * @return プラットフォームに対応したファイルの区切り文字
      */
     public static String getFileSeparator() {
@@ -141,7 +141,7 @@ public final class FileHandler {
 
     /**
      * プラットフォームに対応した改行コードを返却します。
-     * 
+     *
      * @return プラットフォームに対応した改行コード
      */
     public static String getNewLine() {

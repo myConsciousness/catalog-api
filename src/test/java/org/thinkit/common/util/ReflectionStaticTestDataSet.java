@@ -23,7 +23,7 @@ import java.util.Map;
  * <p>
  * このクラスでは静的メソッドのテスト用データセットを定義します。また、このクラスは {@link FluentReflectionTest}
  * クラスでのみ使用することを想定しています。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -32,7 +32,7 @@ public final class ReflectionStaticTestDataSet {
 
     /**
      * 引数なしで文字列型として <code>"success"</code> を返却するメソッドです。
-     * 
+     *
      * @return <code>"success"</code>
      */
     @SuppressWarnings("unused")
@@ -43,7 +43,7 @@ public final class ReflectionStaticTestDataSet {
     /**
      * 引数を受け文字列型として <code>"success"</code> を返却するメソッドです。<br>
      * 渡された文字列の値が空文字列の場合は <code>"failure"</code> を返却します。
-     * 
+     *
      * @return 引数として渡された文字列の値が空文字列の場合は <code>"failure"</code> 、それ以外は
      *         <code>"success"</code>
      */
@@ -54,7 +54,7 @@ public final class ReflectionStaticTestDataSet {
 
     /**
      * 複数の引数を受け文字列型として <code>"success"</code> を返却するメソッドです。
-     * 
+     *
      * @return <code>"success"</code>
      */
     @SuppressWarnings("unused")
@@ -64,7 +64,7 @@ public final class ReflectionStaticTestDataSet {
 
     /**
      * 引数なしで数値型として <code>1</code> を返却するメソッドです。
-     * 
+     *
      * @return <code>1</code>
      */
     @SuppressWarnings("unused")
@@ -75,7 +75,7 @@ public final class ReflectionStaticTestDataSet {
     /**
      * 引数を受け数値型として <code>1</code> を返却するメソッドです。<br>
      * 渡された真偽値の値が <code>false</code> の場合は <code>0</code> を返却します。
-     * 
+     *
      * @return 渡された真偽値の値が <code>false</code> の場合は <code>0</code> 、それ以外は
      *         <code>1</code>
      */
@@ -86,7 +86,7 @@ public final class ReflectionStaticTestDataSet {
 
     /**
      * 複数の引数を受け数値型として <code>1</code> を返却するメソッドです。
-     * 
+     *
      * @return <code>1</code>
      */
     @SuppressWarnings("unused")
@@ -96,7 +96,7 @@ public final class ReflectionStaticTestDataSet {
 
     /**
      * 引数なしで真偽値として <code>true</code> を返却するメソッドです。
-     * 
+     *
      * @return <code>true</code>
      */
     @SuppressWarnings("unused")
@@ -107,7 +107,7 @@ public final class ReflectionStaticTestDataSet {
     /**
      * 引数を受け真偽値として <code>true</code> を返却するメソッドです。<br>
      * 渡された数値が <code>1</code> 以外の場合は <code>false</code> を返却します。
-     * 
+     *
      * @return 渡された数値が <code>1</code> の場合は <code>true</code> 、それ以外は
      *         <code>false</code>
      */
@@ -118,7 +118,7 @@ public final class ReflectionStaticTestDataSet {
 
     /**
      * 複数の引数を受け数値型として <code>1</code> を返却するメソッドです。
-     * 
+     *
      * @return <code>true</code>
      */
     @SuppressWarnings("unused")
@@ -128,7 +128,7 @@ public final class ReflectionStaticTestDataSet {
 
     /**
      * 渡された複数の引数を格納したリストを返却します。
-     * 
+     *
      * @return 渡された全引数を格納したリスト
      */
     @SuppressWarnings("unused")
@@ -144,7 +144,7 @@ public final class ReflectionStaticTestDataSet {
      * 渡された複数の引数を格納したマップを返却します。<br>
      * マップに格納された値の各キーは <code>n = 1</code> から <code>"result" + n</code>
      * <code>"result3"/code> まで設定されます。
-     * 
+     *
      * @return 渡された全引数を格納したマップ
      */
     @SuppressWarnings("unused")

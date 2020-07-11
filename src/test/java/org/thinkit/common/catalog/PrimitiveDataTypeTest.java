@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * {@link PrimitiveDataType} クラスのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -73,7 +73,7 @@ public final class PrimitiveDataTypeTest {
      * {@link PrimitiveDataType} クラスの各要素に定義されたコード値を確認する。
      * コード値は {@link PrimitiveDataType#getCode()} メソッドから取得する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link PrimitiveDataType#BOOLEAN} に定義されたコード値が <code>0</code> であること。
@@ -85,7 +85,7 @@ public final class PrimitiveDataTypeTest {
      * ・{@link PrimitiveDataType#FLOAT} に定義されたコード値が <code>6</code> であること。
      * ・{@link PrimitiveDataType#DOUBLE} に定義されたコード値が <code>7</code> であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -108,7 +108,7 @@ public final class PrimitiveDataTypeTest {
      * ❏ 概要
      * {@link PrimitiveDataType} クラスの {@link PrimitiveDataType#toDataType()} メソッドの返却値を確認する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link PrimitiveDataType#BOOLEAN#toDataType()} の返却値が <code>"boolean"</code> であること。
@@ -120,7 +120,7 @@ public final class PrimitiveDataTypeTest {
      * ・{@link PrimitiveDataType#FLOAT#toDataType()} の返却値が <code>"float"</code> であること。
      * ・{@link PrimitiveDataType#DOUBLE#toDataType()} の返却値が <code>"double"</code> であること。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
@@ -143,7 +143,7 @@ public final class PrimitiveDataTypeTest {
      * ❏ 概要
      * {@link PrimitiveDataType} クラスの {@link PrimitiveDataType#isPrimitive(String)} メソッドの返却値を確認する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link PrimitiveDataType#isPrimitive(String)} メソッドに以下の文字列を渡した場合に {@code true} が返却されること。
@@ -157,7 +157,7 @@ public final class PrimitiveDataTypeTest {
      * <code>"float"</code>
      * <code>"double"</code>
      * ----------------------------------------
-     * 
+     *
      * ・{@link PrimitiveDataType#isPrimitive(String)} メソッドに以下の文字列を渡した場合に {@code false} が返却されること。
      * ---------------------------------------
      * <code>"test"</code>
@@ -169,7 +169,7 @@ public final class PrimitiveDataTypeTest {
      * <code>"?><\^"</code>
      * ---------------------------------------
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし

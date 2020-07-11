@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
  * 以下の静的メソッドを使用することでも各要素の文字列表現を取得できます。<br>
  * {@link #br()}<br>
  * {@link #p()}<br>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -53,7 +53,7 @@ public enum HtmlTag implements Catalog<HtmlTag> {
 
     /**
      * 改行のHTMLタグを返却します。
-     * 
+     *
      * @return 改行のHTMLタグ
      * @see #BREAK
      */
@@ -63,7 +63,7 @@ public enum HtmlTag implements Catalog<HtmlTag> {
 
     /**
      * パラグラフのHTMLタグを返却します。
-     * 
+     *
      * @return パラグラフのHTMLタグ
      * @see #PARAGRAPH
      */

@@ -18,13 +18,13 @@ import lombok.RequiredArgsConstructor;
 /**
  * アクセス修飾子を管理するカタログです。<br>
  * {@link #toIdentifier()}を使用することでアクセス修飾子の文字列表現を取得することができます。
- * 
+ *
  * <pre>
  * 使用例:
  * <code>Identifier.PUBLIC.toIdentifier();
  * >> "public"</code>
  * </pre>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -57,7 +57,7 @@ public enum Identifier implements Catalog<Identifier> {
      * このEnumクラスに定義されたアクセス修飾子の文字列表現を返却します。<br>
      * 言語使用としてアクセス修飾子が全て小文字で定義されていることを利用し、<br>
      * このEnumクラスで定義されている要素を小文字に変換して返却します。
-     * 
+     *
      * @return アクセス修飾子の文字列表現
      */
     public String toIdentifier() {

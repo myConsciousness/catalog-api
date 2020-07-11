@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
  * {@link #windows()}<br>
  * {@link #mac()}<br>
  * {@link #linux()}<br>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -61,7 +61,7 @@ public enum PlatformPrefix implements Catalog<PlatformPrefix> {
     /**
      * Windows OSの接頭辞を返却します。<br>
      * 接頭辞は全て小文字で構成されています。
-     * 
+     *
      * @return Windows OSの接頭辞
      * @see WINDOWS
      */
@@ -72,7 +72,7 @@ public enum PlatformPrefix implements Catalog<PlatformPrefix> {
     /**
      * Mac OSの接頭辞を返却します。<br>
      * 接頭辞は全て小文字で構成されています。
-     * 
+     *
      * @return Mac OSの接頭辞
      * @see MAC
      */
@@ -83,7 +83,7 @@ public enum PlatformPrefix implements Catalog<PlatformPrefix> {
     /**
      * Linux OSの接頭辞を返却します。<br>
      * 接頭辞は全て小文字で構成されています。
-     * 
+     *
      * @return Linux OSの接頭辞
      * @see LINUX
      */

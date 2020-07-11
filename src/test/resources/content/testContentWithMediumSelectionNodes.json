@@ -1,123 +1,124 @@
 {
-    "metadata": {
-        "author": "Kato Shinya",
-        "since": "1.0",
-        "version": "1.0",
-        "creationDate": "2020/06/28",
-        "encoding": "UTF-8",
-        "description": "条件なしのコンテンツロードをテストするためのコンテンツファイルです。このコンテンツファイルでは中規模な選択ノードを定義します。"
+  "metadata": {
+    "author": "Kato Shinya",
+    "since": "1.0",
+    "version": "1.0",
+    "creationDate": "2020/06/28",
+    "encoding": "UTF-8",
+    "description": "条件なしのコンテンツロードをテストするためのコンテンツファイルです。このコンテンツファイルでは中規模な選択ノードを定義します。"
+  },
+
+  "selectionNodes": [
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
     },
 
-    "selectionNodes": [{
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        },
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
+    },
 
-        {
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        },
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
+    },
 
-        {
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        },
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
+    },
 
-        {
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        },
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
+    },
 
-        {
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        },
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
+    },
 
-        {
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        },
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
+    },
 
-        {
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        },
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
+    },
 
-        {
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        },
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
+    },
 
-        {
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        },
+    {
+      "node": {
+        "conditionId": "",
+        "test1": "0",
+        "test2": "false",
+        "test3": "0L",
+        "test4": "1.0",
+        "test5": "test"
+      }
+    }
+  ],
 
-        {
-            "node": {
-                "conditionId": "",
-                "test1": "0",
-                "test2": "false",
-                "test3": "0L",
-                "test4": "1.0",
-                "test5": "test"
-            }
-        }
-    ],
-
-    "conditionNodes": []
+  "conditionNodes": []
 }

@@ -19,7 +19,7 @@ import org.thinkit.common.util.PlatformChecker;
 
 /**
  * {@link Platform}クラスのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0

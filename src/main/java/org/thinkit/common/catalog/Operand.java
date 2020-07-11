@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
  * {@link #multiple()}<br>
  * {@link #equal()}<br>
  * {@link #assignment()}<br>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -77,7 +77,7 @@ public enum Operand implements Catalog<Operand> {
 
     /**
      * 足し算の演算子を文字列表現として返却します。
-     * 
+     *
      * @return 足し算の演算子の文字列表現
      * @see #PLUS
      */
@@ -87,7 +87,7 @@ public enum Operand implements Catalog<Operand> {
 
     /**
      * 引き算の演算子を文字列表現として返却します。
-     * 
+     *
      * @return 引き算の演算子を文字列表現
      * @see #MINUS
      */
@@ -97,7 +97,7 @@ public enum Operand implements Catalog<Operand> {
 
     /**
      * 割り算の演算子を文字列表現として返却します。
-     * 
+     *
      * @return 割り算の演算子の文字列表現
      * @see #DEVIDE
      */
@@ -107,7 +107,7 @@ public enum Operand implements Catalog<Operand> {
 
     /**
      * 掛け算の演算子を文字列表現として返却します。
-     * 
+     *
      * @return 掛け算の演算子の文字列表現
      * @see #MULTIPLE
      */
@@ -117,7 +117,7 @@ public enum Operand implements Catalog<Operand> {
 
     /**
      * 等価演算子を文字列表現として返却します。
-     * 
+     *
      * @return 等価演算子の文字列表現
      * @see #EQUAL
      */
@@ -127,7 +127,7 @@ public enum Operand implements Catalog<Operand> {
 
     /**
      * 割り当て演算子を文字列表現として返却します。
-     * 
+     *
      * @return 割り当て演算子の文字列表現
      * @see #ASSIGNMENT
      */

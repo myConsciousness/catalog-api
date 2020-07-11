@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * エスケープ文字列を管理するカテゴリです。<br>
  * 以下の静的メソッドを使用することで各要素のエスケープ文字列を取得することができます。
- * 
+ *
  * <p>
  * {@link #space()}<br>
  * {@link #fullWidthSpace()}<br>
@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
  * {@link #rightBracket()}<br>
  * {@link #singleQuotation()}<br>
  * {@link #doubleQuotation()}<br>
- * 
+ *
  * <pre>
  * 使用例:
  * <code>String space = EscapeSequence.space();</code>
@@ -39,7 +39,7 @@ import lombok.RequiredArgsConstructor;
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
- * 
+ *
  * @see #space()
  * @see #fullWidthSpace()
  * @see #carriageReturn()
@@ -117,7 +117,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * 半角空白のエスケープ文字列を返却します。
-     * 
+     *
      * @return 半角空白のエスケープ文字列
      * @see #SPACE
      */
@@ -127,7 +127,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * 全角空白のエスケープ文字列を返却します。
-     * 
+     *
      * @return 全角空白のエスケープ文字列
      * @see #FULL_WIDTH_SPACE
      */
@@ -137,7 +137,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * キャリッジリターンのエスケープ文字列を返却します。
-     * 
+     *
      * @return キャリッジリターンのエスケープ文字列
      * @see #CARRIAGE_RETURN
      */
@@ -147,7 +147,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * ラインフィードのエスケープ文字列を返却します。
-     * 
+     *
      * @return ラインフィードのエスケープ文字列
      * @see #LINE_FEED
      */
@@ -157,7 +157,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * 改行のエスケープ文字列を返却します。
-     * 
+     *
      * @return 改行のエスケープ文字列
      * @see #NEW_LINE
      */
@@ -167,7 +167,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * タブのエスケープ文字列を返却します。
-     * 
+     *
      * @return タブのエスケープ文字列
      * @see #TAB
      */
@@ -177,7 +177,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * 左括弧のエスケープ文字列を返却します。
-     * 
+     *
      * @return 左括弧のエスケープ文字列
      * @see #LEFT_BRACKET
      */
@@ -187,7 +187,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * 右括弧のエスケープ文字列を返却します。
-     * 
+     *
      * @return 右括弧のエスケープ文字列
      * @see #RIGHT_BRACKET
      */
@@ -197,7 +197,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * シングルクオテーションのエスケープ文字列を返却します。
-     * 
+     *
      * @return シングルクオテーションのエスケープ文字列
      * @see #SINGLE_QUOTATION
      */
@@ -207,7 +207,7 @@ public enum EscapeSequence implements Catalog<EscapeSequence> {
 
     /**
      * ダブルクオテーションのエスケープ文字列を返却します。
-     * 
+     *
      * @return ダブルクオテーションのエスケープ文字列
      * @see #DOUBLE_QUOTATION
      */

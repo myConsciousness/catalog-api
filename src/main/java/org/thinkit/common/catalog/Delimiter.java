@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
  * {@link #period()}<br>
  * {@link #colon()}<br>
  * {@link #semicolon()}<br>
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -65,7 +65,7 @@ public enum Delimiter implements Catalog<Delimiter> {
 
     /**
      * カンマの文字列表現を返却します。
-     * 
+     *
      * @return カンマの文字列表現
      */
     public static String commma() {
@@ -74,7 +74,7 @@ public enum Delimiter implements Catalog<Delimiter> {
 
     /**
      * ピリオドの文字列表現を返却します。
-     * 
+     *
      * @return ピリオドの文字列表現
      */
     public static String period() {
@@ -83,7 +83,7 @@ public enum Delimiter implements Catalog<Delimiter> {
 
     /**
      * コロンの文字列表現を返却します。
-     * 
+     *
      * @return コロンの文字列表現
      */
     public static String colon() {
@@ -92,7 +92,7 @@ public enum Delimiter implements Catalog<Delimiter> {
 
     /**
      * セミコロンの文字列表現を返却します。
-     * 
+     *
      * @return セミコロンの文字列表現
      */
     public static String semicolon() {

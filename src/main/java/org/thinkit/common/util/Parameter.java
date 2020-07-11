@@ -18,7 +18,7 @@ import lombok.NonNull;
 /**
  * 引数情報を管理するクラスです。<br>
  * 引数の型と値をセットで管理します。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -45,10 +45,10 @@ final class Parameter {
 
     /**
      * コンストラクタ
-     * 
+     *
      * @param type  引数の型
      * @param value 引数の値
-     * 
+     *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
     public Parameter(@NonNull Class<?> type, @NonNull Object value) {

@@ -13,11 +13,12 @@
 package org.thinkit.common.key;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 /**
  * {@link ConditionNodeKey} クラスのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -74,7 +75,7 @@ public final class ConditionNodeKeyTest {
      * ❏ 概要
      * {@link ConditionNodeKey} クラスの {@link ConditionNodeKey#getKey()} メソッドの機能を確認する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link ConditionNodeKey#CONDITION_NODES#getKey()} メソッドの返却値が <code>"conditionNodes"</code> であること
@@ -87,7 +88,7 @@ public final class ConditionNodeKeyTest {
      * ・{@link ConditionNodeKey#OPERAND#getKey()} メソッドの返却値が <code>"operand"</code> であること
      * ・{@link ConditionNodeKey#VALUE#getKey()} メソッドの返却値が <code>"value"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし

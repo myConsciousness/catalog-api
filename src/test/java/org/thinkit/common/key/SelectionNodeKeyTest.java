@@ -13,11 +13,12 @@
 package org.thinkit.common.key;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 /**
  * {@link SelectionNodeKey} クラスのテストクラスです。
- * 
+ *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
@@ -44,14 +45,14 @@ public final class SelectionNodeKeyTest {
      * ❏ 概要
      * {@link SelectionNodeKey} クラスの {@link SelectionNodeKey#getKey()} メソッドの機能を確認する。
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 観点
      * ・{@link SelectionNodeKey#SELECTION_NODES#getKey()} メソッドの返却値が <code>"selectionNodes"</code> であること
      * ・{@link SelectionNodeKey#NODE#getKey()} メソッドの返却値が <code>"node"</code> であること
      * ・{@link SelectionNodeKey#CONDITION_ID#getKey()} メソッドの返却値が <code>"conditionId"</code> であること
      * </pre>
-     * 
+     *
      * <pre>
      * ❏ 留意点
      * なし
