@@ -134,15 +134,6 @@ public final class FluentWorkbook implements AutoCloseable {
     }
 
     /**
-     * カラムアノテーション。
-     */
-    @Target(ElementType.FIELD)
-    @Retention(RetentionPolicy.RUNTIME)
-    public @interface Column {
-        String value();
-    }
-
-    /**
      * 引数として渡されたシート番号からシートオブジェクトを取得し返却します。 引数として渡されたシート番号が負数の場合、
      * または指定されたシート番号に紐づくシートが存在しない場合は実行に必ず例外が発生します。
      *

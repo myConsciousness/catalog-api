@@ -12,27 +12,21 @@
 
 package org.thinkit.common.util;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.google.common.flogger.FluentLogger;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.thinkit.common.catalog.MatrixQueue;
 import org.thinkit.common.exception.ExcelHandlingException;
-import org.thinkit.common.util.FluentWorkbook.Column;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -51,11 +45,6 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 final class FluentSheet {
-
-    /**
-     * ログ出力オブジェクト
-     */
-    private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
     /**
      * A1形式セル指定時に使用する正規表現
@@ -1087,238 +1076,6 @@ final class FluentSheet {
         }
 
         return row;
-    }
-
-    /**
-     * 引数として指定されたBean項目名を基にリフレクション用フィールドを取得し返却します。
-     * 引数として指定されたクラスオブジェクトがnullの場合は実行時に必ず失敗します。 引数として渡された文字列が無効な場合は実行時に必ず失敗します。
-     *
-     * @param clazz 対象のBeanクラス
-     * @param label Bean項目名
-     * @return リフレクション用フィールド
-     * @exception IllegalArgumentException 引数として指定されたクラスオブジェクトがnullの場合、または文字列がまたは空文字列の場合
-     */
-    private Field findRefrectionField(final Class<?> clazz, final String label) {
-
-        if (clazz == null) {
-            throw new IllegalArgumentException("wrong parameter was given. Class object is null.");
-        }
-
-        if (StringUtils.isEmpty(label)) {
-            throw new IllegalArgumentException("wrong parameter was given. String is null or empty.");
-        }
-
-        final Field[] fields = clazz.getDeclaredFields();
-
-        for (Field field : fields) {
-            field.setAccessible(true);
-            final Column column = field.getAnnotation(Column.class);
-
-            if (label.equals(column.value())) {
-                return field;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Beanリストを取得して返却します。 引数として渡されたBeanクラスがnullの場合は実行時に必ず失敗します。
-     *
-     * @param clazz Beanクラス
-     * @return Beanリスト
-     */
-    public <E> List<E> toBeanList(Class<E> clazz) {
-
-        if (clazz == null) {
-            throw new IllegalArgumentException("wrong parameter was given. Class object is null.");
-        }
-
-        final List<E> beans = new ArrayList<>();
-        final List<List<String>> stringList = this.asStringList();
-
-        final ListIterator<List<String>> iterator = stringList.listIterator();
-
-        final List<String> headers = iterator.next();
-        final List<Field> fieldList = new ArrayList<>();
-
-        for (String columnName : headers) {
-            fieldList.add(findRefrectionField(clazz, columnName));
-        }
-
-        while (iterator.hasNext()) {
-            try {
-                final List<String> xlsxList = iterator.next();
-                E bean = clazz.newInstance();
-
-                final ListIterator<String> xlsxListIterator = xlsxList.listIterator();
-                final ListIterator<Field> fieldListIterator = fieldList.listIterator();
-
-                while (xlsxListIterator.hasNext() && fieldListIterator.hasNext()) {
-                    final String value = xlsxListIterator.next();
-                    final Field field = fieldListIterator.next();
-
-                    field.set(bean, value);
-                }
-
-                beans.add(bean);
-
-            } catch (InstantiationException e) {
-                logger.atSevere().withCause(e).log("Could not instantiate the specified class object.");
-            } catch (IllegalAccessException e) {
-                logger.atSevere().withCause(e).log(
-                        "The application attempted to create a non-array instance, set or get a field, or call a method.");
-            }
-        }
-
-        return beans;
-    }
-
-    /**
-     * 引数として指定されたBeanリストからフィールドへの書き込み処理を行います。 引数として指定されたBeanリストがnullの場合は実行時に必ず失敗します。
-     *
-     * @param beanList ビーンリスト
-     * @param <E>      型
-     * @return 当該インスタンス
-     * @exception IllegalArgumentException 引数として指定されたBeanリストがnullの場合
-     */
-    public <E> FluentSheet setBeanList(List<E> beanList) {
-
-        if (beanList == null) {
-            throw new IllegalArgumentException("wrong parameter was given. List object is null.");
-        }
-
-        final Iterator<Row> rows = sheet.rowIterator();
-        final List<String> headers = new ArrayList<>();
-
-        int beginColumnIndex = 0;
-        int beginRowIndex = 1;
-
-        if (rows.hasNext()) {
-            final Row row = rows.next();
-            beginRowIndex += row.getRowNum();
-
-            final Iterator<Cell> cells = row.cellIterator();
-
-            if (cells.hasNext()) {
-                Cell cell = cells.next();
-                beginColumnIndex = cell.getColumnIndex();
-                headers.add(String.valueOf(cell));
-            }
-
-            while (cells.hasNext()) {
-                final Cell cell = cells.next();
-                headers.add(String.valueOf(cell));
-            }
-        }
-
-        this.write(beanList, headers, beginColumnIndex, beginRowIndex);
-
-        return this;
-    }
-
-    /**
-     * 引数として指定されたBeanリストからフィールドへの書き込み処理を行います。 引数として指定されたBeanリストがnullの場合は実行時に必ず失敗します。
-     *
-     * @param beanList ビーンリスト
-     * @param <E>      型
-     * @return 当該インスタンス
-     * @exception IllegalArgumentException 引数として指定されたBeanリストがnullの場合
-     */
-    public <E> FluentSheet addBeanList(List<E> beanList) {
-
-        if (beanList == null) {
-            throw new IllegalArgumentException("wrong parameter was given. Bean list is null.");
-        }
-
-        final Iterator<Row> rows = sheet.rowIterator();
-        final List<String> headers = new ArrayList<>();
-
-        int beginColumnIndex = 0;
-        int beginRowIndex = 1;
-
-        boolean setedBeginColumnIndex = false;
-        boolean setedHeaders = false;
-
-        while (rows.hasNext()) {
-            final Row row = rows.next();
-
-            beginRowIndex = row.getRowNum();
-            final Iterator<Cell> cells = row.cellIterator();
-
-            if (cells.hasNext() && !setedBeginColumnIndex) {
-                final Cell cell = cells.next();
-                beginColumnIndex = cell.getColumnIndex();
-                headers.add(String.valueOf(cell));
-                setedBeginColumnIndex = true;
-            }
-
-            while (cells.hasNext()) {
-                final Cell cell = cells.next();
-
-                if (!setedHeaders) {
-                    headers.add(String.valueOf(cell));
-                }
-            }
-            setedHeaders = true;
-        }
-
-        beginRowIndex++;
-
-        this.write(beanList, headers, beginColumnIndex, beginRowIndex);
-
-        return this;
-    }
-
-    /**
-     * 引数として指定された情報を基にオブジェクトへの書き込み処理を行います。
-     *
-     * @param beanList
-     * @param headers
-     * @param beginColumnIndex
-     * @param beginRowIndex
-     */
-    private <E> void write(List<E> beanList, List<String> headers, int beginColumnIndex, int beginRowIndex) {
-
-        if (beanList == null) {
-            throw new IllegalArgumentException("wrong parameter was given. Bean list is null.");
-        }
-
-        if (beginColumnIndex < 0) {
-            throw new IllegalArgumentException("wrong parameter was given. Column index must be positive.");
-        }
-
-        if (beginRowIndex < 0) {
-            throw new IllegalArgumentException("wrong parameter was given. Row index must be positive.");
-        }
-
-        int rowCnt = 0;
-        for (E e : beanList) {
-            for (String header : headers) {
-                final Field[] fields = e.getClass().getDeclaredFields();
-
-                int columnCnt = 0;
-                for (Field field : fields) {
-                    field.setAccessible(true);
-                    final Column column = field.getAnnotation(Column.class);
-
-                    if (header.equals(column.value())) {
-                        try {
-                            final Object value = field.get(e);
-                            this.put(beginColumnIndex + columnCnt, beginRowIndex + rowCnt, value);
-                        } catch (IllegalArgumentException e1) {
-                            logger.atSevere().withCause(e1).log("wrong parameter (%s) was given.", e);
-                        } catch (IllegalAccessException e1) {
-                            logger.atSevere().withCause(e1).log(
-                                    "The application attempted to create a non-array instance, set or get a field, or call a method.");
-                        }
-                    }
-
-                    columnCnt++;
-                }
-            }
-            rowCnt++;
-        }
     }
 
     /**
