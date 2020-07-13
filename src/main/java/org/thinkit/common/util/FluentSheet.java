@@ -194,7 +194,6 @@ public final class FluentSheet {
      * @param sequence 検索対象の文字列
      * @return 検索対象の文字列が含まれる一番始めのセルの行列インデックス。 検索対象の文字列が存在しない場合は {@code null} を返却します。
      *
-     *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
     public Matrix findCellIndex(@NonNull final String sequence) {
@@ -204,15 +203,11 @@ public final class FluentSheet {
         for (Row row : sheet) {
             for (Cell cell : row) {
                 if (FluentCell.isNumeric(cell)) {
-                    final String cellValue = String.valueOf(cell.getNumericCellValue());
-
-                    if (sequence.equals(cellValue)) {
+                    if (sequence.equals(String.valueOf(cell.getNumericCellValue()))) {
                         return Matrix.of(cell.getColumnIndex(), cell.getRowIndex());
                     }
                 } else {
-                    final String cellValue = cell.getRichStringCellValue().getString().trim();
-
-                    if (sequence.equals(cellValue)) {
+                    if (sequence.equals(cell.getRichStringCellValue().getString().trim())) {
                         return Matrix.of(cell.getColumnIndex(), cell.getRowIndex());
                     }
                 }
@@ -238,13 +233,11 @@ public final class FluentSheet {
         for (Row row : sheet) {
             for (Cell cell : row) {
                 if (FluentCell.isNumeric(cell)) {
-                    final String cellValue = String.valueOf(cell.getNumericCellValue());
-                    if (sequence.equals(cellValue)) {
+                    if (sequence.equals(String.valueOf(cell.getNumericCellValue()))) {
                         cell.getRowIndex();
                     }
                 } else {
-                    final String cellValue = cell.getRichStringCellValue().getString().trim();
-                    if (sequence.equals(cellValue)) {
+                    if (sequence.equals(cell.getRichStringCellValue().getString().trim())) {
                         cell.getRowIndex();
                     }
                 }
@@ -270,13 +263,11 @@ public final class FluentSheet {
         for (Row row : sheet) {
             for (Cell cell : row) {
                 if (FluentCell.isNumeric(cell)) {
-                    final String cellValue = String.valueOf(cell.getNumericCellValue());
-                    if (sequence.equals(cellValue)) {
+                    if (sequence.equals(String.valueOf(cell.getNumericCellValue()))) {
                         return cell.getColumnIndex();
                     }
                 } else {
-                    final String cellValue = cell.getRichStringCellValue().getString().trim();
-                    if (sequence.equals(cellValue)) {
+                    if (sequence.equals(cell.getRichStringCellValue().getString().trim())) {
                         return cell.getColumnIndex();
                     }
                 }
@@ -289,10 +280,10 @@ public final class FluentSheet {
     /**
      * 上部に罫線が設定されているセルの行列インデックスを取得し返却します。
      *
-     * @return 上部に罫線が設定されているセルの行列インデックス。 上部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 上部に罫線が設定されているセルの行列インデックス。 上部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
      */
-    public EnumMap<MatrixQueue, Integer> findBorderTopIndex() {
+    public Matrix findBorderTopIndex() {
         return this.findBorderTopIndex(0, 0);
     }
 
@@ -301,11 +292,12 @@ public final class FluentSheet {
      * 引数として指定された列インデックスが負数の場合は実行時に必ず失敗します。
      *
      * @param startColumnIndex 探索開始列インデックス
-     * @return 上部に罫線が設定されているセルの行列インデックス。 上部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 上部に罫線が設定されているセルの行列インデックス。 上部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
+     *
      * @exception IllegalArgumentException 探索開始列インデックスが負数の場合
      */
-    public EnumMap<MatrixQueue, Integer> findBorderTopIndex(final int startColumnIndex) {
+    public Matrix findBorderTopIndex(final int startColumnIndex) {
 
         if (startColumnIndex < 0) {
             throw new IllegalArgumentException(
@@ -321,11 +313,12 @@ public final class FluentSheet {
      *
      * @param startColumnIndex 探索開始列インデックス
      * @param startRowIndex    探索開始行インデックス
-     * @return 上部に罫線が設定されているセルの行列インデックス。 上部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 上部に罫線が設定されているセルの行列インデックス。 上部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
+     *
      * @exception IllegalArgumentException 探索開始列インデックスが負数の場合、または探索開始行インデックスが負数の場合
      */
-    public EnumMap<MatrixQueue, Integer> findBorderTopIndex(final int startColumnIndex, final int startRowIndex) {
+    public Matrix findBorderTopIndex(final int startColumnIndex, final int startRowIndex) {
 
         if (startColumnIndex < 0) {
             throw new IllegalArgumentException(
@@ -337,7 +330,6 @@ public final class FluentSheet {
                     String.format("wrong parameter (%s) was given. Row index must be positive.", startRowIndex));
         }
 
-        final EnumMap<MatrixQueue, Integer> borderedIndexes = new EnumMap<>(MatrixQueue.class);
         final Sheet sheet = this.sheet;
 
         for (int rowIndex = startRowIndex, size = sheet.getPhysicalNumberOfRows(); rowIndex < size; rowIndex++) {
@@ -347,23 +339,21 @@ public final class FluentSheet {
                 final int columnIndex = cell.getColumnIndex();
 
                 if (startColumnIndex <= columnIndex && FluentCell.isBorderedTop(cell)) {
-                    borderedIndexes.put(MatrixQueue.COLUMN, columnIndex);
-                    borderedIndexes.put(MatrixQueue.ROW, rowIndex);
-                    return borderedIndexes;
+                    return Matrix.of(columnIndex, rowIndex);
                 }
             }
         }
 
-        return borderedIndexes;
+        return null;
     }
 
     /**
      * 下部に罫線が設定されているセルの行列インデックスを取得し返却します。
      *
-     * @return 下部に罫線が設定されているセルの行列インデックス。 下部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 下部に罫線が設定されているセルの行列インデックス。 下部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
      */
-    public EnumMap<MatrixQueue, Integer> findBorderBottomIndex() {
+    public Matrix findBorderBottomIndex() {
         return this.findBorderBottomIndex(0, 0);
     }
 
@@ -372,11 +362,12 @@ public final class FluentSheet {
      * 引数として指定された列インデックスが負数の場合は実行時に必ず失敗します。
      *
      * @param startColumnIndex 探索開始列インデックス
-     * @return 下部に罫線が設定されているセルの行列インデックス。 下部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 下部に罫線が設定されているセルの行列インデックス。 下部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
+     *
      * @exception IllegalArgumentException 探索開始列インデックスが負数の場合
      */
-    public EnumMap<MatrixQueue, Integer> findBorderBottomIndex(final int startColumnIndex) {
+    public Matrix findBorderBottomIndex(final int startColumnIndex) {
 
         if (startColumnIndex < 0) {
             throw new IllegalArgumentException(
@@ -392,11 +383,12 @@ public final class FluentSheet {
      *
      * @param startColumnIndex 探索開始列インデックス
      * @param startRowIndex    探索開始行インデックス
-     * @return 下部に罫線が設定されているセルの行列インデックス。 下部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see EMatrixQueue
+     * @return 下部に罫線が設定されているセルの行列インデックス。 下部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
+     *
      * @exception IllegalArgumentException 探索開始列インデックスが負数の場合、または探索開始行インデックスが負数の場合
      */
-    public EnumMap<MatrixQueue, Integer> findBorderBottomIndex(final int startColumnIndex, final int startRowIndex) {
+    public Matrix findBorderBottomIndex(final int startColumnIndex, final int startRowIndex) {
 
         if (startColumnIndex < 0) {
             throw new IllegalArgumentException(
@@ -408,7 +400,6 @@ public final class FluentSheet {
                     String.format("wrong parameter (%s) was given. Row index must be positive.", startRowIndex));
         }
 
-        final EnumMap<MatrixQueue, Integer> borderedIndexes = new EnumMap<>(MatrixQueue.class);
         final Sheet sheet = this.sheet;
 
         for (int rowIndex = startRowIndex, size = sheet.getPhysicalNumberOfRows(); rowIndex < size; rowIndex++) {
@@ -418,14 +409,12 @@ public final class FluentSheet {
                 final int columnIndex = cell.getColumnIndex();
 
                 if (startColumnIndex <= columnIndex && FluentCell.isBorderedBottom(cell)) {
-                    borderedIndexes.put(MatrixQueue.COLUMN, columnIndex);
-                    borderedIndexes.put(MatrixQueue.ROW, rowIndex);
-                    return borderedIndexes;
+                    return Matrix.of(columnIndex, rowIndex);
                 }
             }
         }
 
-        return borderedIndexes;
+        return null;
     }
 
     /**
