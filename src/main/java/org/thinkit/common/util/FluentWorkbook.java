@@ -18,10 +18,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,6 +33,8 @@ import org.thinkit.common.exception.ExcelHandlingException;
 import com.google.common.flogger.FluentLogger;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 
 /**
@@ -63,6 +61,7 @@ public final class FluentWorkbook implements AutoCloseable {
     /**
      * 操作対象のExcelワークブックオブジェクト
      */
+    @Getter
     private Workbook workbook = null;
 
     /**
@@ -115,22 +114,13 @@ public final class FluentWorkbook implements AutoCloseable {
      * @return 引数として指定されたシート名に紐づくSheetオブジェクト
      * @exception IllegalArgumentException 指定されたシート番号がnullまたは空文字列の場合
      */
-    public FluentSheet sheet(final String sheetName) {
+    public FluentSheet sheet(@NonNull final String sheetName) {
 
         if (StringUtils.isEmpty(sheetName)) {
             throw new IllegalArgumentException("wrong parameter was given. String is null or empty.");
         }
 
         return new FluentSheet(this.getSheet(sheetName));
-    }
-
-    /**
-     * Excelワークブックオブジェクトのインスタンスを返却します。
-     *
-     * @return 当該Excelワークブックオブジェクトのインスタンス
-     */
-    public Workbook book() {
-        return this.workbook;
     }
 
     /**
@@ -182,6 +172,7 @@ public final class FluentWorkbook implements AutoCloseable {
 
     @Override
     public void close() {
+
         final Workbook workbook = this.workbook;
 
         if (workbook == null) {
