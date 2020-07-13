@@ -19,8 +19,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Row;
@@ -33,6 +31,7 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.RichTextString;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
 /**
@@ -47,13 +46,9 @@ import lombok.ToString;
 final class FluentSheet {
 
     /**
-     * A1形式セル指定時に使用する正規表現
-     */
-    private static final Pattern CELL_PATTERN = Pattern.compile("([A-Z]+)([0-9]+)", Pattern.CASE_INSENSITIVE);
-
-    /**
      * シートオブジェクト
      */
+    @Getter
     private Sheet sheet = null;
 
     /**
@@ -77,89 +72,6 @@ final class FluentSheet {
         }
 
         this.sheet = sheet;
-    }
-
-    /**
-     * A1形式の列番号からワークブックを操作する際の数値へ変換する。
-     *
-     * @param a1StyleColumn A1形式の列番号
-     * @return 列番号
-     */
-    private static int convertToIntFromA1Style(final String a1StyleColumn) {
-
-        if (StringUtils.isEmpty(a1StyleColumn)) {
-            throw new IllegalArgumentException("wrong parameter was given. String is null or empty.");
-        }
-
-        char[] reverseChars = a1StyleColumn.toUpperCase().toCharArray();
-        int sinsu = 'Z' - 'A' + 1;
-        int cnt = 0;
-        int result = 0;
-
-        for (int i = reverseChars.length - 1; i >= 0; i--) {
-            int a = reverseChars[i] - 'A';
-
-            if (cnt > 0) {
-                a++;
-            }
-
-            result += a * Math.pow(sinsu, cnt);
-            cnt++;
-        }
-
-        return result;
-    }
-
-    /**
-     * A1形式で指定された引数を基にセルの値を取得し返却します。 引数として指定された文字列が無効の場合は実行時に必ず失敗しします。
-     * 引数として指定される文字列はExcelのA1形式である必要があります。
-     *
-     * @param cell A1形式の文字列
-     * @return セルの値
-     * @exception IllegalArgumentException 引数として指定された文字列がnullまたは空文字列の場合
-     * @exception ExcelHandlingException   渡された文字列のパターンが存在しない場合
-     */
-    public String get(final String cell) {
-
-        if (StringUtils.isEmpty(cell)) {
-            throw new IllegalArgumentException("wrong parameter was given. String is null or empty.");
-        }
-
-        final Matcher matcher = CELL_PATTERN.matcher(cell);
-
-        if (!matcher.find()) {
-            throw new ExcelHandlingException(String.format("indicated pattern (%s) does not exist.", cell));
-        }
-
-        final String columnNumber = matcher.group(1);
-        final int rowIndex = Integer.parseInt(matcher.group(2));
-
-        return this.get(columnNumber, rowIndex);
-    }
-
-    /**
-     * 引数として指定された列番号（A1形式）と行番号を基にセルの値を取得し返却します。 引数として指定された文字列が無効の場合は実行時に必ず失敗しします。
-     * 引数として指定された行番号が負数の場合は実行時に必ず失敗します。 引数として指定される文字列はExcelのA1形式である必要があります。
-     *
-     * @param columnNumber A1形式の列番号
-     * @param rowIndex     行番号
-     * @return セルの値
-     * @exception IllegalArgumentException 引数として指定された文字列がnullまたは空文字列の場合、または行番号が負数の場合
-     */
-    public String get(final String columnNumber, int rowIndex) {
-
-        if (StringUtils.isEmpty(columnNumber)) {
-            throw new IllegalArgumentException("wrong parameter was given. String is null or empty.");
-        }
-
-        if (rowIndex < 0) {
-            throw new IllegalArgumentException("wrong parameter was given. Row index must be positive.");
-        }
-
-        int columnIndex = convertToIntFromA1Style(columnNumber);
-        rowIndex--;
-
-        return this.get(columnIndex, rowIndex);
     }
 
     /**
@@ -202,51 +114,6 @@ final class FluentSheet {
 
         throw new ExcelHandlingException(String
                 .format("indicated cell (column index = %s, row index = %s) does not exist.", columnIndex, rowIndex));
-    }
-
-    /**
-     * A1形式で指定された引数を基にセルへ値を代入します。 引数として指定された文字列が無効な場合は必ず実行時に失敗します。
-     *
-     * @param cell      A1形式の文字列
-     * @param cellValue 代入する値
-     * @exception IllegalArgumentException 引数として指定された文字列がnullまたは空文字列の場合
-     */
-    public FluentSheet put(final String cell, final Object cellValue) {
-
-        if (StringUtils.isEmpty(cell)) {
-            throw new IllegalArgumentException("wrong parameter was given. String is null or empty.");
-        }
-
-        final Matcher matcher = CELL_PATTERN.matcher(cell);
-
-        if (!matcher.find()) {
-            throw new ExcelHandlingException(String.format("indicated pattern (%s) does not exist.", cell));
-        }
-
-        final String columnNumber = matcher.group(1);
-        final int rowIndex = Integer.parseInt(matcher.group(2));
-
-        this.put(columnNumber, rowIndex, cellValue);
-
-        return this;
-    }
-
-    /**
-     * A1形式で指定された文字列と行番号を基にセルへ値を代入します。 引数として指定された文字列が無効な場合は必ず実行時に失敗します。
-     * 引数として指定された行番号が負数の場合は必ず実行時に失敗しします。 @param columnNumber A1形式の列番号 @param
-     * rowIndex 行番号 @param cellValue 代入する値 @exception
-     */
-    public void put(final String columnNumber, int rowIndex, final Object cellValue) {
-
-        if (StringUtils.isEmpty(columnNumber)) {
-            throw new IllegalArgumentException("wrong parameter was given. String is null or empty.");
-        }
-
-        if (rowIndex < 0) {
-            throw new IllegalArgumentException("wrong parameter was given. Row index must be positive.");
-        }
-
-        this.put(convertToIntFromA1Style(columnNumber), rowIndex--, cellValue);
     }
 
     /**
@@ -1009,7 +876,7 @@ final class FluentSheet {
      *
      * @return 全てのセルの値を格納した文字列型のリスト
      */
-    public List<List<String>> asStringList() {
+    public List<List<String>> toStringList() {
 
         final List<List<String>> stringList = new ArrayList<>(this.sheet.getPhysicalNumberOfRows());
 
@@ -1077,14 +944,4 @@ final class FluentSheet {
 
         return row;
     }
-
-    /**
-     * シートオブジェクトを返却します。
-     *
-     * @return シートオブジェクト
-     */
-    public Sheet sheet() {
-        return this.sheet;
-    }
-
 }
