@@ -62,14 +62,10 @@ final class FluentSheet {
      * 引数として指定されたSheetオブジェクトがnullの場合は実行時に必ず失敗します。
      *
      * @param sheet シートオブジェクト
-     * @exception IllegalArgumentException 引数として指定されたSheetオブジェクトがnullの場合
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public FluentSheet(Sheet sheet) {
-
-        if (sheet == null) {
-            throw new IllegalArgumentException("wrong parameter was given. Sheet object is null.");
-        }
-
+    public FluentSheet(@NonNull Sheet sheet) {
         this.sheet = sheet;
     }
 
@@ -90,6 +86,8 @@ final class FluentSheet {
         if (rowIndex < 0) {
             throw new IllegalArgumentException("wrong parameter was given. Row index must be positive.");
         }
+
+        final Sheet sheet = this.sheet;
 
         for (Row row : sheet) {
             final int _rowIndex = row.getRowNum();
@@ -159,15 +157,18 @@ final class FluentSheet {
      *
      * @param value 検査対象の文字列
      * @return シート中に指定された文字列が存在する場合は{@code true}、それ以外は{@code false}
-     * @exception IllegalArgumentException 引数として指定された文字列がnullまたは空文字列の場合
+     *
+     * @exception IllegalArgumentException 引数として指定された文字列が {@code null} または空文字列の場合
      */
     public boolean hasValue(final String value) {
 
         if (StringUtils.isEmpty(value)) {
-            throw new ExcelHandlingException("wrong parameter was given. String is null or empty.");
+            throw new IllegalArgumentException("wrong parameter was given. String is null or empty.");
         }
 
-        for (Row row : this.sheet) {
+        final Sheet sheet = this.sheet;
+
+        for (Row row : sheet) {
             for (Cell cell : row) {
                 if (FluentCell.isNumeric(cell)) {
                     final String cellValue = String.valueOf(cell.getNumericCellValue());
@@ -199,8 +200,9 @@ final class FluentSheet {
     public EnumMap<MatrixQueue, Integer> findCellIndex(@NonNull final String sequence) {
 
         final EnumMap<MatrixQueue, Integer> cellIndexes = new EnumMap<>(MatrixQueue.class);
+        final Sheet sheet = this.sheet;
 
-        for (Row row : this.sheet) {
+        for (Row row : sheet) {
             for (Cell cell : row) {
                 if (FluentCell.isNumeric(cell)) {
                     final String cellValue = String.valueOf(cell.getNumericCellValue());
@@ -232,11 +234,13 @@ final class FluentSheet {
      * @param sequence 検索対象の文字列
      * @return 検索対象の文字列が含まれる一番始めのセルの行インデックス。 検索対象の文字列が存在しない場合は-1を返却します。
      *
-     * @exception 引数として {@code null} が渡された場合
+     * @exception NullPointerException 引数として {@code null} が渡された場合
      */
     public int findRowIndex(@NonNull final String sequence) {
 
-        for (Row row : this.sheet) {
+        final Sheet sheet = this.sheet;
+
+        for (Row row : sheet) {
             for (Cell cell : row) {
                 if (FluentCell.isNumeric(cell)) {
                     final String cellValue = String.valueOf(cell.getNumericCellValue());
@@ -266,7 +270,9 @@ final class FluentSheet {
      */
     public int findColumnIndex(@NonNull final String sequence) {
 
-        for (Row row : this.sheet) {
+        final Sheet sheet = this.sheet;
+
+        for (Row row : sheet) {
             for (Cell cell : row) {
                 if (FluentCell.isNumeric(cell)) {
                     final String cellValue = String.valueOf(cell.getNumericCellValue());
@@ -337,9 +343,10 @@ final class FluentSheet {
         }
 
         final EnumMap<MatrixQueue, Integer> borderedIndexes = new EnumMap<>(MatrixQueue.class);
+        final Sheet sheet = this.sheet;
 
         for (int rowIndex = startRowIndex, size = sheet.getPhysicalNumberOfRows(); rowIndex < size; rowIndex++) {
-            final Row row = this.sheet.getRow(rowIndex);
+            final Row row = sheet.getRow(rowIndex);
 
             for (Cell cell : row) {
                 final int columnIndex = cell.getColumnIndex();
@@ -407,9 +414,10 @@ final class FluentSheet {
         }
 
         final EnumMap<MatrixQueue, Integer> borderedIndexes = new EnumMap<>(MatrixQueue.class);
+        final Sheet sheet = this.sheet;
 
         for (int rowIndex = startRowIndex, size = sheet.getPhysicalNumberOfRows(); rowIndex < size; rowIndex++) {
-            final Row row = this.sheet.getRow(rowIndex);
+            final Row row = sheet.getRow(rowIndex);
 
             for (Cell cell : row) {
                 final int columnIndex = cell.getColumnIndex();
@@ -477,9 +485,10 @@ final class FluentSheet {
         }
 
         final EnumMap<MatrixQueue, Integer> borderedIndexes = new EnumMap<>(MatrixQueue.class);
+        final Sheet sheet = this.sheet;
 
         for (int rowIndex = startRowIndex, size = sheet.getPhysicalNumberOfRows(); rowIndex < size; rowIndex++) {
-            final Row row = this.sheet.getRow(rowIndex);
+            final Row row = sheet.getRow(rowIndex);
 
             for (Cell cell : row) {
                 final int columnIndex = cell.getColumnIndex();
@@ -547,9 +556,10 @@ final class FluentSheet {
         }
 
         final EnumMap<MatrixQueue, Integer> borderedIndexes = new EnumMap<>(MatrixQueue.class);
+        final Sheet sheet = this.sheet;
 
         for (int rowIndex = startRowIndex, size = sheet.getPhysicalNumberOfRows(); rowIndex < size; rowIndex++) {
-            final Row row = this.sheet.getRow(rowIndex);
+            final Row row = sheet.getRow(rowIndex);
 
             for (Cell cell : row) {
                 final int columnIndex = cell.getColumnIndex();
@@ -597,8 +607,10 @@ final class FluentSheet {
         final int endColumnIndex = endBorder.get(MatrixQueue.COLUMN);
         final int endRowIndex = endBorder.get(MatrixQueue.ROW);
 
+        final Sheet sheet = this.sheet;
+
         for (int rowIndex = startRowIndex; rowIndex <= endRowIndex; rowIndex++) {
-            final Row row = this.sheet.getRow(rowIndex);
+            final Row row = sheet.getRow(rowIndex);
 
             for (Cell cell : row) {
                 final int columnIndex = cell.getColumnIndex();
@@ -724,32 +736,6 @@ final class FluentSheet {
     }
 
     /**
-     * 当該シートオブジェクトに含まれる全てのセルの値を文字列型のリスト形式で取得し返却します。
-     *
-     * @return 全てのセルの値を格納した文字列型のリスト
-     */
-    public List<List<String>> toStringList() {
-
-        final List<List<String>> stringList = new ArrayList<>(this.sheet.getPhysicalNumberOfRows());
-
-        for (Row row : this.sheet) {
-            final List<String> rowList = new ArrayList<>(row.getPhysicalNumberOfCells());
-
-            for (Cell cell : row) {
-                if (FluentCell.isNumeric(cell)) {
-                    rowList.add(String.valueOf(cell.getNumericCellValue()));
-                } else {
-                    rowList.add(cell.getRichStringCellValue().getString().trim());
-                }
-            }
-
-            stringList.add(rowList);
-        }
-
-        return stringList;
-    }
-
-    /**
      * 引数として指定された行オブジェクトと列番号を基にセルオブジェクトを取得して返却します。
      * 引数として指定された列番号に紐づくセルオブジェクトが存在しない場合は、 指定された列番号に紐づく新しいセルオブジェクトを生成し返却します。
      * 引数として指定された列番号が負数の場合は実行時に必ず失敗します。
@@ -795,5 +781,32 @@ final class FluentSheet {
         }
 
         return row;
+    }
+
+    /**
+     * 当該シートオブジェクトに含まれる全てのセルの値を文字列型のリスト形式で取得し返却します。
+     *
+     * @return 全てのセルの値を格納した文字列型のリスト
+     */
+    public List<List<String>> toStringList() {
+
+        final List<List<String>> stringList = new ArrayList<>(this.sheet.getPhysicalNumberOfRows());
+        final Sheet sheet = this.sheet;
+
+        for (Row row : sheet) {
+            final List<String> rowList = new ArrayList<>(row.getPhysicalNumberOfCells());
+
+            for (Cell cell : row) {
+                if (FluentCell.isNumeric(cell)) {
+                    rowList.add(String.valueOf(cell.getNumericCellValue()));
+                } else {
+                    rowList.add(cell.getRichStringCellValue().getString().trim());
+                }
+            }
+
+            stringList.add(rowList);
+        }
+
+        return stringList;
     }
 }
