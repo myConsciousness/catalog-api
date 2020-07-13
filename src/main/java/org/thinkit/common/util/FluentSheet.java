@@ -25,13 +25,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.thinkit.common.catalog.MatrixQueue;
 import org.thinkit.common.exception.ExcelHandlingException;
-import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.RichTextString;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 
 /**
@@ -104,7 +103,7 @@ final class FluentSheet {
                     continue;
                 }
 
-                if (this.isCellNumeric(cell)) {
+                if (FluentCell.isNumeric(cell)) {
                     return String.valueOf(cell.getNumericCellValue());
                 }
 
@@ -170,7 +169,7 @@ final class FluentSheet {
 
         for (Row row : this.sheet) {
             for (Cell cell : row) {
-                if (this.isCellNumeric(cell)) {
+                if (FluentCell.isNumeric(cell)) {
                     final String cellValue = String.valueOf(cell.getNumericCellValue());
                     if (value.equals(cellValue)) {
                         return true;
@@ -194,19 +193,16 @@ final class FluentSheet {
      * @param sequence 検索対象の文字列
      * @return 検索対象の文字列が含まれる一番始めのセルの行列インデックス。 検索対象の文字列が存在しない場合は空のマップを返却します。
      * @see MatrixQueue
-     * @exception IllegalArgumentException 引数で指定された検索対象の文字列がnullの場合
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public EnumMap<MatrixQueue, Integer> findCellIndex(final String sequence) {
-
-        if (sequence == null) {
-            throw new IllegalArgumentException("wrong parameter was given. String is null.");
-        }
+    public EnumMap<MatrixQueue, Integer> findCellIndex(@NonNull final String sequence) {
 
         final EnumMap<MatrixQueue, Integer> cellIndexes = new EnumMap<>(MatrixQueue.class);
 
         for (Row row : this.sheet) {
             for (Cell cell : row) {
-                if (this.isCellNumeric(cell)) {
+                if (FluentCell.isNumeric(cell)) {
                     final String cellValue = String.valueOf(cell.getNumericCellValue());
 
                     if (sequence.equals(cellValue)) {
@@ -235,17 +231,14 @@ final class FluentSheet {
      *
      * @param sequence 検索対象の文字列
      * @return 検索対象の文字列が含まれる一番始めのセルの行インデックス。 検索対象の文字列が存在しない場合は-1を返却します。
-     * @exception IllegalArgumentException 引数で指定された検索対象の文字列がnullの場合
+     *
+     * @exception 引数として {@code null} が渡された場合
      */
-    public int findRowIndex(final String sequence) {
-
-        if (sequence == null) {
-            throw new IllegalArgumentException("wrong parameter was given. String is null.");
-        }
+    public int findRowIndex(@NonNull final String sequence) {
 
         for (Row row : this.sheet) {
             for (Cell cell : row) {
-                if (this.isCellNumeric(cell)) {
+                if (FluentCell.isNumeric(cell)) {
                     final String cellValue = String.valueOf(cell.getNumericCellValue());
                     if (sequence.equals(cellValue)) {
                         cell.getRowIndex();
@@ -268,17 +261,14 @@ final class FluentSheet {
      *
      * @param sequence 検索対象の文字列
      * @return 検索対象の文字列が含まれる一番始めのセルの列インデックス。 検索対象の文字列が存在しない場合は-1を返却します。
-     * @exception IllegalArgumentException 引数で指定された検索対象の文字列がnullの場合
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public int findColumnIndex(final String sequence) {
-
-        if (sequence == null) {
-            throw new IllegalArgumentException("wrong parameter was given. String is null.");
-        }
+    public int findColumnIndex(@NonNull final String sequence) {
 
         for (Row row : this.sheet) {
             for (Cell cell : row) {
-                if (this.isCellNumeric(cell)) {
+                if (FluentCell.isNumeric(cell)) {
                     final String cellValue = String.valueOf(cell.getNumericCellValue());
                     if (sequence.equals(cellValue)) {
                         return cell.getColumnIndex();
@@ -354,7 +344,7 @@ final class FluentSheet {
             for (Cell cell : row) {
                 final int columnIndex = cell.getColumnIndex();
 
-                if (startColumnIndex <= columnIndex && this.isCellBorderedTop(cell)) {
+                if (startColumnIndex <= columnIndex && FluentCell.isBorderedTop(cell)) {
                     borderedIndexes.put(MatrixQueue.COLUMN, columnIndex);
                     borderedIndexes.put(MatrixQueue.ROW, rowIndex);
                     return borderedIndexes;
@@ -424,7 +414,7 @@ final class FluentSheet {
             for (Cell cell : row) {
                 final int columnIndex = cell.getColumnIndex();
 
-                if (startColumnIndex <= columnIndex && this.isCellBorderedBottom(cell)) {
+                if (startColumnIndex <= columnIndex && FluentCell.isBorderedBottom(cell)) {
                     borderedIndexes.put(MatrixQueue.COLUMN, columnIndex);
                     borderedIndexes.put(MatrixQueue.ROW, rowIndex);
                     return borderedIndexes;
@@ -494,7 +484,7 @@ final class FluentSheet {
             for (Cell cell : row) {
                 final int columnIndex = cell.getColumnIndex();
 
-                if (startColumnIndex <= columnIndex && this.isCellBorderedRight(cell)) {
+                if (startColumnIndex <= columnIndex && FluentCell.isBorderedRight(cell)) {
                     borderedIndexes.put(MatrixQueue.COLUMN, columnIndex);
                     borderedIndexes.put(MatrixQueue.ROW, rowIndex);
                     return borderedIndexes;
@@ -564,7 +554,7 @@ final class FluentSheet {
             for (Cell cell : row) {
                 final int columnIndex = cell.getColumnIndex();
 
-                if (startColumnIndex <= columnIndex && this.isCellBorderedLeft(cell)) {
+                if (startColumnIndex <= columnIndex && FluentCell.isBorderedLeft(cell)) {
                     borderedIndexes.put(MatrixQueue.COLUMN, columnIndex);
                     borderedIndexes.put(MatrixQueue.ROW, rowIndex);
                     return borderedIndexes;
@@ -614,7 +604,7 @@ final class FluentSheet {
                 final int columnIndex = cell.getColumnIndex();
                 if (startColumnIndex <= columnIndex && columnIndex <= endColumnIndex) {
 
-                    if (this.isCellNumeric(cell)) {
+                    if (FluentCell.isNumeric(cell)) {
                         final String cellValue = String.valueOf(cell.getNumericCellValue());
                         if (!StringUtils.isEmpty(cellValue)) {
                             return cellValue;
@@ -664,8 +654,8 @@ final class FluentSheet {
             int countHeader = 0;
 
             for (Cell cell : row) {
-                if (!this.isCellBlank(cell)) {
-                    if (this.isCellNumeric(cell)) {
+                if (!FluentCell.isBlank(cell)) {
+                    if (FluentCell.isNumeric(cell)) {
                         final String cellValue = String.valueOf(cell.getNumericCellValue());
                         record.put(matrixHeader.get(countHeader), cellValue);
                         alreadySet = true;
@@ -677,7 +667,7 @@ final class FluentSheet {
 
                     countHeader++;
                 } else {
-                    if (this.isCellBorderedRight(cell)) {
+                    if (FluentCell.isBorderedRight(cell)) {
                         if (alreadySet) {
                             alreadySet = false;
                         } else {
@@ -717,11 +707,11 @@ final class FluentSheet {
         final List<String> matrixHeader = new ArrayList<>();
 
         for (Cell cell : headers) {
-            if (this.isCellBlank(cell)) {
+            if (FluentCell.isBlank(cell)) {
                 continue;
             }
 
-            if (this.isCellNumeric(cell)) {
+            if (FluentCell.isNumeric(cell)) {
                 final String cellValue = String.valueOf(cell.getNumericCellValue());
                 matrixHeader.add(cellValue);
             } else {
@@ -731,144 +721,6 @@ final class FluentSheet {
         }
 
         return matrixHeader;
-    }
-
-    /**
-     * セルの上部に罫線が設定されているか判定します。 セルの上部に罫線が設定されている場合は{@code true}を返却し、
-     * セルの上部に罫線が設定されていない場合は{@code false}を返却します。
-     * 引数として指定されたセルオブジェクトがnullの場合は実行時に必ず失敗します。
-     *
-     * @param cell 判定対象のセルオブジェクト
-     * @return セルの上部に罫線が設定されている場合は{@code true}、それ以外は{@code false}
-     * @exception IllegalArgumentException 引数として指定されたセルオブジェクトがnullの場合
-     */
-    private boolean isCellBorderedTop(final Cell cell) {
-
-        if (cell == null) {
-            throw new IllegalArgumentException("wrong parameter was given. Cell object is null.");
-        }
-
-        final BorderStyle borderStyle = cell.getCellStyle().getBorderTop();
-
-        if (borderStyle == BorderStyle.NONE) {
-            return false;
-        }
-
-        return this.isStyleBordered(borderStyle);
-    }
-
-    /**
-     * セルの下部に罫線が設定されているか判定します。 セルの下部に罫線が設定されている場合は{@code true}を返却し、
-     * セルの下部に罫線が設定されていない場合は{@code false}を返却します。
-     * 引数として指定されたセルオブジェクトがnullの場合は実行時に必ず失敗します。
-     *
-     * @param cell 判定対象のセルオブジェクト
-     * @return セルの下部に罫線が設定されている場合は{@code true}、それ以外は{@code false}
-     * @exception IllegalArgumentException 引数として指定されたセルオブジェクトがnullの場合
-     */
-    private boolean isCellBorderedBottom(final Cell cell) {
-
-        if (cell == null) {
-            throw new IllegalArgumentException("wrong parameter was given. Cell object is null.");
-        }
-
-        final BorderStyle borderStyle = cell.getCellStyle().getBorderBottom();
-
-        if (borderStyle == BorderStyle.NONE) {
-            return false;
-        }
-
-        return this.isStyleBordered(borderStyle);
-    }
-
-    /**
-     * セルの右部に罫線が設定されているか判定します。 セルの右部に罫線が設定されている場合は{@code true}を返却し、
-     * セルの右部に罫線が設定されていない場合は{@code false}を返却します。
-     * 引数として指定されたセルオブジェクトがnullの場合は実行時に必ず失敗します。
-     *
-     * @param cell 判定対象のセルオブジェクト
-     * @return セルの右部に罫線が設定されている場合は{@code true}、それ以外は{@code false}
-     * @exception IllegalArgumentException 引数として指定されたセルオブジェクトがnullの場合
-     */
-    private boolean isCellBorderedRight(final Cell cell) {
-
-        if (cell == null) {
-            throw new IllegalArgumentException("wrong parameter was given. Cell object is null.");
-        }
-
-        final BorderStyle borderStyle = cell.getCellStyle().getBorderRight();
-
-        if (borderStyle == BorderStyle.NONE) {
-            return false;
-        }
-
-        return this.isStyleBordered(borderStyle);
-    }
-
-    /**
-     * セルの左部に罫線が設定されているか判定します。 セルの左部に罫線が設定されている場合は{@code true}を返却し、
-     * セルの左部に罫線が設定されていない場合は{@code false}を返却します。
-     * 引数として指定されたセルオブジェクトがnullの場合は実行時に必ず失敗します。
-     *
-     * @param cell 判定対象のセルオブジェクト
-     * @return セルの左部に罫線が設定されている場合は{@code true}、それ以外は{@code false}
-     * @exception IllegalArgumentException 引数として指定されたセルオブジェクトがnullの場合
-     */
-    private boolean isCellBorderedLeft(final Cell cell) {
-
-        if (cell == null) {
-            throw new IllegalArgumentException("wrong parameter was given. Cell object is null.");
-        }
-
-        final BorderStyle borderStyle = cell.getCellStyle().getBorderLeft();
-
-        if (borderStyle == BorderStyle.NONE) {
-            return false;
-        }
-
-        return this.isStyleBordered(borderStyle);
-    }
-
-    /**
-     * 罫線が設定されているか判定します。 罫線が設定されている場合は{@code true}を返却し、
-     * 罫線が設定されていない場合は{@code false}を返却します。
-     *
-     * @param borderStyle スタイルオブジェクト
-     * @return 罫線が設定されている場合は{@code true}、それ以外は{@code false}
-     */
-    private boolean isStyleBordered(final BorderStyle borderStyle) {
-
-        if (borderStyle == BorderStyle.THIN || borderStyle == BorderStyle.MEDIUM || borderStyle == BorderStyle.DASHED
-                || borderStyle == BorderStyle.DOTTED || borderStyle == BorderStyle.THICK
-                || borderStyle == BorderStyle.DOUBLE || borderStyle == BorderStyle.HAIR
-                || borderStyle == BorderStyle.MEDIUM_DASHED || borderStyle == BorderStyle.DASH_DOT
-                || borderStyle == BorderStyle.MEDIUM_DASH_DOT || borderStyle == BorderStyle.DASH_DOT_DOT
-                || borderStyle == BorderStyle.MEDIUM_DASH_DOT_DOT || borderStyle == BorderStyle.SLANTED_DASH_DOT) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * セルの書式設定を判定します。セルの書式がブランクの場合は{@code true}を返却し、セルの書式がブランク以外の場合は{@code false}を返却します。
-     *
-     * @param cell セルオブジェクト
-     * @return セルの書式がブランクの場合は{@code true}、それ以外は{@code false}
-     */
-    private boolean isCellBlank(final Cell cell) {
-        return cell.getCellType() == CellType.BLANK;
-    }
-
-    /**
-     * セルの書式設定を判定します。 セルの書式が数値の場合は{@code true}を返却し、
-     * セルの書式が数値以外の場合は{@code false}を返却します。
-     *
-     * @param cell セルオブジェクト
-     * @return セルの書式が数値の場合は{@code true}、それ以外は{@code false}
-     */
-    private boolean isCellNumeric(final Cell cell) {
-        return cell.getCellType() == CellType.NUMERIC;
     }
 
     /**
@@ -884,7 +736,7 @@ final class FluentSheet {
             final List<String> rowList = new ArrayList<>(row.getPhysicalNumberOfCells());
 
             for (Cell cell : row) {
-                if (this.isCellNumeric(cell)) {
+                if (FluentCell.isNumeric(cell)) {
                     rowList.add(String.valueOf(cell.getNumericCellValue()));
                 } else {
                     rowList.add(cell.getRichStringCellValue().getString().trim());
