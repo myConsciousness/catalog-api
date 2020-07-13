@@ -15,7 +15,6 @@ package org.thinkit.common.util;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.thinkit.common.catalog.MatrixQueue;
 import org.thinkit.common.exception.ExcelHandlingException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.RichTextString;
@@ -420,10 +418,10 @@ public final class FluentSheet {
     /**
      * 右部に罫線が設定されているセルの行列インデックスを取得し返却します。
      *
-     * @return 右部に罫線が設定されているセルの行列インデックス。 右部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 右部に罫線が設定されているセルの行列インデックス。 右部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
      */
-    public EnumMap<MatrixQueue, Integer> findBorderRightIndex() {
+    public Matrix findBorderRightIndex() {
         return this.findBorderRightIndex(0, 0);
     }
 
@@ -432,11 +430,12 @@ public final class FluentSheet {
      * 引数として指定された列インデックスが負数の場合は実行時に必ず失敗します。
      *
      * @param startColumnIndex 探索開始列インデックス
-     * @return 右部に罫線が設定されているセルの行列インデックス。 右部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 右部に罫線が設定されているセルの行列インデックス。 右部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
+     *
      * @exception IllegalArgumentException 探索開始列インデックスが負数の場合
      */
-    public EnumMap<MatrixQueue, Integer> findBorderRightIndex(final int startColumnIndex) {
+    public Matrix findBorderRightIndex(final int startColumnIndex) {
 
         if (startColumnIndex < 0) {
             throw new IllegalArgumentException(
@@ -452,11 +451,12 @@ public final class FluentSheet {
      *
      * @param startColumnIndex 探索開始列インデックス
      * @param startRowIndex    探索開始行インデックス
-     * @return 右部に罫線が設定されているセルの行列インデックス。 右部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 右部に罫線が設定されているセルの行列インデックス。 右部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
+     *
      * @exception IllegalArgumentException 探索開始列インデックスが負数の場合、または探索開始行インデックスが負数の場合
      */
-    public EnumMap<MatrixQueue, Integer> findBorderRightIndex(final int startColumnIndex, final int startRowIndex) {
+    public Matrix findBorderRightIndex(final int startColumnIndex, final int startRowIndex) {
 
         if (startColumnIndex < 0) {
             throw new IllegalArgumentException(
@@ -468,7 +468,6 @@ public final class FluentSheet {
                     String.format("wrong parameter (%s) was given. Row index must be positive.", startRowIndex));
         }
 
-        final EnumMap<MatrixQueue, Integer> borderedIndexes = new EnumMap<>(MatrixQueue.class);
         final Sheet sheet = this.sheet;
 
         for (int rowIndex = startRowIndex, size = sheet.getPhysicalNumberOfRows(); rowIndex < size; rowIndex++) {
@@ -478,23 +477,21 @@ public final class FluentSheet {
                 final int columnIndex = cell.getColumnIndex();
 
                 if (startColumnIndex <= columnIndex && FluentCell.isBorderedRight(cell)) {
-                    borderedIndexes.put(MatrixQueue.COLUMN, columnIndex);
-                    borderedIndexes.put(MatrixQueue.ROW, rowIndex);
-                    return borderedIndexes;
+                    return Matrix.of(columnIndex, rowIndex);
                 }
             }
         }
 
-        return borderedIndexes;
+        return null;
     }
 
     /**
      * 左部に罫線が設定されているセルの行列インデックスを取得し返却します。
      *
-     * @return 左部に罫線が設定されているセルの行列インデックス。 左部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 左部に罫線が設定されているセルの行列インデックス。 左部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
      */
-    public EnumMap<MatrixQueue, Integer> findBorderLeftIndex() {
+    public Matrix findBorderLeftIndex() {
         return this.findBorderLeftIndex(0, 0);
     }
 
@@ -503,11 +500,12 @@ public final class FluentSheet {
      * 引数として指定された列インデックスが負数の場合は実行時に必ず失敗します。
      *
      * @param startColumnIndex 探索開始列インデックス
-     * @return 左部に罫線が設定されているセルの行列インデックス。 左部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
-     * @exception IllegalArgumentException 探索開始列インデックスが負数の場合
+     * @return 左部に罫線が設定されているセルの行列インデックス。 左部に罫線が設定されているセルが存在しない場合は
+     *         {@code null] を返却します。
+     *
+     *         @exception IllegalArgumentException 探索開始列インデックスが負数の場合
      */
-    public EnumMap<MatrixQueue, Integer> findBorderLeftIndex(final int startColumnIndex) {
+    public Matrix findBorderLeftIndex(final int startColumnIndex) {
 
         if (startColumnIndex < 0) {
             throw new IllegalArgumentException(
@@ -523,11 +521,12 @@ public final class FluentSheet {
      *
      * @param startColumnIndex 探索開始列インデックス
      * @param startRowIndex    探索開始行インデックス
-     * @return 左部に罫線が設定されているセルの行列インデックス。 左部に罫線が設定されているセルが存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 左部に罫線が設定されているセルの行列インデックス。 左部に罫線が設定されているセルが存在しない場合は {@code null}
+     *         を返却します。
+     *
      * @exception IllegalArgumentException 探索開始列インデックスが負数の場合、または探索開始行インデックスが負数の場合
      */
-    public EnumMap<MatrixQueue, Integer> findBorderLeftIndex(final int startColumnIndex, final int startRowIndex) {
+    public Matrix findBorderLeftIndex(final int startColumnIndex, final int startRowIndex) {
 
         if (startColumnIndex < 0) {
             throw new IllegalArgumentException(
@@ -539,7 +538,6 @@ public final class FluentSheet {
                     String.format("wrong parameter (%s) was given. Row index must be positive.", startRowIndex));
         }
 
-        final EnumMap<MatrixQueue, Integer> borderedIndexes = new EnumMap<>(MatrixQueue.class);
         final Sheet sheet = this.sheet;
 
         for (int rowIndex = startRowIndex, size = sheet.getPhysicalNumberOfRows(); rowIndex < size; rowIndex++) {
@@ -549,14 +547,12 @@ public final class FluentSheet {
                 final int columnIndex = cell.getColumnIndex();
 
                 if (startColumnIndex <= columnIndex && FluentCell.isBorderedLeft(cell)) {
-                    borderedIndexes.put(MatrixQueue.COLUMN, columnIndex);
-                    borderedIndexes.put(MatrixQueue.ROW, rowIndex);
-                    return borderedIndexes;
+                    return Matrix.of(columnIndex, rowIndex);
                 }
             }
         }
 
-        return borderedIndexes;
+        return null;
     }
 
     /**
@@ -580,16 +576,15 @@ public final class FluentSheet {
                     String.format("wrong parameter (%s) was given. Row index must be positive.", baseStartRowIndex));
         }
 
-        final EnumMap<MatrixQueue, Integer> startBorder = this.findBorderLeftIndex(baseStartColumnIndex + 1,
-                baseStartRowIndex);
+        final Matrix startBorder = this.findBorderLeftIndex(baseStartColumnIndex + 1, baseStartRowIndex);
 
-        final int startColumnIndex = startBorder.get(MatrixQueue.COLUMN);
-        final int startRowIndex = startBorder.get(MatrixQueue.ROW);
+        final int startColumnIndex = startBorder.getColumn();
+        final int startRowIndex = startBorder.getRow();
 
-        final EnumMap<MatrixQueue, Integer> endBorder = this.findBorderRightIndex(startColumnIndex + 1, startRowIndex);
+        final Matrix endBorder = this.findBorderRightIndex(startColumnIndex + 1, startRowIndex);
 
-        final int endColumnIndex = endBorder.get(MatrixQueue.COLUMN);
-        final int endRowIndex = endBorder.get(MatrixQueue.ROW);
+        final int endColumnIndex = endBorder.getColumn();
+        final int endRowIndex = endBorder.getRow();
 
         final Sheet sheet = this.sheet;
 
