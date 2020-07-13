@@ -192,14 +192,13 @@ public final class FluentSheet {
      * 引数として指定された検索対象の文字列がnullの場合は実行時に必ず失敗します。
      *
      * @param sequence 検索対象の文字列
-     * @return 検索対象の文字列が含まれる一番始めのセルの行列インデックス。 検索対象の文字列が存在しない場合は空のマップを返却します。
-     * @see MatrixQueue
+     * @return 検索対象の文字列が含まれる一番始めのセルの行列インデックス。 検索対象の文字列が存在しない場合は {@code null} を返却します。
+     *
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public EnumMap<MatrixQueue, Integer> findCellIndex(@NonNull final String sequence) {
+    public Matrix findCellIndex(@NonNull final String sequence) {
 
-        final EnumMap<MatrixQueue, Integer> cellIndexes = new EnumMap<>(MatrixQueue.class);
         final Sheet sheet = this.sheet;
 
         for (Row row : sheet) {
@@ -208,23 +207,19 @@ public final class FluentSheet {
                     final String cellValue = String.valueOf(cell.getNumericCellValue());
 
                     if (sequence.equals(cellValue)) {
-                        cellIndexes.put(MatrixQueue.COLUMN, cell.getColumnIndex());
-                        cellIndexes.put(MatrixQueue.ROW, cell.getRowIndex());
-                        return cellIndexes;
+                        return Matrix.of(cell.getColumnIndex(), cell.getRowIndex());
                     }
                 } else {
                     final String cellValue = cell.getRichStringCellValue().getString().trim();
 
                     if (sequence.equals(cellValue)) {
-                        cellIndexes.put(MatrixQueue.COLUMN, cell.getColumnIndex());
-                        cellIndexes.put(MatrixQueue.ROW, cell.getRowIndex());
-                        return cellIndexes;
+                        return Matrix.of(cell.getColumnIndex(), cell.getRowIndex());
                     }
                 }
             }
         }
 
-        return cellIndexes;
+        return null;
     }
 
     /**
