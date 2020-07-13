@@ -42,7 +42,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
-final class FluentSheet {
+public final class FluentSheet {
 
     /**
      * シートオブジェクト
