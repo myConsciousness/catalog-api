@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.util;
+package org.thinkit.common.util.content;
 
 import org.thinkit.common.key.ConditionNodeKey;
 import org.thinkit.common.key.Key;
