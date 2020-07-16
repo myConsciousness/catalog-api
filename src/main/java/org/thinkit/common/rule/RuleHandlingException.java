@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.rule.exception;
+package org.thinkit.common.rule;
 
 /**
  * Thrown to indicate that an incorrect operation or incorrect value has been
@@ -20,7 +20,7 @@ package org.thinkit.common.rule.exception;
  * @since 1.0
  * @version 1.0
  */
-public final class RuleHandlingException extends RuntimeException {
+final class RuleHandlingException extends RuntimeException {
 
     /**
      * serialVersionUID
