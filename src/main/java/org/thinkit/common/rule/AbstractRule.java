@@ -23,7 +23,7 @@ import com.google.common.flogger.FluentLogger;
 
 import org.thinkit.common.catalog.Catalog;
 import org.thinkit.common.rule.exception.RuleHandlingException;
-import org.thinkit.common.util.ContentLoader;
+import org.thinkit.common.util.content.ContentLoader;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
