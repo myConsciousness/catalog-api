@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.util;
+package org.thinkit.common.util.reflection;
 
 import lombok.Getter;
 import lombok.NonNull;
