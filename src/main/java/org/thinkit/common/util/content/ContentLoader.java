@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.util;
+package org.thinkit.common.util.content;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -28,6 +28,7 @@ import org.thinkit.common.catalog.Extension;
 import org.thinkit.common.key.ConditionNodeKey;
 import org.thinkit.common.key.Key;
 import org.thinkit.common.key.SelectionNodeKey;
+import org.thinkit.common.util.JsonConverter;
 
 import lombok.NonNull;
 
