@@ -28,7 +28,7 @@ import org.thinkit.common.catalog.Extension;
 import org.thinkit.common.key.ConditionNodeKey;
 import org.thinkit.common.key.Key;
 import org.thinkit.common.key.SelectionNodeKey;
-import org.thinkit.common.util.JsonConverter;
+import org.thinkit.common.util.json.JsonConverter;
 
 import lombok.NonNull;
 
