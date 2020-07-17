@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.util;
+package org.thinkit.common.util.file;
 
 import java.io.BufferedWriter;
 import java.io.File;
