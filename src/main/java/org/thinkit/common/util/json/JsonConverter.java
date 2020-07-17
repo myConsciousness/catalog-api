@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.util;
+package org.thinkit.common.util.json;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,8 +23,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-
-import org.thinkit.common.exception.JsonConvertingException;
 
 import lombok.NonNull;
 
