@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.exception;
+package org.thinkit.common.util.json;
 
 /**
  * Thrown to indicate that an illegal operation has been detected during the
