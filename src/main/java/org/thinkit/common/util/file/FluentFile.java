@@ -1,6 +1,6 @@
 /**
  * Project Name : dev-utils<br>
- * File Name : FileHandler.java<br>
+ * File Name : FluentFile.java<br>
  * Encoding : UTF-8<br>
  * Creation Date : 2020/06/07<br>
  * <p>
@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.FileHandler;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -26,9 +27,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * ファイル操作に関する汎用的な処理を定義したクラスです。<br>
- * {@link FileHandler}では以下の操作を提供しています。<br>
- * <br>
+ * ファイル操作に関する汎用的な処理を定義したクラスです。 {@link FileHandler} では以下の操作を提供しています。
+ * <p>
  * {@link #write(String, String, String)}
  *
  * @author Kato Shinya
@@ -37,7 +37,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
-public final class FileHandler {
+public final class FluentFile {
 
     /**
      * プラットフォームに対応したファイルの区切り文字列
@@ -73,7 +73,7 @@ public final class FileHandler {
      * デフォルトコンストラクタ
      */
     @SuppressWarnings("unused")
-    private FileHandler() {
+    private FluentFile() {
     }
 
     /**
@@ -81,9 +81,10 @@ public final class FileHandler {
      * 指定された出力先のディレクトリが存在しない場合は生成します。
      *
      * @param output 出力先
-     * @exception NullPointerException 引数として{@code null}が渡された場合
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public FileHandler(@NonNull String output) {
+    public FluentFile(@NonNull String output) {
         this.output = output;
 
         final File outputDirectory = new File(output);
@@ -95,18 +96,20 @@ public final class FileHandler {
 
     /**
      * ファイルへの書き込み処理を行います。<br>
-     * 出力先は{@link FileHandler}のインスタンス生成時に渡した文字列に<br>
-     * {@link #write(String, String, String)}の第１引数として渡した文字列を結合したものになります。<br>
-     * 出力先を変更した場合は{@link #setOutput(String)}を使用してください。 <br>
+     * 出力先は {@link FileHandler} のインスタンス生成時に渡した文字列に<br>
+     * {@link #write(String, String, String)} の第１引数として渡した文字列を結合したものになります。<br>
+     * 出力先を変更した場合は {@link #setOutput(String)} を使用してください。 <br>
      * <br>
-     * 書き込み処理で{@link IOException}が発生した場合は{@code false}を返却します。
+     * 書き込み処理で {@link IOException} が発生した場合は {@code false} を返却します。
      *
      * @param fileName  ファイル名
      * @param extension 拡張子
      * @param content   書き込む内容
-     * @return 書き込み処理が正常終了した場合は{@code true}、{@link IOException}が発生した場合は{@code false}
+     * @return 書き込み処理が正常終了した場合は {@code true}、{@link IOException} が発生した場合は
+     *         {@code false}
      *
-     * @exception IOException 出力処理が異常終了した場合
+     * @exception IOException          出力処理が異常終了した場合
+     * @exception NullPointerException 引数として {@code null} が渡された場合
      */
     public boolean write(@NonNull String fileName, @NonNull String extension, @NonNull String content) {
 
