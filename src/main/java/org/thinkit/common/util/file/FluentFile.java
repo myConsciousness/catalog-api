@@ -120,32 +120,6 @@ public final class FluentFile {
     }
 
     /**
-     * 引数として指定された {@code filePath} に格納されたファイルパスが存在するか確認します。<br>
-     * 指定されたファイルパスが存在する場合は {@code true} を返却し、ファイルパスが存在しない場合は {@code false} を返却します。
-     *
-     * @param filePath 検査対象のファイルパス
-     * @return 引数として指定されたファイルパスが存在する場合は {@code true}、それ以外は {@code false}
-     *
-     * @exception NullPointerException 引数として {@code null} が渡された場合
-     */
-    public static boolean exists(@NonNull String filePath) {
-        return exists(new File(filePath));
-    }
-
-    /**
-     * 引数として指定された {@code filePath} に格納されたファイルパスが存在するか確認します。<br>
-     * 指定されたファイルパスが存在する場合は {@code true} を返却し、ファイルパスが存在しない場合は {@code false} を返却します。
-     *
-     * @param filePath 検査対象のファイルオブジェクト
-     * @return 引数として指定されたファイルパスが存在する場合は {@code true}、それ以外は {@code false}
-     *
-     * @exception NullPointerException 引数として {@code null} が渡された場合
-     */
-    public static boolean exists(@NonNull File filePath) {
-        return filePath.exists();
-    }
-
-    /**
      * 引数として指定された {@code filePath} に格納されたファイルパスをもとにディレクトリを生成します。<br>
      * 指定されたファイルパスが既に存在する場合は常に {@code true} を返却します。
      *
@@ -171,7 +145,7 @@ public final class FluentFile {
      */
     public static boolean mkdirs(@NonNull File filePath) {
 
-        if (exists(filePath)) {
+        if (FileChecker.exists(filePath)) {
             return true;
         }
 
