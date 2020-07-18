@@ -37,7 +37,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
-final class FileWriter {
+public final class FileWriter {
 
     /**
      * 出力先
