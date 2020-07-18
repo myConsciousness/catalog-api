@@ -42,26 +42,12 @@ public final class FluentFile {
     /**
      * プラットフォームに対応したファイルの区切り文字列
      */
-    private static String FILE_SEPARATOR;
+    private static final String FILE_SEPARATOR = File.separator;
 
     /**
      * プラットフォームに対応した改行文字列
      */
-    private static String NEW_LINE;
-
-    static {
-        try {
-            FILE_SEPARATOR = File.separator;
-        } catch (SecurityException e) {
-            FILE_SEPARATOR = "¥¥";
-        }
-
-        try {
-            NEW_LINE = System.lineSeparator();
-        } catch (SecurityException e) {
-            NEW_LINE = "¥r¥n";
-        }
-    }
+    private static final String NEW_LINE = System.lineSeparator();
 
     /**
      * 出力先
@@ -96,7 +82,7 @@ public final class FluentFile {
 
     /**
      * ファイルへの書き込み処理を行います。<br>
-     * 出力先は {@link FileHandler} のインスタンス生成時に渡した文字列に<br>
+     * 出力先は {@link FluentFile} のインスタンス生成時に渡した文字列に<br>
      * {@link #write(String, String, String)} の第１引数として渡した文字列を結合したものになります。<br>
      * 出力先を変更した場合は {@link #setOutput(String)} を使用してください。 <br>
      * <br>
@@ -131,6 +117,65 @@ public final class FluentFile {
         }
 
         return true;
+    }
+
+    /**
+     * 引数として指定された {@code filePath} に格納されたファイルパスが存在するか確認します。<br>
+     * 指定されたファイルパスが存在する場合は {@code true} を返却し、ファイルパスが存在しない場合は {@code false} を返却します。
+     *
+     * @param filePath 検査対象のファイルパス
+     * @return 引数として指定されたファイルパスが存在する場合は {@code true}、それ以外は {@code false}
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    public static boolean exists(@NonNull String filePath) {
+        return exists(new File(filePath));
+    }
+
+    /**
+     * 引数として指定された {@code filePath} に格納されたファイルパスが存在するか確認します。<br>
+     * 指定されたファイルパスが存在する場合は {@code true} を返却し、ファイルパスが存在しない場合は {@code false} を返却します。
+     *
+     * @param filePath 検査対象のファイルオブジェクト
+     * @return 引数として指定されたファイルパスが存在する場合は {@code true}、それ以外は {@code false}
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    public static boolean exists(@NonNull File filePath) {
+        return filePath.exists();
+    }
+
+    /**
+     * 引数として指定された {@code filePath} に格納されたファイルパスをもとにディレクトリを生成します。<br>
+     * 指定されたファイルパスが既に存在する場合は常に {@code true} を返却します。
+     *
+     * @param filePath ディレクトリを生成する際に使用するファイルパス
+     * @return ディレクトリが既に存在する場合、またはディレクトリの生成が正常終了した場合は {@code true}、それ以外は
+     *         {@code false}
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    public static boolean mkdirs(@NonNull String filePath) {
+        return mkdirs(new File(filePath));
+    }
+
+    /**
+     * 引数として指定された {@code filePath} に格納されたファイルパスをもとにディレクトリを生成します。<br>
+     * 指定されたファイルパスが既に存在する場合は常に {@code true} を返却します。
+     *
+     * @param filePath ディレクトリを生成する際に使用するファイルパス
+     * @return ディレクトリが既に存在する場合、またはディレクトリの生成が正常終了した場合は {@code true}、それ以外は
+     *         {@code false}
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    public static boolean mkdirs(@NonNull File filePath) {
+
+        if (exists(filePath)) {
+            return true;
+        }
+
+        return filePath.mkdirs();
     }
 
     /**
