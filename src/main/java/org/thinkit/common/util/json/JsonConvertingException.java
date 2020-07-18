@@ -25,7 +25,7 @@ package org.thinkit.common.util.json;
  * @since 1.0
  * @version 1.0
  */
-public final class JsonConvertingException extends RuntimeException {
+final class JsonConvertingException extends RuntimeException {
 
     /**
      * serialVersionUID
