@@ -16,7 +16,6 @@ import java.io.File;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -25,6 +24,9 @@ import lombok.ToString;
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
+ *
+ * @see #writerOf(String)
+ * @see FileWriter#write(String, String, String)
  */
 @ToString
 @EqualsAndHashCode
@@ -41,34 +43,38 @@ public final class FluentFile {
     private static final String NEW_LINE = System.lineSeparator();
 
     /**
-     * 出力先
-     */
-    @Setter
-    private String output = "";
-
-    /**
      * デフォルトコンストラクタ
      */
-    @SuppressWarnings("unused")
     private FluentFile() {
     }
 
     /**
-     * コンストラクタ。<br>
-     * 指定された出力先のディレクトリが存在しない場合は生成します。
+     * 引数として指定されたパスをもとにファイルへ書き込みを行う {@link FileWriter} クラスのインスタンスを生成して返却します。
+     * <p>
+     * この静的メソッドを呼び出した後にファイルへ書き込み処理を行う際には、{@link #writerOf(String)} メソッドが返却する
+     * {@link FileWriter} クラスのインスタンスの
+     * {@link FileWriter#write(String, String, String)} メソッドをメソッドチェーンで呼び出してください。
+     * <p>
+     * {@link FileWriter}
+     * クラスのインスタンス生成時に指定されたファイルパスが存在しない場合は自動でファイルパスに対応するディレクトリ構造を生成します。そのため、{@link FileWriter#write(String, String, String)}
+     * メソッドを使用する前にファイルパスの存在を検査する必要はありません。但し、渡されたファイルパスが有効なパスではない場合はディレクトリの生成時に失敗し
+     * {@link FileHandlingException} が実行時に必ず発生します。
+     * <p>
+     * 具体的な使用方法は以下のサンプルコードを参考にしてください。
      *
-     * @param output 出力先
+     * <pre>
+     * 書き込み処理の例:
+     * <code>FluentFile.writerOf(output).write(fileName, extension, content);</code>
+     * </pre>
+     *
+     * @param output 出力先のパス
+     * @return {@link FileWriter} クラスのインスタンス
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
+     * @throws FileHandlingException 有効ではないファイルパスが引数として渡された場合
      */
-    public FluentFile(@NonNull String output) {
-        this.output = output;
-
-        final File outputDirectory = new File(output);
-
-        if (!outputDirectory.exists()) {
-            outputDirectory.mkdirs();
-        }
+    public static FileWriter writerOf(@NonNull String output) {
+        return FileWriter.of(output);
     }
 
     /**

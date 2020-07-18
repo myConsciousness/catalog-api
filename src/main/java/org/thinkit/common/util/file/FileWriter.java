@@ -20,9 +20,10 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -41,7 +42,7 @@ final class FileWriter {
     /**
      * 出力先
      */
-    @Setter
+    @Getter(AccessLevel.PRIVATE)
     private String output = "";
 
     /**
@@ -51,20 +52,19 @@ final class FileWriter {
     }
 
     /**
-     * コンストラクタ。<br>
-     * 指定された出力先のディレクトリが存在しない場合は生成します。
+     * コンストラクタ。 指定された出力先のディレクトリが存在しない場合は生成します。
      *
      * @param output 出力先のパス
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
+     * @throws FileHandlingException ディレクトリの生成処理が異常終了した場合
      */
     private FileWriter(@NonNull String output) {
         this.output = output;
 
-        final File outputDirectory = new File(output);
-
-        if (!outputDirectory.exists()) {
-            outputDirectory.mkdirs();
+        if (!FluentFile.mkdirs(output)) {
+            throw new FileHandlingException(String
+                    .format("Failed to generate the directory of %s. Please pass a valid directory path.", output));
         }
     }
 
@@ -105,7 +105,7 @@ final class FileWriter {
         final String fullFileName = fullFileNameBuilder.toString();
 
         final StringBuilder filePathBuilder = new StringBuilder();
-        filePathBuilder.append(output).append("\\").append(fullFileName);
+        filePathBuilder.append(this.getOutput()).append("\\").append(fullFileName);
 
         final File file = new File(new File(filePathBuilder.toString()).getParentFile(), fullFileName);
 
