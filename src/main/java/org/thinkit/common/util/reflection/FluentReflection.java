@@ -167,7 +167,7 @@ public final class FluentReflection<T> {
         }
 
         try {
-            final Object clazzInstance = isStatic ? null : this.clazz.newInstance();
+            final Object clazzInstance = isStatic ? null : this.clazz.getDeclaredConstructor().newInstance();
 
             if (this.parameter.isEmpty()) {
                 Method method = this.clazz.getDeclaredMethod(methodName);
