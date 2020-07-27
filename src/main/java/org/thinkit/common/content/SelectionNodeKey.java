@@ -10,8 +10,9 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.key;
+package org.thinkit.common.content;
 
+import org.thinkit.common.key.Key;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -22,7 +23,7 @@ import lombok.RequiredArgsConstructor;
  * @version 1.0
  */
 @RequiredArgsConstructor
-public enum SelectionNodeKey implements Key {
+enum SelectionNodeKey implements Key {
 
     /**
      * 選択ノード群

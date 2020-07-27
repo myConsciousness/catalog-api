@@ -12,9 +12,7 @@
 
 package org.thinkit.common.content;
 
-import org.thinkit.common.key.ConditionNodeKey;
 import org.thinkit.common.key.Key;
-import org.thinkit.common.key.SelectionNodeKey;
 import org.thinkit.common.rule.Attribute;
 import org.thinkit.common.rule.Condition;
 
