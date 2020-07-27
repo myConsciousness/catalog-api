@@ -12,7 +12,7 @@
 
 package org.thinkit.common.rule;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * @since 1.0
  * @version 1.0
  */
-public final class RuleTest implements Rule {
+public final class RuleTest implements Rule<String> {
 
     /**
      * <pre>
@@ -33,7 +33,7 @@ public final class RuleTest implements Rule {
      *
      * <pre>
      * ❏ 観点
-     * ・{@link Rule#execute()} の返却値が <code>true</code> であること
+     * ・{@link Rule#execute()} の返却値が <code>"test"</code> であること
      * </pre>
      *
      * <pre>
@@ -43,12 +43,12 @@ public final class RuleTest implements Rule {
      */
     @Test
     public void testExecute() {
-        assertTrue(this.execute());
+        assertEquals("test", this.execute());
     }
 
     @Override
-    public boolean execute() {
+    public String execute() {
         // do nothing
-        return true;
+        return "test";
     }
 }

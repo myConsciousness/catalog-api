@@ -13,18 +13,31 @@
 package org.thinkit.common.rule;
 
 /**
- * ルール処理のインターフェースです。
+ * ルールを抽象化したインターフェースです。
+ * <p>
+ * {@link Rule} インターフェースを実装する際には総称型として {@link Rule#execute()}
+ * メソッドが返却する値の型を指定してください。
+ *
+ * <pre>
+ * 使用例 (String型を返却する場合):
+ * <code>
+ * public class TestRule implements Rule&lt;String&gt; {
+ *      // do something
+ * }
+ * </code>
+ * </pre>
  *
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
  */
-public interface Rule {
+public interface Rule<R> {
 
     /**
-     * ルールの開始処理を定義するメソッドです。
+     * ルールを実行します。<br>
+     * このメソッドは {@link Rule} インターフェースの宣言時に定義した総称型の値を返却します。
      *
-     * @return ルール処理が正常終了した場合は{@code true}、それ以外は{@code false}
+     * @return {@link Rule} インターフェースの宣言時に定義した総称型の値
      */
-    public boolean execute();
+    public R execute();
 }

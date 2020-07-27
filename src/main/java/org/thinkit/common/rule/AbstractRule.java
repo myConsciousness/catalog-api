@@ -60,7 +60,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
-public abstract class AbstractRule implements Rule {
+public abstract class AbstractRule<R> implements Rule<R> {
 
     /**
      * ログ出力オブジェクト
