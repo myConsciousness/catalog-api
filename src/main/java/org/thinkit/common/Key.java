@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.key;
+package org.thinkit.common;
 
 /**
  * コンテンツのキーに関する汎用的な処理を定義したインターフェースです。<br>

@@ -12,7 +12,7 @@
 
 package org.thinkit.common.content;
 
-import org.thinkit.common.key.Key;
+import org.thinkit.common.Key;
 import lombok.RequiredArgsConstructor;
 
 /**

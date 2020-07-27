@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.key;
+package org.thinkit.common;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
