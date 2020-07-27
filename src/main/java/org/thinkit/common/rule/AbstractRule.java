@@ -22,7 +22,7 @@ import java.util.Set;
 import com.google.common.flogger.FluentLogger;
 
 import org.thinkit.common.catalog.Catalog;
-import org.thinkit.common.util.content.ContentLoader;
+import org.thinkit.common.content.ContentLoader;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
