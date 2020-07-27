@@ -10,7 +10,7 @@
  * reproduced or used in any manner whatsoever.
  */
 
-package org.thinkit.common.iterator;
+package org.thinkit.common.util.iterator;
 
 import java.util.List;
 
