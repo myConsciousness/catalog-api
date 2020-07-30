@@ -14,6 +14,9 @@ package org.thinkit.common.rule;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -50,5 +53,17 @@ public final class RuleTest implements Rule<String> {
     public String execute() {
         // do nothing
         return "test";
+    }
+
+    @Override
+    public List<Attribute> getAttributes() {
+        // do nothing
+        return List.of();
+    }
+
+    @Override
+    public Map<Condition, String> getConditions() {
+        // do nothing
+        return Map.of();
     }
 }
