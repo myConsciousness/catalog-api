@@ -109,7 +109,7 @@ public final class FluentIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        return nodes.get(++cursorIndex);
+        return nodes.get(cursorIndex++);
     }
 
     @Override
