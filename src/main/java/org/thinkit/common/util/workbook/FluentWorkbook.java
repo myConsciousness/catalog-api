@@ -236,6 +236,12 @@ public final class FluentWorkbook implements AutoCloseable {
         private Workbook workbook = null;
 
         /**
+         * デフォルトコンストラクタ
+         */
+        private Builder() {
+        }
+
+        /**
          * 引数として渡された文字列を基にExcelワークブックオブジェクトを取得して返却します。
          * 引数として渡される文字列は既に存在してるExcelワークブックを表すものでなければなりません。 無効な引数が渡された場合は実行時に必ず例外が発生します。
          *
