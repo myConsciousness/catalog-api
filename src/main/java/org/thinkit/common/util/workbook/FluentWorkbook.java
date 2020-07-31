@@ -58,6 +58,19 @@ public final class FluentWorkbook implements AutoCloseable {
     private OutputStream outputStream = null;
 
     /**
+     * デフォルトコンストラクタ
+     */
+    private FluentWorkbook() {
+    }
+
+    /**
+     * {@link FluentWorkbook} クラスを生成するビルダーを返却します。
+     */
+    public static FluentWorkbook.Builder builder() {
+        return new FluentWorkbook.Builder();
+    }
+
+    /**
      * 操作対象のExcelワークブックオブジェクト
      */
     @Getter
