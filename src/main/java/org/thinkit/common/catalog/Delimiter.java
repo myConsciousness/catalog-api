@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
  * {@link #getDelimiter()}を使用することで区切り要素の文字列表現を取得できます。<br>
  * <br>
  * 以下の静的メソッドを使用することでも各要素の文字列表現を取得できます。<br>
- * {@link #commma()}<br>
+ * {@link #comma()}<br>
  * {@link #period()}<br>
  * {@link #colon()}<br>
  * {@link #semicolon()}<br>
@@ -68,7 +68,7 @@ public enum Delimiter implements Catalog<Delimiter> {
      *
      * @return カンマの文字列表現
      */
-    public static String commma() {
+    public static String comma() {
         return COMMA.getDelimiter();
     }
 

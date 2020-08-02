@@ -55,7 +55,7 @@ public final class DelimiterTest {
 
     @Test
     public void testComma() {
-        assertEquals(COMMA, Delimiter.commma());
+        assertEquals(COMMA, Delimiter.comma());
     }
 
     @Test
