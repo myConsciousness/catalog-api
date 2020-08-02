@@ -54,7 +54,7 @@ public final class FileWriter {
      * 出力先
      */
     @Getter(AccessLevel.PRIVATE)
-    private String output = "";
+    private String output;
 
     /**
      * ファイル書き込み時の文字コード
@@ -137,8 +137,7 @@ public final class FileWriter {
      */
     public boolean write(@NonNull String fileName, @NonNull String extension, @NonNull String content) {
 
-        final StringBuilder fullFileNameBuilder = new StringBuilder();
-        fullFileNameBuilder.append(fileName).append(extension);
+        final StringBuilder fullFileNameBuilder = new StringBuilder().append(fileName).append(extension);
         final String fullFileName = fullFileNameBuilder.toString();
 
         final StringBuilder filePathBuilder = new StringBuilder();
