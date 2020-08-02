@@ -141,7 +141,7 @@ public final class FileWriter {
         final String fullFileName = fullFileNameBuilder.toString();
 
         final StringBuilder filePathBuilder = new StringBuilder();
-        filePathBuilder.append(this.getOutput()).append("\\").append(fullFileName);
+        filePathBuilder.append(this.getOutput()).append(FluentFile.getFileSeparator()).append(fullFileName);
 
         final File file = new File(new File(filePathBuilder.toString()).getParentFile(), fullFileName);
 
