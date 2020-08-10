@@ -105,6 +105,17 @@ public interface Precondition {
         }
     }
 
+    /**
+     * 引数として指定された {@code index} が {@code 0} から {@code to}
+     * で指定された範囲内の数値か判定します。引数として指定された {@code index} が範囲外にある数値である場合は
+     * {@link IndexOutOfBoundsException} が必ず実行時に発生します。
+     *
+     * @param index 判定対象のインデックス
+     * @param to    判定時の上限値
+     *
+     * @throws IndexOutOfBoundsException 引数として指定された {@code number} の数値が {@code 0} から
+     *                                   {@code to} で指定された範囲内に存在しない場合
+     */
     static void requireRange(int index, int to) {
         if (index < 0 || to < index) {
             throw new IndexOutOfBoundsException(
@@ -112,6 +123,18 @@ public interface Precondition {
         }
     }
 
+    /**
+     * 引数として指定された {@code index} が {@code from} から {@code to}
+     * で指定された範囲内の数値か判定します。引数として指定された {@code index} が範囲外にある数値である場合は
+     * {@link IndexOutOfBoundsException} が必ず実行時に発生します。
+     *
+     * @param index 判定対象のインデックス
+     * @param from  判定時の最低値
+     * @param to    判定時の上限値
+     *
+     * @throws IndexOutOfBoundsException 引数として指定された {@code number} の数値が {@code from}
+     *                                   から {@code to} で指定された範囲内に存在しない場合
+     */
     static void requireRange(int index, int from, int to) {
         if (index < from || to < index) {
             throw new IndexOutOfBoundsException(
