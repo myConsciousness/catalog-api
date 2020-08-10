@@ -14,6 +14,9 @@
 
 package org.thinkit.common;
 
+import org.thinkit.common.exception.IllegalNumberFoundException;
+import org.thinkit.common.exception.IllegalSequenceFoundException;
+
 /**
  * 前提条件を判定する処理を定義したインターフェースです。
  *
@@ -31,7 +34,24 @@ public interface Precondition {
 
     static void requireNonBlank(String sequence) {
         if (sequence.isEmpty()) {
-            throw new IllegalArgumentException("String must not be blank");
+            throw new IllegalSequenceFoundException("String must not be blank");
+        }
+    }
+
+    static void requireNonEmpty(String sequence) {
+        requireNonNull(sequence);
+        requireNonBlank(sequence);
+    }
+
+    static void requirePositive(int number) {
+        if (number < 0) {
+            throw new IllegalNumberFoundException(String.format("Number must be positive but %s was given", number));
+        }
+    }
+
+    static void requireNegative(int number) {
+        if (number < 0) {
+            throw new IllegalNumberFoundException(String.format("Number must be negative but %s was given", number));
         }
     }
 
