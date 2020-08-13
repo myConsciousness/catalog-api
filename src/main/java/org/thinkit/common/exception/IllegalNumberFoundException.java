@@ -16,7 +16,7 @@ package org.thinkit.common.exception;
 
 /**
  * Thrown to indicate that a method has been passed an illegal or inappropriate
- * sequence.
+ * number.
  *
  * @author Kato Shinya
  * @since 1.0
