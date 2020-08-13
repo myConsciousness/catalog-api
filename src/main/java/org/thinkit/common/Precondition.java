@@ -14,6 +14,11 @@
 
 package org.thinkit.common;
 
+import java.util.List;
+import java.util.Map;
+
+import org.thinkit.common.exception.IllegalListFoundException;
+import org.thinkit.common.exception.IllegalMapFoundException;
 import org.thinkit.common.exception.IllegalNumberFoundException;
 import org.thinkit.common.exception.IllegalSequenceFoundException;
 
@@ -139,6 +144,38 @@ public interface Precondition {
         if (index < from || to < index) {
             throw new IndexOutOfBoundsException(
                     String.format("Index %s out-of-bounds for range from length %s to length %s", index, from, to));
+        }
+    }
+
+    /**
+     * 引数として渡された {@code list} が空か判定します。
+     * <p>
+     * この {@link #requireNonEmpty(List)} メソッドは {@link List#isEmpty()} メソッドでの判定前に
+     * {@code null} の判定を行いません。
+     *
+     * @param list 判定対象のリスト
+     *
+     * @throws IllegalListFoundException 引数として渡された {@code list} に要素が含まれていない場合
+     */
+    static void requireNonEmpty(List<?> list) {
+        if (list.isEmpty()) {
+            throw new IllegalListFoundException("List must contain at least one or more elements");
+        }
+    }
+
+    /**
+     * 引数として渡された {@code map} が空か判定します。
+     * <p>
+     * この {@link #requireNonEmpty(Map)} メソッドは {@link Map#isEmpty()} メソッドでの判定前に
+     * {@code null} の判定を行いません。
+     *
+     * @param list 判定対象のリスト
+     *
+     * @throws IllegalMapFoundException 引数として渡された {@code list} に要素が含まれていない場合
+     */
+    static void requireNonEmpty(Map<?, ?> map) {
+        if (map.isEmpty()) {
+            throw new IllegalMapFoundException("Map must contain at least one or more elements");
         }
     }
 }
