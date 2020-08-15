@@ -51,6 +51,28 @@ public enum Quotation implements Catalog<Quotation> {
     private final String quotation;
 
     /**
+     * {@link #SINGLE_QUOTE} 要素の文字列表現を返却します。
+     *
+     * @return {@link #SINGLE_QUOTE} 要素の文字列表現
+     *
+     * @see #SINGLE_QUOTE
+     */
+    public static String singleQuote() {
+        return SINGLE_QUOTE.getQuotation();
+    }
+
+    /**
+     * {@link #DOUBLE_QUOTE} 要素の文字列表現を返却します。
+     *
+     * @return {@link #DOUBLE_QUOTE} 要素の文字列表現
+     *
+     * @see #DOUBLE_QUOTE
+     */
+    public static String doubleQuote() {
+        return DOUBLE_QUOTE.getQuotation();
+    }
+
+    /**
      * 引数として与えられた {@code token} の文字列が {@link Quotation} に定義されているか判定します。
      *
      * @param token 判定対象のトークン
