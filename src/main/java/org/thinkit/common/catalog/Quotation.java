@@ -15,6 +15,7 @@
 package org.thinkit.common.catalog;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -48,4 +49,24 @@ public enum Quotation implements Catalog<Quotation> {
      */
     @Getter
     private final String quotation;
+
+    /**
+     * 引数として与えられた {@code token} の文字列が {@link Quotation} に定義されているか判定します。
+     *
+     * @param token 判定対象のトークン
+     * @return 引数として与えられた {@code token} の文字列が {@link Quotation} に定義されている場合は
+     *         {@code true} 、それ以外は {@code false}
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    public boolean contains(@NonNull String token) {
+
+        for (Quotation quotation : Quotation.values()) {
+            if (quotation.getQuotation().equals(token)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
