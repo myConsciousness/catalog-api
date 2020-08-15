@@ -12,7 +12,6 @@
  * the License.
  */
 
-
 package org.thinkit.common.util.reflection;
 
 import lombok.Getter;
