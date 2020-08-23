@@ -30,7 +30,7 @@ import lombok.NonNull;
  * @version 1.0
  */
 @EqualsAndHashCode
-public final class FluentInputStream {
+public final class FluentStreamReader {
 
     /**
      * 入力ストリーム
@@ -40,7 +40,7 @@ public final class FluentInputStream {
     /**
      * デフォルトコンストラクタ
      */
-    private FluentInputStream() {
+    private FluentStreamReader() {
     }
 
     /**
@@ -50,37 +50,37 @@ public final class FluentInputStream {
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    private FluentInputStream(@NonNull final InputStream stream) {
+    private FluentStreamReader(@NonNull final InputStream stream) {
         this.stream = stream;
     }
 
     /**
-     * 引数として渡された {@code stream} を基に {@link FluentInputStream}
+     * 引数として渡された {@code stream} を基に {@link FluentStreamReader}
      * クラスの新しいインスタンスを生成し返却します。
      *
      * @param stream 入力ストリーム
-     * @return {@link FluentInputStream} クラスの新しいインスタンス
+     * @return {@link FluentStreamReader} クラスの新しいインスタンス
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public static FluentInputStream of(@NonNull final InputStream stream) {
-        return new FluentInputStream(stream);
+    public static FluentStreamReader of(@NonNull final InputStream stream) {
+        return new FluentStreamReader(stream);
     }
 
     @Override
     public String toString() {
 
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder sequence = new StringBuilder();
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(stream))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream))) {
             String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
+            while ((line = bufferedReader.readLine()) != null) {
+                sequence.append(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return sb.toString();
+        return sequence.toString();
     }
 }
