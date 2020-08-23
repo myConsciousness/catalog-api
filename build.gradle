@@ -14,7 +14,6 @@
 
 plugins {
     id 'java'
-    id 'application'
     id 'maven-publish'
     id 'com.palantir.git-version' version '0.12.2'
 }
