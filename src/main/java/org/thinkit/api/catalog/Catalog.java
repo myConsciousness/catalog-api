@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.thinkit.common.catalog;
+package org.thinkit.api.catalog;
 
 import java.util.Arrays;
 import java.util.Comparator;
