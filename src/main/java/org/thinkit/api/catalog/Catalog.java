@@ -28,7 +28,7 @@ import java.util.stream.Stream;
  * @since 1.0
  * @version 1.0
  *
- * @param <E> Wildcard type
+ * @param <E> Catalog element
  */
 public interface Catalog<E extends Catalog<E>> {
 
@@ -67,7 +67,7 @@ public interface Catalog<E extends Catalog<E>> {
      * is converted into a list structure with the order in which it is displayed
      * and returned.
      *
-     * @param <E>   Wildcard type
+     * @param <E>   Catalog element
      * @param clazz Enum class object to be operated on
      * @return A list containing the values sorted based on the code values defined
      *         for each element of the Enum class
@@ -82,7 +82,7 @@ public interface Catalog<E extends Catalog<E>> {
      * the interface are compared with the numbers passed as arguments, and the Enum
      * element that matches the values is returned.
      *
-     * @param <E>   Wildcard type
+     * @param <E>   Catalog element
      * @param clazz Enum class object to be operated on
      * @param code  Code value
      * @return Enum element with a code value equal to the number specified as an
@@ -97,7 +97,7 @@ public interface Catalog<E extends Catalog<E>> {
      * interface is compared with the number specified as an argument. Return the
      * Enum element whose value matches the code value as a key.
      *
-     * @param <E>   Wildcard type
+     * @param <E>   Catalog element
      * @param clazz Enum class object to be operated on
      * @return Map containing an Enum element with a code value equal to the number
      *         specified as an argument as a code key
@@ -111,7 +111,7 @@ public interface Catalog<E extends Catalog<E>> {
      * defined in each element of the Enum class that implements the interface
      * concerned.
      *
-     * @param <E>   Wildcard type
+     * @param <E>   Catalog element
      * @param clazz Enum class object to be operated on
      * @param code  Code value
      * @return {@code true} if there is an Enum element with a code value equal to
@@ -125,7 +125,7 @@ public interface Catalog<E extends Catalog<E>> {
      * Converts the element group defined in the {@code clazz} argument to a
      * {@link Stream} and returns it.
      *
-     * @param <E>   Wildcard type
+     * @param <E>   Catalog element
      * @param clazz Enum class object to be operated on
      * @return Streams of the Enum class
      */
