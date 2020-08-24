@@ -55,7 +55,7 @@ public interface Catalog<E extends Catalog<E>> {
      *
      * @param code Code value
      * @return If the number passed as an argument is equal to the code value of the
-     *         Enum element, {@code true}, otherwise {@code false}.
+     *         Enum element, {@code true} , otherwise {@code false}
      */
     default boolean equalsByCode(int code) {
         return getCode() == code;
