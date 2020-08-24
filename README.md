@@ -1,8 +1,10 @@
-# dev-utils
+# Catalog API
 
-Development utils main repository.
+## What is it?
 
-# License
+Catalog API main repository.
+
+## License
 
 ```
 Copyright 2020 Kato Shinya.
