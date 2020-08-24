@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * An interface that defines common operations of the Catalog.
@@ -71,8 +72,8 @@ public interface Catalog<E extends Catalog<E>> {
      *         for each element of the Enum class
      */
     public static <E extends Catalog<E>> List<E> getOrderedList(Class<? extends Catalog<E>> clazz) {
-        return Arrays.stream(clazz.getEnumConstants()).sorted(Comparator.comparing(Catalog::getCode))
-                .map(Catalog::toEnum).collect(Collectors.toList());
+        return stream(clazz).sorted(Comparator.comparing(Catalog::getCode)).map(Catalog::toEnum)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -87,8 +88,7 @@ public interface Catalog<E extends Catalog<E>> {
      *         argument
      */
     public static <E extends Catalog<E>> E getEnum(Class<? extends Catalog<E>> clazz, int code) {
-        return Arrays.stream(clazz.getEnumConstants()).filter(e -> e.equalsByCode(code)).map(Catalog::toEnum)
-                .findFirst().orElse(null);
+        return stream(clazz).filter(e -> e.equalsByCode(code)).map(Catalog::toEnum).findFirst().orElse(null);
     }
 
     /**
@@ -102,7 +102,7 @@ public interface Catalog<E extends Catalog<E>> {
      *         specified as an argument as a code key
      */
     public static <E extends Catalog<E>> Map<Integer, E> getMap(Class<? extends Catalog<E>> clazz) {
-        return Arrays.stream(clazz.getEnumConstants()).collect(Collectors.toMap(Catalog::getCode, Catalog::toEnum));
+        return stream(clazz).collect(Collectors.toMap(Catalog::getCode, Catalog::toEnum));
     }
 
     /**
@@ -114,9 +114,21 @@ public interface Catalog<E extends Catalog<E>> {
      * @param clazz Enum class object to be operated on
      * @param code  Code value
      * @return {@code true} if there is an Enum element with a code value equal to
-     *         the number specified as an argument, otherwise {@false}
+     *         the number specified as an argument, otherwise {@code false}
      */
     public static <E extends Catalog<E>> boolean hasCode(Class<? extends Catalog<E>> clazz, int code) {
-        return Arrays.stream(clazz.getEnumConstants()).anyMatch(e -> e.equalsByCode(code));
+        return stream(clazz).anyMatch(e -> e.equalsByCode(code));
+    }
+
+    /**
+     * Converts the element group defined in the {@code clazz} argument to a
+     * {@link Stream} and returns it.
+     *
+     * @param <E>   Wildcard type
+     * @param clazz Enum class object to be operated on
+     * @return Streams of the Enum class
+     */
+    public static <E extends Catalog<E>> Stream<? extends Catalog<E>> stream(Class<? extends Catalog<E>> clazz) {
+        return Arrays.stream(clazz.getEnumConstants());
     }
 }
