@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -142,8 +143,74 @@ public final class BiCatalogTest {
         assertEquals(SEQUENCE_FAILURE, test3.getTag());
     }
 
-    @Test
-    void testContains() {
+    /**
+     * {@link BiCatalog#contains(Class, Object)} メソッドのインナーテストクラスです。
+     *
+     * @author Kato Shinya
+     * @since 1.0
+     * @version 1.0
+     */
+    @Nested
+    class TestContains {
 
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link BiCatalog} インターフェースの {@link BiCatalog#contains(Class, Object)} メソッドの返却値を確認する。
+         * テストの際には {@link BiCatalogForTest} クラスを使用する。
+         * </pre>
+         *
+         * <pre>
+         * ❏ 観点
+         * ・文字列の {@code "failure"} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code true} が返却されること。
+         * ・文字列の {@code "success"} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code true} が返却されること。
+         * ・文字列の {@code "not contained"} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code false} が返却されること。
+         * </pre>
+         *
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testSimplePattern() {
+            assertTrue(BiCatalog.contains(BiCatalogForTest.class, SEQUENCE_FAILURE));
+            assertTrue(BiCatalog.contains(BiCatalogForTest.class, SEQUENCE_SUCCESS));
+            assertTrue(!BiCatalog.contains(BiCatalogForTest.class, "not contained"));
+        }
+
+        /**
+         * <pre>
+         * ❏ 概要
+         * {@link BiCatalog} インターフェースの {@link BiCatalog#contains(Class, Object)} メソッドの返却値を確認する。
+         * テストの際には {@link BiCatalogForTest} クラスを使用する。
+         * </pre>
+         *
+         * <pre>
+         * ❏ 観点
+         * ・半角スペース {@code " "} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code false} が返却されること。
+         * ・全角スペース {@code "　"} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code false} が返却されること。
+         * ・文字列の {@code "uccess"} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code false} が返却されること。
+         * ・文字列の {@code "succes"} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code false} が返却されること。
+         * ・文字列の {@code "Success"} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code false} が返却されること。
+         * ・文字列の {@code "succesS"} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code false} が返却されること。
+         * ・文字列の {@code "SUCCESS"} を {@link BiCatalog#contains(Class, Object)} へ渡した際に {@code false} が返却されること。
+         * </pre>
+         *
+         * <pre>
+         * ❏ 留意点
+         * なし
+         * </pre>
+         */
+        @Test
+        void testBoundaryValue() {
+            assertTrue(!BiCatalog.contains(BiCatalogForTest.class, " "));
+            assertTrue(!BiCatalog.contains(BiCatalogForTest.class, "　"));
+            assertTrue(!BiCatalog.contains(BiCatalogForTest.class, "uccess"));
+            assertTrue(!BiCatalog.contains(BiCatalogForTest.class, "succes"));
+            assertTrue(!BiCatalog.contains(BiCatalogForTest.class, "Success"));
+            assertTrue(!BiCatalog.contains(BiCatalogForTest.class, "succesS"));
+            assertTrue(!BiCatalog.contains(BiCatalogForTest.class, "SUCCESS"));
+        }
     }
 }
