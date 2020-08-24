@@ -60,7 +60,7 @@ public final class BiCatalogTest {
      * </pre>
      */
     @Test
-    public void testGetCode() {
+    void testGetCode() {
         assertEquals(0, BiCatalogForTest.TEST_1.getCode());
         assertEquals(1, BiCatalogForTest.TEST_2.getCode());
         assertEquals(2, BiCatalogForTest.TEST_3.getCode());
@@ -84,7 +84,7 @@ public final class BiCatalogTest {
      * </pre>
      */
     @Test
-    public void testGetOrderedList() {
+    void testGetOrderedList() {
         final List<BiCatalogForTest> expectedBraceList = new ArrayList<>(3);
         expectedBraceList.add(BiCatalogForTest.TEST_1);
         expectedBraceList.add(BiCatalogForTest.TEST_2);
@@ -123,7 +123,7 @@ public final class BiCatalogTest {
      * </pre>
      */
     @Test
-    public void testGetEnum() {
+    void testGetEnum() {
 
         final BiCatalogForTest test1 = BiCatalog.getEnum(BiCatalogForTest.class, BiCatalogForTest.TEST_1.getCode());
         final BiCatalogForTest test2 = BiCatalog.getEnum(BiCatalogForTest.class, BiCatalogForTest.TEST_2.getCode());
@@ -140,5 +140,10 @@ public final class BiCatalogTest {
         assertEquals(SEQUENCE_FAILURE, test1.getTag());
         assertEquals(SEQUENCE_SUCCESS, test2.getTag());
         assertEquals(SEQUENCE_FAILURE, test3.getTag());
+    }
+
+    @Test
+    void testContains() {
+
     }
 }
