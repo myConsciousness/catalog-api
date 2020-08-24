@@ -20,7 +20,7 @@ plugins {
 
 publishing {
    publications {
-        group 'org.thinkit.common'
+        group 'org.thinkit.api.catalog'
         version = gitVersion()
 
         gpr(MavenPublication) {
@@ -31,7 +31,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/myConsciousness/dev-utils")
+            url = uri("https://maven.pkg.github.com/myConsciousness/catalog-api")
             credentials {
                 username = System.getenv("GITHUB_USER")
                 password = System.getenv("GITHUB_PUBLISH_TOKEN")
@@ -58,24 +58,6 @@ dependencies {
     implementation 'com.google.guava:guava:28.2-jre'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-
-    compile group: 'com.google.flogger', name: 'flogger', version: '0.4'
-    runtime group: 'com.google.flogger', name: 'flogger-system-backend', version: '0.4'
-
-    compile 'commons-io:commons-io:2.4'
-    compile 'org.apache.commons:commons-lang3:3.4'
-
-    compile group: 'org.apache.poi', name : 'poi', version: '4.1.2'
-	compile(group: 'org.apache.poi', name : 'poi-ooxml', version: '4.1.2') {
-		exclude group: 'stax', module: 'stax-api'
-	}
-
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.0'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.0'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.11.0'
-
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
 
 test {
