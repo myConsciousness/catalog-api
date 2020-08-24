@@ -12,9 +12,11 @@
  * the License.
  */
 
-package org.thinkit.common.catalog;
+package org.thinkit.api.catalog;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +33,20 @@ import org.junit.jupiter.api.Test;
 public final class CatalogTest {
 
     /**
+     * 文字列 : {@code "success"}
+     */
+    private static final String SEQUENCE_SUCCESS = "success";
+
+    /**
+     * 文字列 : {@code "failure"}
+     */
+    private static final String SEQUENCE_FAILURE = "failure";
+
+    /**
      * <pre>
      * ❏ 概要
      * {@link Catalog} インターフェースの抽象メソッド {@link Catalog#getCode()} を確認する。
-     * テストの際には {@link Brace} クラスを使用する。
+     * テストの際には {@link CatalogForTest} クラスを使用する。
      * </pre>
      *
      * <pre>
@@ -49,15 +61,16 @@ public final class CatalogTest {
      */
     @Test
     public void testGetCode() {
-        assertEquals(0, Brace.START.getCode());
-        assertEquals(1, Brace.END.getCode());
+        assertEquals(0, CatalogForTest.TEST_1.getCode());
+        assertEquals(1, CatalogForTest.TEST_2.getCode());
+        assertEquals(2, CatalogForTest.TEST_3.getCode());
     }
 
     /**
      * <pre>
      * ❏ 概要
      * {@link Catalog} インターフェースの {@link Catalog#getOrderedList(Class)} メソッドの返却値を確認する。
-     * テストの際には {@link Brace} クラスを使用する。
+     * テストの際には {@link BraCatalogForTestce} クラスを使用する。
      * </pre>
      *
      * <pre>
@@ -67,33 +80,41 @@ public final class CatalogTest {
      *
      * <pre>
      * ❏ 留意点
-     * 以下のリストを期待値とする。
-     *
-     * {@code final List<Brace> expectedBraceList = new ArrayList<>(2);
-     *        expectedBraceList.add(Brace.START);
-     *        expectedBraceList.add(Brace.END);}
+     * なし
      * </pre>
      */
     @Test
     public void testGetOrderedList() {
-        final List<Brace> expectedBraceList = new ArrayList<>(2);
-        expectedBraceList.add(Brace.START);
-        expectedBraceList.add(Brace.END);
+        final List<CatalogForTest> expectedBraceList = new ArrayList<>(3);
+        expectedBraceList.add(CatalogForTest.TEST_1);
+        expectedBraceList.add(CatalogForTest.TEST_2);
+        expectedBraceList.add(CatalogForTest.TEST_3);
 
-        assertEquals(expectedBraceList, Catalog.getOrderedList(Brace.class));
+        final List<CatalogForTest> catalogs = Catalog.getOrderedList(CatalogForTest.class);
+
+        assertNotNull(catalogs);
+        assertTrue(catalogs.size() == expectedBraceList.size());
+        assertEquals(expectedBraceList, catalogs);
     }
 
     /**
      * <pre>
      * ❏ 概要
      * {@link Catalog} インターフェースの {@link Catalog#getEnum(Class, int)} メソッドの返却値を確認する。
-     * テストの際には {@link Brace} クラスを使用する。
+     * テストの際には {@link CatalogForTest} クラスを使用する。
      * </pre>
      *
      * <pre>
      * ❏ 観点
-     * ・{@link Brace#START} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#START} が返却されること。
-     * ・{@link Brace#END} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#END} が返却されること。
+     * ・{@link CatalogForTest#TEST_1} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@code null} が返却されないこと。
+     * ・{@link CatalogForTest#TEST_2} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@code null} が返却されないこと。
+     * ・{@link CatalogForTest#TEST_3} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@code null} が返却されないこと。
+     * ・{@link CatalogForTest#TEST_1} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#TEST_1} が返却されること。
+     * ・{@link CatalogForTest#TEST_2} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#TEST_2} が返却されること。
+     * ・{@link CatalogForTest#TEST_3} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#TEST_3} が返却されること。
+     * ・{@link CatalogForTest#TEST_1} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に取得した要素の文字列が {@code "failure"} であること。
+     * ・{@link CatalogForTest#TEST_2} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に取得した要素の文字列が {@code "success""} であること。
+     * ・{@link CatalogForTest#TEST_3} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に取得した要素の文字列が {@code "failure"} であること。
      * </pre>
      *
      * <pre>
@@ -103,7 +124,21 @@ public final class CatalogTest {
      */
     @Test
     public void testGetEnum() {
-        assertEquals(Brace.START, Catalog.getEnum(Brace.class, Brace.START.getCode()));
-        assertEquals(Brace.END, Catalog.getEnum(Brace.class, Brace.END.getCode()));
+
+        final CatalogForTest test1 = Catalog.getEnum(CatalogForTest.class, CatalogForTest.TEST_1.getCode());
+        final CatalogForTest test2 = Catalog.getEnum(CatalogForTest.class, CatalogForTest.TEST_2.getCode());
+        final CatalogForTest test3 = Catalog.getEnum(CatalogForTest.class, CatalogForTest.TEST_3.getCode());
+
+        assertNotNull(test1);
+        assertNotNull(test2);
+        assertNotNull(test3);
+
+        assertEquals(CatalogForTest.TEST_1, test1);
+        assertEquals(CatalogForTest.TEST_2, test2);
+        assertEquals(CatalogForTest.TEST_3, test3);
+
+        assertEquals(SEQUENCE_FAILURE, test1.getSequence());
+        assertEquals(SEQUENCE_SUCCESS, test2.getSequence());
+        assertEquals(SEQUENCE_FAILURE, test3.getSequence());
     }
 }
