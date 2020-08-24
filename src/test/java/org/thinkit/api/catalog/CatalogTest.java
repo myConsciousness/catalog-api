@@ -70,7 +70,7 @@ public final class CatalogTest {
      * <pre>
      * ❏ 概要
      * {@link Catalog} インターフェースの {@link Catalog#getOrderedList(Class)} メソッドの返却値を確認する。
-     * テストの際には {@link BraCatalogForTestce} クラスを使用する。
+     * テストの際には {@link CatalogForTest} クラスを使用する。
      * </pre>
      *
      * <pre>
@@ -109,9 +109,9 @@ public final class CatalogTest {
      * ・{@link CatalogForTest#TEST_1} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@code null} が返却されないこと。
      * ・{@link CatalogForTest#TEST_2} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@code null} が返却されないこと。
      * ・{@link CatalogForTest#TEST_3} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@code null} が返却されないこと。
-     * ・{@link CatalogForTest#TEST_1} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#TEST_1} が返却されること。
-     * ・{@link CatalogForTest#TEST_2} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#TEST_2} が返却されること。
-     * ・{@link CatalogForTest#TEST_3} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link Brace#TEST_3} が返却されること。
+     * ・{@link CatalogForTest#TEST_1} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link CatalogForTest#TEST_1} が返却されること。
+     * ・{@link CatalogForTest#TEST_2} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link CatalogForTest#TEST_2} が返却されること。
+     * ・{@link CatalogForTest#TEST_3} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に {@link CatalogForTest#TEST_3} が返却されること。
      * ・{@link CatalogForTest#TEST_1} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に取得した要素の文字列が {@code "failure"} であること。
      * ・{@link CatalogForTest#TEST_2} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に取得した要素の文字列が {@code "success""} であること。
      * ・{@link CatalogForTest#TEST_3} のコード値を {@link Catalog#getEnum(Class, int)} へ渡した際に取得した要素の文字列が {@code "failure"} であること。
