@@ -35,7 +35,7 @@ public interface Catalog<E extends Catalog<E>> {
      *
      * @return Code value
      */
-    public abstract int getCode();
+    public int getCode();
 
     /**
      * Convert to an Enum class object.
