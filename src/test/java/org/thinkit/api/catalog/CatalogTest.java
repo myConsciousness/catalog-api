@@ -60,7 +60,7 @@ public final class CatalogTest {
      * </pre>
      */
     @Test
-    public void testGetCode() {
+    void testGetCode() {
         assertEquals(0, CatalogForTest.TEST_1.getCode());
         assertEquals(1, CatalogForTest.TEST_2.getCode());
         assertEquals(2, CatalogForTest.TEST_3.getCode());
@@ -84,7 +84,7 @@ public final class CatalogTest {
      * </pre>
      */
     @Test
-    public void testGetOrderedList() {
+    void testGetOrderedList() {
         final List<CatalogForTest> expectedBraceList = new ArrayList<>(3);
         expectedBraceList.add(CatalogForTest.TEST_1);
         expectedBraceList.add(CatalogForTest.TEST_2);
@@ -123,7 +123,7 @@ public final class CatalogTest {
      * </pre>
      */
     @Test
-    public void testGetEnum() {
+    void testGetEnum() {
 
         final CatalogForTest test1 = Catalog.getEnum(CatalogForTest.class, CatalogForTest.TEST_1.getCode());
         final CatalogForTest test2 = Catalog.getEnum(CatalogForTest.class, CatalogForTest.TEST_2.getCode());
