@@ -27,6 +27,7 @@ import java.util.stream.Stream;
  * @author Kato Shinya
  * @since 1.0
  * @version 1.0
+ *
  * @param <E> Wildcard type
  */
 public interface Catalog<E extends Catalog<E>> {
