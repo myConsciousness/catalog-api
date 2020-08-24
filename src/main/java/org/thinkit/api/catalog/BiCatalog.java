@@ -14,6 +14,7 @@
 
 package org.thinkit.api.catalog;
 
+import java.util.Objects;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -63,10 +64,22 @@ public interface BiCatalog<E extends BiCatalog<E, T>, T> {
      *
      * @param code Code value
      * @return If the number passed as an argument is equal to the code value of the
-     *         Enum element, {@code true}, otherwise {@code false}.
+     *         Enum element, {@code true}, otherwise {@code false}
      */
     default boolean equalsByCode(int code) {
         return getCode() == code;
+    }
+
+    /**
+     * Check whether the tag of the Enum element is equal to the tag passed as an
+     * argument.
+     *
+     * @param tag Tag
+     * @return If the number passed as an argument is equal to the code value of the
+     *         Enum element, {@code true} , otherwise {@code false}
+     */
+    default boolean eqaulsByTag(T tag) {
+        return Objects.equals(getTag(), tag);
     }
 
     /**
@@ -131,6 +144,21 @@ public interface BiCatalog<E extends BiCatalog<E, T>, T> {
      */
     public static <E extends BiCatalog<E, T>, T> boolean hasCode(Class<? extends BiCatalog<E, T>> clazz, int code) {
         return stream(clazz).anyMatch(e -> e.equalsByCode(code));
+    }
+
+    /**
+     * This function determines whether the tag specified as an argument is defined
+     * in each element of the Enum class that implements the interface concerned.
+     *
+     * @param <E>   Catalog element
+     * @param <T>   Catalog tag type
+     * @param clazz Enum class object to be operated on
+     * @param tag   Tag
+     * @return {@code true} if there is an Enum element with a code value equal to
+     *         the number specified as an argument, otherwise {@code false}
+     */
+    public static <E extends BiCatalog<E, T>, T> boolean contains(Class<? extends BiCatalog<E, T>> clazz, T tag) {
+        return stream(clazz).anyMatch(e -> e.eqaulsByTag(tag));
     }
 
     /**
