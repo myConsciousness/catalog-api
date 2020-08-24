@@ -26,17 +26,17 @@ public enum CatalogForTest implements Catalog<CatalogForTest> {
     /**
      * テスト1
      */
-    TEST_1(0),
+    TEST_1(0, "failure"),
 
     /**
      * テスト2
      */
-    TEST_2(1),
+    TEST_2(1, "success"),
 
     /**
      * テスト3
      */
-    TEST_3(2);
+    TEST_3(2, "failure");
 
     /**
      * コード値
@@ -44,16 +44,32 @@ public enum CatalogForTest implements Catalog<CatalogForTest> {
     private int code;
 
     /**
+     * 文字列
+     */
+    private String sequence;
+
+    /**
      * コンストラクタ
      *
-     * @param code コード値
+     * @param code     コード値
+     * @param sequence 文字列
      */
-    CatalogForTest(int code) {
+    CatalogForTest(int code, String sequence) {
         this.code = code;
+        this.sequence = sequence;
     }
 
     @Override
     public int getCode() {
         return this.code;
+    }
+
+    /**
+     * テスト要素に定義された文字列を返却します。
+     *
+     * @return テスト要素に定義された文字列
+     */
+    public String getSequence() {
+        return this.sequence;
     }
 }
