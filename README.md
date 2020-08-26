@@ -59,7 +59,7 @@ dependencies {
 }
 ```
 
-### Select interface you want to use
+### 2. Select interface you want to use
 
 The `Catalog API` currently provides the following interfaces.<br>
 Choose the interface you want to use depending on your needs.
