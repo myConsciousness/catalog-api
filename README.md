@@ -64,10 +64,10 @@ dependencies {
 The `Catalog API` currently provides the following interfaces.<br>
 Choose the interface you want to use depending on your needs.
 
-| Interface                                     | Overview |
-| --------------------------------------------- | -------- |
-| **_Catalog<E extends Catalog<E>>_**           |          |
-| **_BiCatalog<E extends BiCatalog<E, T>, T>_** |          |
+| Interface                                     | Overview                                                                                                                                                                                                                                                                                 |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **_Catalog<E extends Catalog<E>>_**           | This is the basic catalog interface.<br>Elements of the concrete catalog class that implement this interface have a `code value`.<br>You can use the common behavior defined in the Catalog interface.                                                                                   |
+| **_BiCatalog<E extends BiCatalog<E, T>, T>_** | Each element of a concrete catalog class that implements this interface can have a `code value` plus a `value of any data type`.<br>The arbitrary data type is defined at the time of implementation of the concrete catalog class.<br>You can use the common behavior of the interface. |
 
 ## License
 
