@@ -8,10 +8,11 @@ Catalog API main repository.
 
 ## Benefits
 
+- It assumes the use of `Enum`
 - Necessary processes for constant operation are integrated in the interface
 - Useful common behaviors can be used anywhere
 - No need to use `public static final` constant classes anymore
-- **_Easy to manage constants_**
+- **_Easy to manage and use constants!_**
 
 ## How To Use
 
@@ -57,6 +58,11 @@ dependencies {
     implementation 'org.thinkit.api.catalog:catalog-api:v1.0.1'
 }
 ```
+
+### Select interface you want to use
+
+The `Catalog API` currently provides the following interfaces.<br>
+Choose the interface you want to use depending on your needs.
 
 ## License
 
