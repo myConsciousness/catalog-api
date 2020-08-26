@@ -64,6 +64,11 @@ dependencies {
 The `Catalog API` currently provides the following interfaces.<br>
 Choose the interface you want to use depending on your needs.
 
+| Interface                                     | Overview |
+| --------------------------------------------- | -------- |
+| **_Catalog<E extends Catalog<E>>_**           |          |
+| **_BiCatalog<E extends BiCatalog<E, T>, T>_** |          |
+
 ## License
 
 ```
