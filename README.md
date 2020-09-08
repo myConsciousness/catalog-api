@@ -13,13 +13,13 @@ It manages regularized constants as a single `catalog` and provides a convenient
 - Necessary processes for constant operation are integrated in the interface
 - Useful common behaviors can be used anywhere
 - No need to use `public static final` constant classes anymore
-- **_Easy to manage and use constants!_**
+- **_Easy to maintain and use constants!_**
 
 ## How To Use
 
 ### 1. Add the dependencies
 
-> Note:<br>
+> **_Note:_**br>
 > Replace version you want to use. Check the latest [Packages](https://github.com/myConsciousness/catalog-api/packages).<br>
 > Please contact me for a token to download the package.
 
