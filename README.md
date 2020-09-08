@@ -106,7 +106,47 @@ public enum TestCatalog implements Catalog<TestCatalog> {
   
 **_BiCatalog<E extends BiCatalog<E, T>, T>_**
 
+```java
+import org.thinkit.api.catalog.BiCatalog;
 
+/**
+ * Because the catalog applies the mechanism of recursive generics,
+ * specify own type to the generics when implement the BiCatalog interface. 
+ */
+public enum TestBiCatalog implements BiCatalog<TestBiCatalog, String> {
+
+    /**
+     * BiCatalog constants need unique code value and any tag value as parameters
+     */
+    TEST(0, "test");
+    
+    /**
+     * Required code value
+     */
+    private int code;
+    
+    /**
+     * Required tag value.
+     * The data type of the tag is the data type specified to generics when implement BiCatalog interface.
+     */
+    private String tag;
+    
+    TestCatalog(int code, String tag) {
+        this.code ＝ code;
+        this.tag ＝ tag;
+    }
+    
+    @Override
+    public int getCode() {
+        return this.code;
+    }
+    
+    @Override
+    public String getTag() {
+        return this.tag;
+    }
+}
+```
 
 ## License
 
