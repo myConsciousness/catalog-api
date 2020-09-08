@@ -2,9 +2,10 @@
 
 ## What is it?
 
-**_Make easier to manage and use constants_**
+**_Make easier to maintain and use constants_**
 
-Catalog API main repository.
+This is a Java-based API designed to make the constants group more maintainable and extensible.<br>
+It manages regularized constants as a single `catalog` and provides a convenient utility interface to manipulate the `catalog`.
 
 ## Benefits
 
