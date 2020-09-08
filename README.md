@@ -19,7 +19,7 @@ It manages regularized constants as a single `catalog` and provides a convenient
 
 ### 1. Add the dependencies
 
-> **_Note:_**br>
+> **_Note:_**<br>
 > Replace version you want to use. Check the latest [Packages](https://github.com/myConsciousness/catalog-api/packages).<br>
 > Please contact me for a token to download the package.
 
