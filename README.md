@@ -70,6 +70,44 @@ Choose the interface you want to use depending on your needs.
 | **_Catalog<E extends Catalog<E>>_**           | This is the basic catalog interface.<br>Elements of the concrete catalog class that implement this interface have a `code value`.<br>You can use the common behavior defined in the Catalog interface.                                                                                   |
 | **_BiCatalog<E extends BiCatalog<E, T>, T>_** | Each element of a concrete catalog class that implements this interface can have a `code value` plus a `value of any data type`.<br>The arbitrary data type is defined at the time of implementation of the concrete catalog class.<br>You can use the common behavior of the interface. |
 
+### 3. Import and implement interface
+
+**_Catalog<E extends Catalog<E>>_**
+
+```java
+import org.thinkit.api.catalog.Catalog;
+
+/**
+ * Because the catalog applies the mechanism of recursive generics,
+ * specify own type to the generics when implement the Catalog interface. 
+ */
+public enum TestCatalog implements Catalog<TestCatalog> {
+
+    /**
+     * Catalog constants need unique code value as an parameter
+     */
+    TEST(0);
+    
+    /**
+     * Required code value
+     */
+    private int code;
+    
+    TestCatalog(int code) {
+        this.code ＝ code;
+    }
+    
+    @Override
+    public int getCode() {
+        return this.code;
+    }
+}
+```
+  
+**_BiCatalog<E extends BiCatalog<E, T>, T>_**
+
+
+
 ## License
 
 ```
