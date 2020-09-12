@@ -70,7 +70,7 @@ Choose the interface you want to use depending on your needs.
 | **_Catalog<E extends Catalog<E>>_**           | This is the basic catalog interface.<br>Elements of the concrete catalog class that implement this interface have a `code value`.<br>You can use the common behavior defined in the Catalog interface.                                                                                   |
 | **_BiCatalog<E extends BiCatalog<E, T>, T>_** | Each element of a concrete catalog class that implements this interface can have a `code value` plus a `value of any data type`.<br>The arbitrary data type is defined at the time of implementation of the concrete catalog class.<br>You can use the common behavior of the interface. |
 
-### 3. Import and implement interface
+### 3. Import and implement Enum with Catalog / BiCatalog interface
 
 **_Catalog<E extends Catalog<E>>_**
 
@@ -79,7 +79,7 @@ import org.thinkit.api.catalog.Catalog;
 
 /**
  * Because the catalog applies the mechanism of recursive generics,
- * specify own type to the generics when implement the Catalog interface. 
+ * specify own type to the generics when implement the Catalog interface.
  */
 public enum TestCatalog implements Catalog<TestCatalog> {
 
@@ -87,23 +87,26 @@ public enum TestCatalog implements Catalog<TestCatalog> {
      * Catalog constants need unique code value as an parameter
      */
     TEST(0);
-    
+
     /**
      * Required code value
      */
     private int code;
-    
+
+    /**
+     * Simple constructor
+     */
     TestCatalog(int code) {
         this.code ＝ code;
     }
-    
+
     @Override
     public int getCode() {
         return this.code;
     }
 }
 ```
-  
+
 **_BiCatalog<E extends BiCatalog<E, T>, T>_**
 
 ```java
@@ -111,7 +114,7 @@ import org.thinkit.api.catalog.BiCatalog;
 
 /**
  * Because the catalog applies the mechanism of recursive generics,
- * specify own type to the generics when implement the BiCatalog interface. 
+ * specify own type to the generics when implement the BiCatalog interface.
  */
 public enum TestBiCatalog implements BiCatalog<TestBiCatalog, String> {
 
@@ -119,28 +122,31 @@ public enum TestBiCatalog implements BiCatalog<TestBiCatalog, String> {
      * BiCatalog constants need unique code value and any tag value as parameters
      */
     TEST(0, "test");
-    
+
     /**
      * Required code value
      */
     private int code;
-    
+
     /**
      * Required tag value.
      * The data type of the tag is the data type specified to generics when implement BiCatalog interface.
      */
     private String tag;
-    
+
+    /**
+     * Simple constructor
+     */
     TestCatalog(int code, String tag) {
         this.code ＝ code;
         this.tag ＝ tag;
     }
-    
+
     @Override
     public int getCode() {
         return this.code;
     }
-    
+
     @Override
     public String getTag() {
         return this.tag;
@@ -171,7 +177,7 @@ the License.
 Regardless of the means or content of communication, I would love to hear from you if you have any questions or concerns. I do not check my email box very often so a response may be delayed, anyway thank you for your interest!
 
 - [Creator Profile](https://github.com/myConsciousness)
-- [License](https://github.com/myConsciousness/json-formatter/blob/master/LICENSE)
+- [License](https://github.com/myConsciousness/catalog-api/blob/master/LICENSE)
 - [Release Note](https://github.com/myConsciousness/catalog-api/releases)
 - [Package](https://github.com/myConsciousness/catalog-api/packages)
 - [File a Bug](https://github.com/myConsciousness/catalog-api/issues)
