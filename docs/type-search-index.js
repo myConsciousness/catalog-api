@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"org.thinkit.api.catalog","l":"BiCatalog"},{"p":"org.thinkit.api.catalog","l":"Catalog"}];updateSearchResults();
