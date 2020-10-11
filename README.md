@@ -182,3 +182,4 @@ Regardless of the means or content of communication, I would love to hear from y
 - [Release Note](https://github.com/myConsciousness/catalog-api/releases)
 - [Package](https://github.com/myConsciousness/catalog-api/packages)
 - [File a Bug](https://github.com/myConsciousness/catalog-api/issues)
+- [Reference](https://myconsciousness.github.io/catalog-api/org/thinkit/api/catalog/package-summary.html)
