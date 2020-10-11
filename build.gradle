@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright 2020 Kato Shinya.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -30,34 +30,25 @@ publishing {
 
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/myConsciousness/catalog-api")
+            name = 'GitHubPackages'
+            url = uri('https://maven.pkg.github.com/myConsciousness/catalog-api')
             credentials {
-                username = System.getenv("GITHUB_USER")
-                password = System.getenv("GITHUB_PUBLISH_TOKEN")
+                username = System.getenv('GITHUB_USER')
+                password = System.getenv('GITHUB_PUBLISH_TOKEN')
             }
         }
     }
 }
 
 repositories {
-    // Use jcenter for resolving dependencies.
-    // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-}
-
-tasks.withType(Javadoc) {
-    options.encoding = "UTF-8"
-}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 dependencies {
     implementation 'com.google.guava:guava:28.2-jre'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
 }
 
 test {
@@ -68,4 +59,13 @@ test {
         events 'started', 'skipped', 'passed', 'failed'
         exceptionFormat 'full'
     }
+}
+
+task('reference', type: Javadoc) {
+    source = sourceSets.main.allJava
+    title = 'Catalog API'
+    options.links('https://docs.oracle.com/en/java/javase/13/docs/api/')
+    options.charSet('utf-8')
+    options.showFromPublic()
+    destinationDir = file('./docs')
 }
