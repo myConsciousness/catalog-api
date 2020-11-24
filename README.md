@@ -1,4 +1,12 @@
+![Build](https://img.shields.io/badge/Build-Automated-2980b9.svg?style=for-the-badge)
+![Latest Version](https://img.shields.io/badge/Latest_Version-v1.0.2-27ae60.svg?style=for-the-badge)
+![License](https://img.shields.io/badge/License-Apache_2.0-e74c3c.svg?style=for-the-badge)</br>
+![Java CI with Gradle](https://github.com/myConsciousness/catalog-api/workflows/Java%20CI%20with%20Gradle/badge.svg)
+
 # Catalog API
+
+<!-- START doctoc -->
+<!-- END doctoc -->
 
 ## What is it?
 
@@ -29,7 +37,7 @@ It manages regularized constants as a single `catalog` and provides a convenient
 <dependency>
   <groupId>org.thinkit.api.catalog</groupId>
   <artifactId>catalog-api</artifactId>
-  <version>v1.0.1</version>
+  <version>v1.0.2</version>
 </dependency>
 
 <servers>
@@ -56,7 +64,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.thinkit.api.catalog:catalog-api:v1.0.1'
+    implementation 'org.thinkit.api.catalog:catalog-api:v1.0.2'
 }
 ```
 
