@@ -5,8 +5,20 @@
 
 # Catalog API
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [What is it?](#what-is-it)
+- [Benefits](#benefits)
+- [How To Use](#how-to-use)
+  - [1. Add the dependencies](#1-add-the-dependencies)
+  - [2. Select interface you want to use](#2-select-interface-you-want-to-use)
+  - [3. Import and implement Enum with Catalog / BiCatalog interface](#3-import-and-implement-enum-with-catalog--bicatalog-interface)
+- [License](#license)
+- [More Information](#more-information)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## What is it?
 
