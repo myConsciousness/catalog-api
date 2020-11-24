@@ -14,11 +14,11 @@
 
 package org.thinkit.api.catalog;
 
-import java.util.Objects;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -78,7 +78,7 @@ public interface BiCatalog<E extends BiCatalog<E, T>, T> {
      * @return If the number passed as an argument is equal to the code value of the
      *         Enum element, {@code true} , otherwise {@code false}
      */
-    default boolean eqaulsByTag(T tag) {
+    default boolean equalsByTag(T tag) {
         return Objects.equals(getTag(), tag);
     }
 
@@ -113,6 +113,22 @@ public interface BiCatalog<E extends BiCatalog<E, T>, T> {
      */
     public static <E extends BiCatalog<E, T>, T> E getEnum(Class<? extends BiCatalog<E, T>> clazz, int code) {
         return stream(clazz).filter(e -> e.equalsByCode(code)).map(BiCatalog::toEnum).findFirst().orElse(null);
+    }
+
+    /**
+     * The tag values defined for each element of the Enum class that implements the
+     * interface are compared with the specified value passed as arguments, and the
+     * Enum element that matches the values is returned.
+     *
+     * @param <E>   Catalog element
+     * @param <T>   Catalog tag type
+     * @param clazz Enum class object to be operated on
+     * @param tag   Tag value
+     * @return Enum element with a tag value equal to the specified value as an
+     *         argument
+     */
+    public static <E extends BiCatalog<E, T>, T> E getEnumByTag(Class<? extends BiCatalog<E, T>> clazz, T tag) {
+        return stream(clazz).filter(e -> e.equalsByTag(tag)).map(BiCatalog::toEnum).findFirst().orElse(null);
     }
 
     /**
@@ -158,7 +174,7 @@ public interface BiCatalog<E extends BiCatalog<E, T>, T> {
      *         the number specified as an argument, otherwise {@code false}
      */
     public static <E extends BiCatalog<E, T>, T> boolean contains(Class<? extends BiCatalog<E, T>> clazz, T tag) {
-        return stream(clazz).anyMatch(e -> e.eqaulsByTag(tag));
+        return stream(clazz).anyMatch(e -> e.equalsByTag(tag));
     }
 
     /**
