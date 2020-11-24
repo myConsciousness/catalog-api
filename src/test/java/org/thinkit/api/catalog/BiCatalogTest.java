@@ -144,6 +144,44 @@ public final class BiCatalogTest {
     }
 
     /**
+     * <pre>
+     * ❏ 概要
+     * {@link BiCatalog} インターフェースの {@link BiCatalog#getEnumByTag(Class, Object)} メソッドの返却値を確認する。
+     * テストの際には {@link BiCatalogForTest} クラスを使用する。
+     * </pre>
+     *
+     * <pre>
+     * ❏ 観点
+     * ・{@link BiCatalogForTest#TEST_1} のコード値を {@link BiCatalog#getEnumByTag(Class, Object)} へ渡した際に {@code null} が返却されないこと。
+     * ・{@link BiCatalogForTest#TEST_2} のコード値を {@link BiCatalog#getEnumByTag(Class, Object)} へ渡した際に {@code null} が返却されないこと。
+     * ・{@link BiCatalogForTest#TEST_1} のコード値を {@link BiCatalog#getEnumByTag(Class, Object)} へ渡した際に {@link BiCatalogForTest#TEST_1} が返却されること。
+     * ・{@link BiCatalogForTest#TEST_2} のコード値を {@link BiCatalog#getEnumByTag(Class, Object)} へ渡した際に {@link BiCatalogForTest#TEST_2} が返却されること。
+     * ・{@link BiCatalogForTest#TEST_1} のコード値を {@link BiCatalog#getEnumByTag(Class, Object)} へ渡した際に取得した要素の文字列が {@code "failure"} であること。
+     * ・{@link BiCatalogForTest#TEST_2} のコード値を {@link BiCatalog#getEnumByTag(Class, Object)} へ渡した際に取得した要素の文字列が {@code "success""} であること。
+     * </pre>
+     *
+     * <pre>
+     * ❏ 留意点
+     * なし
+     * </pre>
+     */
+    @Test
+    void testGetEnumByTag() {
+
+        final BiCatalogForTest test1 = BiCatalog.getEnumByTag(BiCatalogForTest.class, BiCatalogForTest.TEST_1.getTag());
+        final BiCatalogForTest test2 = BiCatalog.getEnumByTag(BiCatalogForTest.class, BiCatalogForTest.TEST_2.getTag());
+
+        assertNotNull(test1);
+        assertNotNull(test2);
+
+        assertEquals(BiCatalogForTest.TEST_1, test1);
+        assertEquals(BiCatalogForTest.TEST_2, test2);
+
+        assertEquals(SEQUENCE_FAILURE, test1.getTag());
+        assertEquals(SEQUENCE_SUCCESS, test2.getTag());
+    }
+
+    /**
      * {@link BiCatalog#contains(Class, Object)} メソッドのインナーテストクラスです。
      *
      * @author Kato Shinya
