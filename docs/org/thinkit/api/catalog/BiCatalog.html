@@ -15,7 +15,7 @@
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var data = {"i0":1,"i1":18,"i2":18,"i3":6,"i4":1,"i5":1,"i6":1,"i7":6,"i8":1,"i9":1,"i10":18};
+<script type="text/javascript">var data = {"i0":1,"i1":18,"i2":18,"i3":6,"i4":1,"i5":1,"i6":1,"i7":1,"i8":6,"i9":1,"i10":1,"i11":18};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "alt-color";
 var rowColor = "row-color";
@@ -119,18 +119,18 @@ T&nbsp;tag)</code></th>
 </tr>
 <tr class="row-color" id="i1">
 <td class="col-first"><code>default boolean</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#eqaulsByTag(T)">eqaulsByTag</a></span>&#8203;(<a href="BiCatalog.html" title="type parameter in BiCatalog">T</a>&nbsp;tag)</code></th>
-<td class="col-last">
-<div class="block">Check whether the tag of the Enum element is equal to the tag passed as an
- argument.</div>
-</td>
-</tr>
-<tr class="alt-color" id="i2">
-<td class="col-first"><code>default boolean</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#equalsByCode(int)">equalsByCode</a></span>&#8203;(int&nbsp;code)</code></th>
 <td class="col-last">
 <div class="block">Check whether the code value of the Enum element is equal to the value passed
  as an argument.</div>
+</td>
+</tr>
+<tr class="alt-color" id="i2">
+<td class="col-first"><code>default boolean</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#equalsByTag(T)">equalsByTag</a></span>&#8203;(<a href="BiCatalog.html" title="type parameter in BiCatalog">T</a>&nbsp;tag)</code></th>
+<td class="col-last">
+<div class="block">Check whether the tag of the Enum element is equal to the tag passed as an
+ argument.</div>
 </td>
 </tr>
 <tr class="row-color" id="i3">
@@ -155,6 +155,18 @@ int&nbsp;code)</code></th>
 <tr class="row-color" id="i5">
 <td class="col-first"><code>static &lt;E extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;
 T&gt;,&#8203;
+T&gt;<br>E</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getEnumByTag(java.lang.Class,T)">getEnumByTag</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;T&gt;&gt;&nbsp;clazz,
+T&nbsp;tag)</code></th>
+<td class="col-last">
+<div class="block">The tag values defined for each element of the Enum class that implements the
+ interface are compared with the specified value passed as arguments, and the
+ Enum element that matches the values is returned.</div>
+</td>
+</tr>
+<tr class="alt-color" id="i6">
+<td class="col-first"><code>static &lt;E extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;
+T&gt;,&#8203;
 T&gt;<br><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,&#8203;E&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getMap(java.lang.Class)">getMap</a></span>&#8203;(<a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;T&gt;&gt;&nbsp;clazz)</code></th>
 <td class="col-last">
@@ -162,7 +174,7 @@ T&gt;<br><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/j
  interface is compared with the number specified as an argument.</div>
 </td>
 </tr>
-<tr class="alt-color" id="i6">
+<tr class="row-color" id="i7">
 <td class="col-first"><code>static &lt;E extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;
 T&gt;,&#8203;
 T&gt;<br><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;E&gt;</code></td>
@@ -172,14 +184,14 @@ T&gt;<br><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/j
  on the code value defined for each element.</div>
 </td>
 </tr>
-<tr class="row-color" id="i7">
+<tr class="alt-color" id="i8">
 <td class="col-first"><code><a href="BiCatalog.html" title="type parameter in BiCatalog">T</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getTag()">getTag</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Return a tag.</div>
 </td>
 </tr>
-<tr class="alt-color" id="i8">
+<tr class="row-color" id="i9">
 <td class="col-first"><code>static &lt;E extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;
 T&gt;,&#8203;
 T&gt;<br>boolean</code></td>
@@ -191,7 +203,7 @@ int&nbsp;code)</code></th>
  concerned.</div>
 </td>
 </tr>
-<tr class="row-color" id="i9">
+<tr class="alt-color" id="i10">
 <td class="col-first"><code>static &lt;E extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;
 T&gt;,&#8203;
 T&gt;<br><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link">Stream</a>&lt;? extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;T&gt;&gt;</code></td>
@@ -201,7 +213,7 @@ T&gt;<br><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/j
  <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link"><code>Stream</code></a> and returns it.</div>
 </td>
 </tr>
-<tr class="alt-color" id="i10">
+<tr class="row-color" id="i11">
 <td class="col-first"><code>default <a href="BiCatalog.html" title="type parameter in BiCatalog">E</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#toEnum()">toEnum</a></span>()</code></th>
 <td class="col-last">
@@ -272,9 +284,9 @@ T&gt;<br><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/j
 </section>
 </li>
 <li>
-<section class="detail" id="eqaulsByTag(T)">
-<h3 id="eqaulsByTag(java.lang.Object)">eqaulsByTag</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">eqaulsByTag</span>&#8203;(<span class="parameters"><a href="BiCatalog.html" title="type parameter in BiCatalog">T</a>&nbsp;tag)</span></div>
+<section class="detail" id="equalsByTag(T)">
+<h3 id="equalsByTag(java.lang.Object)">equalsByTag</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">equalsByTag</span>&#8203;(<span class="parameters"><a href="BiCatalog.html" title="type parameter in BiCatalog">T</a>&nbsp;tag)</span></div>
 <div class="block">Check whether the tag of the Enum element is equal to the tag passed as an
  argument.</div>
 <dl class="notes">
@@ -327,6 +339,29 @@ int&nbsp;code)</span></div>
 <dd><code>code</code> - Code value</dd>
 <dt>Returns:</dt>
 <dd>Enum element with a code value equal to the number specified as an
+         argument</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getEnumByTag(java.lang.Class,T)">
+<h3 id="getEnumByTag(java.lang.Class,java.lang.Object)">getEnumByTag</h3>
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="type-parameters">&lt;E extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;
+T&gt;,&#8203;
+T&gt;</span>&nbsp;<span class="return-type">E</span>&nbsp;<span class="member-name">getEnumByTag</span>&#8203;(<span class="parameters"><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="BiCatalog.html" title="interface in org.thinkit.api.catalog">BiCatalog</a>&lt;E,&#8203;T&gt;&gt;&nbsp;clazz,
+T&nbsp;tag)</span></div>
+<div class="block">The tag values defined for each element of the Enum class that implements the
+ interface are compared with the specified value passed as arguments, and the
+ Enum element that matches the values is returned.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>E</code> - Catalog element</dd>
+<dd><code>T</code> - Catalog tag type</dd>
+<dt>Parameters:</dt>
+<dd><code>clazz</code> - Enum class object to be operated on</dd>
+<dd><code>tag</code> - Tag value</dd>
+<dt>Returns:</dt>
+<dd>Enum element with a tag value equal to the specified value as an
          argument</dd>
 </dl>
 </section>
