@@ -22,13 +22,45 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * An interface that defines common operations of the Catalog.
+ * The interface that extends the functionality of Enum, a built-in feature of
+ * Java, and consolidates general-purpose functions used in many situations.
+ * This interface can be implements in existing Enum classes to easily add
+ * useful functionality. When implementing this interface, please specify the
+ * type of the class that implements this interface in the generic.
+ *
+ * <p>
+ * This interface manages the code value used to identify each element of an
+ * Enum. The code value is an arbitrary numeric value that can be specified for
+ * each element of the Enum class that implements this interface; the code value
+ * for each element of the Enum does not need to be in the order of the
+ * elements, and can be specified in any way that the implementor of this
+ * interface chooses. However, since this code value is used to identify each
+ * element of the Enum, it is important that the specified value does not
+ * overlap with any other element in the Enum class. Please do not duplicate
+ * other elements.
+ *
+ * <p>
+ *
+ *
+ * <pre>
+ * <code>
+ * public enum EnumClass implements Catalog<EnumClass> {
+ *
+ *    ELEMENT_1(0),
+ *
+ *    ELEMENT_2(1);
+ *
+ *    private int code;
+ *
+ *    EnumClass(int code) {
+ *        this.code = code;
+ *    }
+ * }
+ * </code>
+ * </pre>
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
- *
- * @param <E> Catalog element
+ * @since 1.0.0
  */
 public interface Catalog<E extends Catalog<E>> {
 
