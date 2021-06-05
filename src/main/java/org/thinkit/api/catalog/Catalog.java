@@ -54,7 +54,7 @@ import java.util.stream.Stream;
  *
  * <pre>
  * <code>
- * public enum EnumClass implements Catalog<EnumClass> {
+ * public enum EnumClass implements Catalog&lt;EnumClass&gt; {
  *
  *    ELEMENT_1(0),
  *

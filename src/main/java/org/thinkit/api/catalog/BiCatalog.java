@@ -63,7 +63,7 @@ import java.util.stream.Stream;
  *
  * <pre>
  * <code>
- * public enum EnumClass implements BiCatalog<EnumClass, String> {
+ * public enum EnumClass implements BiCatalog&lt;EnumClass, String&gt; {
  *
  *    ELEMENT_1(0, "test1"),
  *
