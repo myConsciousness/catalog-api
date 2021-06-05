@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"org.thinkit.api.catalog","l":"BiCatalog"},{"p":"org.thinkit.api.catalog","l":"Catalog"}];updateSearchResults();
+typeSearchIndex = [{"l":"BiCatalog","h":"","u":""},{"l":"BiCatalogSupport","h":"","u":""},{"l":"Catalog","h":"","u":""},{"l":"CatalogSupport","h":"","u":""},{"l":"CodeSupport","h":"","u":""},{"l":"TagSupport","h":"","u":""},{"l":"すべてのクラス","h":"","u":"allclasses-index.html"}]
