@@ -18,6 +18,12 @@ plugins {
     id 'com.palantir.git-version' version '0.12.2'
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
 publishing {
    publications {
         group 'org.thinkit.api.catalog'
@@ -47,7 +53,7 @@ repositories {
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 dependencies {
-    implementation 'com.google.guava:guava:28.2-jre'
+    implementation 'com.google.guava:guava:30.1-jre'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
 }
 
