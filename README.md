@@ -1,33 +1,35 @@
 ![Build](https://img.shields.io/badge/Build-Automated-2980b9.svg?style=for-the-badge)
-![Latest Version](https://img.shields.io/badge/Latest_Version-v1.0.2-27ae60.svg?style=for-the-badge)
+![Latest Version](https://img.shields.io/badge/Latest_Version-v1.0.3-27ae60.svg?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-Apache_2.0-e74c3c.svg?style=for-the-badge)</br>
 ![Java CI with Gradle](https://github.com/myConsciousness/catalog-api/workflows/Java%20CI%20with%20Gradle/badge.svg)
 
-# Catalog API
+# 1. Catalog API
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
-- [What is it?](#what-is-it)
-- [Benefits](#benefits)
-- [How To Use](#how-to-use)
-  - [1. Add the dependencies](#1-add-the-dependencies)
-  - [2. Select interface you want to use](#2-select-interface-you-want-to-use)
-  - [3. Import and implement Enum with Catalog / BiCatalog interface](#3-import-and-implement-enum-with-catalog--bicatalog-interface)
-- [License](#license)
-- [More Information](#more-information)
+- [1. Catalog API](#1-catalog-api)
+  - [1.1. What is it?](#11-what-is-it)
+  - [1.2. Benefits](#12-benefits)
+  - [1.3. How To Use](#13-how-to-use)
+    - [1.3.1. Add the dependencies](#131-add-the-dependencies)
+    - [1.3.2. Select interface you want to use](#132-select-interface-you-want-to-use)
+    - [1.3.3. Import and implement Enum with Catalog / BiCatalog interface](#133-import-and-implement-enum-with-catalog--bicatalog-interface)
+  - [1.4. License](#14-license)
+  - [1.5. More Information](#15-more-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## What is it?
+## 1.1. What is it?
 
 **_Make easier to maintain and use constants!_**
 
 This is a Java-based API designed to make the constants group more maintainable and extensible.<br>
 It manages regularized constants as a single `catalog` and provides a convenient utility interface to manipulate the `catalog`.
 
-## Benefits
+## 1.2. Benefits
 
 - It assumes the use of `Enum`
 - Necessary processes for constant operation are integrated in the interface
@@ -35,9 +37,9 @@ It manages regularized constants as a single `catalog` and provides a convenient
 - No need to use `public static final` constant classes anymore
 - **_Easy to maintain and use constants!_**
 
-## How To Use
+## 1.3. How To Use
 
-### 1. Add the dependencies
+### 1.3.1. Add the dependencies
 
 > **_Note:_**<br>
 > Replace version you want to use. Check the latest [Packages](https://github.com/myConsciousness/catalog-api/packages).<br>
@@ -49,7 +51,7 @@ It manages regularized constants as a single `catalog` and provides a convenient
 <dependency>
   <groupId>org.thinkit.api.catalog</groupId>
   <artifactId>catalog-api</artifactId>
-  <version>v1.0.2</version>
+  <version>v1.0.3</version>
 </dependency>
 
 <servers>
@@ -76,11 +78,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.thinkit.api.catalog:catalog-api:v1.0.2'
+    implementation 'org.thinkit.api.catalog:catalog-api:v1.0.3'
 }
 ```
 
-### 2. Select interface you want to use
+### 1.3.2. Select interface you want to use
 
 The `Catalog API` currently provides the following interfaces.<br>
 Choose the interface you want to use depending on your needs.
@@ -90,7 +92,7 @@ Choose the interface you want to use depending on your needs.
 | **_Catalog<E extends Catalog<E>>_**           | This is the basic catalog interface.<br>Elements of the concrete catalog class that implement this interface have a `code value`.<br>You can use the common behavior defined in the Catalog interface.                                                                                   |
 | **_BiCatalog<E extends BiCatalog<E, T>, T>_** | Each element of a concrete catalog class that implements this interface can have a `code value` plus a `value of any data type`.<br>The arbitrary data type is defined at the time of implementation of the concrete catalog class.<br>You can use the common behavior of the interface. |
 
-### 3. Import and implement Enum with Catalog / BiCatalog interface
+### 1.3.3. Import and implement Enum with Catalog / BiCatalog interface
 
 **_Catalog<E extends Catalog<E>>_**
 
@@ -174,7 +176,7 @@ public enum TestBiCatalog implements BiCatalog<TestBiCatalog, String> {
 }
 ```
 
-## License
+## 1.4. License
 
 ```
 Copyright 2020 Kato Shinya.
@@ -190,7 +192,7 @@ or implied. See the License for the specific language governing permissions and 
 the License.
 ```
 
-## More Information
+## 1.5. More Information
 
 `Catalog API` was designed and implemented by Kato Shinya, who works as a freelance developer.
 
