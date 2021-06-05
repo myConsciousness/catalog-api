@@ -22,55 +22,87 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * An interface that defines common operations of the Catalog.
+ * The interface that extends the functionality of Enum, a built-in feature of
+ * Java, and consolidates general-purpose functions used in many situations.
+ * This interface can be implements in existing Enum classes to easily add
+ * useful functionality. When implementing this interface, please specify the
+ * type of the class that implements this interface in the generic.
+ *
+ * <p>
+ * This interface manages the code value used to identify each element of an
+ * Enum. The code value is an arbitrary numeric value that can be specified for
+ * each element of the Enum class that implements this interface; the code value
+ * for each element of the Enum does not need to be in the order of the
+ * elements, and can be specified in any way that the implementor of this
+ * interface chooses. However, since this code value is used to identify each
+ * element of the Enum, it is important that the specified value does not
+ * overlap with any other element in the Enum class.
+ *
+ * <p>
+ * This interface provides generic functions based on the code values specified
+ * in the Enum class that implements this interface. For example, there is a
+ * {@link #hasCode(Class, int)} to determine whether the code value given as an
+ * argument is defined in the target Enum class, and there is a
+ * {@link #getEnum(Class, int)} that returns the Enum element associated with
+ * the number given as an argument from the target Enum class. Other generic
+ * methods are also provided, but all of them require the target Enum class to
+ * implement this interface.
+ *
+ * <p>
+ * The basic implementation and usage examples of this interface are briefly
+ * described below.
+ *
+ * <pre>
+ * <code>
+ * public enum EnumClass implements Catalog&lt;EnumClass&gt; {
+ *
+ *    ELEMENT_1(0),
+ *
+ *    ELEMENT_2(1);
+ *
+ *    private int code;
+ *
+ *    EnumClass(int code) {
+ *        this.code = code;
+ *    }
+ *
+ *    &#64;Override
+ *    public int getCode() {
+ *        return this.code;
+ *    }
+ * }
+ * </code>
+ * </pre>
+ *
+ * <pre>
+ * <code>
+ * public class TestCatalog {
+ *
+ *     public static void main(String[] args) {
+ *         Catalog.hasCode(EnumClass.class, 1); // Returns true
+ *         Catalog.getEnum(EnumClass.class, 1); // Returns EnumClass#ELEMENT_2
+ *     }
+ * }
+ * </code>
+ * </pre>
  *
  * @author Kato Shinya
- * @since 1.0
- * @version 1.0
- *
- * @param <E> Catalog element
+ * @since 1.0.0
  */
-public interface Catalog<E extends Catalog<E>> {
+public interface Catalog<E extends Catalog<E>> extends CatalogSupport<E> {
 
     /**
-     * Return a code value.
+     * Returns the {@link List} representation of this catalog class.
      *
-     * @return Code value
-     */
-    public int getCode();
-
-    /**
-     * Convert to an Enum class object.
+     * <p>
+     * The {@link List} representation of this catalog class is sorted each element
+     * based on the code value specified for each element of the Enum class that
+     * implements the {@link Catalog} interface. This sorting process is based on
+     * the {@link Stream#sorted()} algorithm.
      *
-     * @return Converted an Enum class object
-     */
-    @SuppressWarnings("unchecked")
-    default E toEnum() {
-        return (E) this;
-    }
-
-    /**
-     * Check whether the code value of the Enum element is equal to the value passed
-     * as an argument.
-     *
-     * @param code Code value
-     * @return If the number passed as an argument is equal to the code value of the
-     *         Enum element, {@code true} , otherwise {@code false}
-     */
-    default boolean equalsByCode(int code) {
-        return getCode() == code;
-    }
-
-    /**
-     * Each element of the Enum class that implements this interface is sorted based
-     * on the code value defined for each element. The result of the sorting process
-     * is converted into a list structure with the order in which it is displayed
-     * and returned.
-     *
-     * @param <E>   Catalog element
-     * @param clazz Enum class object to be operated on
-     * @return A list containing the values sorted based on the code values defined
-     *         for each element of the Enum class
+     * @param <E>   The type of Enum class
+     * @param clazz The Enum class to be sorted
+     * @return The sorted Enum elements based on the code value
      */
     public static <E extends Catalog<E>> List<E> getOrderedList(Class<? extends Catalog<E>> clazz) {
         return stream(clazz).sorted(Comparator.comparing(Catalog::getCode)).map(Catalog::toEnum)
@@ -78,56 +110,58 @@ public interface Catalog<E extends Catalog<E>> {
     }
 
     /**
-     * The code values defined for each element of the Enum class that implements
-     * the interface are compared with the numbers passed as arguments, and the Enum
-     * element that matches the values is returned.
+     * Returns the Enum element linked to the code value given as an argument from
+     * the target Enum class. If the target Enum class does not have an Enum element
+     * linked to the code value given as an argument, {@code null} is returned.
      *
-     * @param <E>   Catalog element
-     * @param clazz Enum class object to be operated on
-     * @param code  Code value
-     * @return Enum element with a code value equal to the number specified as an
-     *         argument
+     * @param <E>   The type of Enum class
+     * @param clazz The target Enum class
+     * @param code  The code value linked to the Enum element
+     * @return The Enum element linked to the code value, or {@code null} if the
+     *         target Enum class does not have an Enum element linked to the code
+     *         value
      */
     public static <E extends Catalog<E>> E getEnum(Class<? extends Catalog<E>> clazz, int code) {
         return stream(clazz).filter(e -> e.equalsByCode(code)).map(Catalog::toEnum).findFirst().orElse(null);
     }
 
     /**
-     * The code value defined for each element of the Enum class that implements the
-     * interface is compared with the number specified as an argument. Return the
-     * Enum element whose value matches the code value as a key.
+     * Returns the {@link Map} representation of this catalog class.
      *
-     * @param <E>   Catalog element
-     * @param clazz Enum class object to be operated on
-     * @return Map containing an Enum element with a code value equal to the number
-     *         specified as an argument as a code key
+     * <p>
+     * The structure of the map returned by this {@link #getMap} has the code value
+     * specified in the Enum element of the Enum class that implements this
+     * {@link Catalog} interface as the key and the Enum element linked to the code
+     * value as the value.
+     *
+     * @param <E>   The type of Enum class
+     * @param clazz The target Enum class
+     * @return The {@link Map} representation of this catalog class
      */
     public static <E extends Catalog<E>> Map<Integer, E> getMap(Class<? extends Catalog<E>> clazz) {
         return stream(clazz).collect(Collectors.toMap(Catalog::getCode, Catalog::toEnum));
     }
 
     /**
-     * This function determines whether the code value specified as an argument is
-     * defined in each element of the Enum class that implements the interface
-     * concerned.
+     * Checks if the target Enum class has an Enum element linked to the code value
+     * passed as an argument.
      *
-     * @param <E>   Catalog element
-     * @param clazz Enum class object to be operated on
-     * @param code  Code value
-     * @return {@code true} if there is an Enum element with a code value equal to
-     *         the number specified as an argument, otherwise {@code false}
+     * @param <E>   The type of Enum class
+     * @param clazz The target Enum class
+     * @param code  The code value
+     * @return {@code true} if the target Enum class has an Enum element linked to
+     *         the code value passed as an argument, otherwise {@code false}
      */
     public static <E extends Catalog<E>> boolean hasCode(Class<? extends Catalog<E>> clazz, int code) {
         return stream(clazz).anyMatch(e -> e.equalsByCode(code));
     }
 
     /**
-     * Converts the element group defined in the {@code clazz} argument to a
-     * {@link Stream} and returns it.
+     * Returns the {@link Stream} representation of the target Enum class.
      *
-     * @param <E>   Catalog element
-     * @param clazz Enum class object to be operated on
-     * @return Streams of the Enum class
+     * @param <E>   The type of Enum class
+     * @param clazz The target Enum class
+     * @return The {@link Stream} representation of the target Enum class
      */
     public static <E extends Catalog<E>> Stream<? extends Catalog<E>> stream(Class<? extends Catalog<E>> clazz) {
         return Arrays.stream(clazz.getEnumConstants());
